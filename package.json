@@ -22,5 +22,8 @@
     "rollup-plugin-dts": "^5.0.0",
     "tslib": "^2.4.0",
     "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "ts-toolbelt": "^9.6.0"
   }
 }
