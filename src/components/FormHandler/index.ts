@@ -1,1 +1,1 @@
-export * from './TSXForm';
+export * from './FormHandler';
