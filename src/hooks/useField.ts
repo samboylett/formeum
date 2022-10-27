@@ -5,12 +5,13 @@ import { UseMainContextReturn } from './useMainContext';
 import { get } from 'lodash';
 import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
 import { FormErrors } from '../types/FormErrors';
+import { ValuesFields } from '../types/ValuesFields';
 
 export interface UseFieldArg<Name> {
   name: Name;
 }
 
-export interface UseFieldReturn<Values, Name extends string> {
+export interface UseFieldReturn<Values, Name extends ValuesFields<Values>> {
   value: DeepIndex<Values, Name>;
   error: string | undefined;
   name: Name;
@@ -23,7 +24,7 @@ export interface CreateUseFieldDependencies<Values> {
 }
 
 export const createUseField = <Values>({ useMainContext }: CreateUseFieldDependencies<Values>) => {
-  const useField = <Name extends string & O.Paths<Values>>({ name }: UseFieldArg<Name>): UseFieldReturn<Values, Name> => {
+  const useField = <Name extends ValuesFields<Values>>({ name }: UseFieldArg<Name>): UseFieldReturn<Values, Name> => {
     const { events, values, errors, setFieldValue, setFieldError } = useMainContext();
     const [value, setValue] = useState<DeepIndex<Values, Name>>(get(values, name));
     const [error, setError] = useState<string | undefined>(get(errors, name));

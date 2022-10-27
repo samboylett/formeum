@@ -5,7 +5,6 @@ import { ContextValuesInterface } from "../../contexts/ContextValues";
 import { UseFormHandlerArg, UseFormHandlerReturn } from "../../hooks/useFormHandler";
 import { UseGetFormContextsArg, UseGetFormContextsReturn } from "../../hooks/useGetFormContexts";
 import { CreateFormArg } from "../../types/CreateFormArg";
-import { getComponentName } from "../../utils/getComponentName";
 
 export interface FormHandlerProps<Values> {
   initialValues: Values;
@@ -45,8 +44,6 @@ export const createFormHandler = <Values extends unknown>(arg: CreateFormArg, {
       </ContextMain.Provider>
     )
   };
-
-  FormHandler.name = getComponentName(arg, FormHandler);
 
   return FormHandler;
 };
