@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import { UseFieldArg, UseFieldReturn } from "../../hooks/useField";
 import { CreateFormArg } from "../../types/CreateFormArg";
 import { ValuesFields } from "../../types/ValuesFields";
@@ -24,5 +24,5 @@ export const createFormField = <Values extends unknown>(arg: CreateFormArg, {
     )
   };
 
-  return FormField;
+  return memo(FormField) as typeof FormField;
 };

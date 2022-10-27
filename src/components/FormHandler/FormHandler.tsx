@@ -1,4 +1,4 @@
-import { Context, ReactNode } from "react";
+import { Context, memo, ReactNode } from "react";
 import { ContextErrorsInterface } from "../../contexts/ContextErrors";
 import { ContextMainInterface } from "../../contexts/ContextMain";
 import { ContextValuesInterface } from "../../contexts/ContextValues";
@@ -26,7 +26,7 @@ export const createFormHandler = <Values extends unknown>(arg: CreateFormArg, {
   useFormHandler,
   useGetFormContexts,
 }: CreateFormHandlerDependencies<Values>) => {
-  const FormHandler = ({ initialValues, children }: FormHandlerProps<Values>) => {
+  const FormHandler = memo(function FormHandler({ initialValues, children }: FormHandlerProps<Values>) {
     const handler = useFormHandler({ initialValues });
     const {
       mainContext,
@@ -43,7 +43,7 @@ export const createFormHandler = <Values extends unknown>(arg: CreateFormArg, {
         </ContextValues.Provider>
       </ContextMain.Provider>
     )
-  };
+  });
 
   return FormHandler;
 };
