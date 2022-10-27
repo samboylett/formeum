@@ -1,38 +1,51 @@
-import React, { ReactNode, useRef, useState } from "react";
-import { ContextMain } from "../../contexts/ContextMain";
+import React, { Context, ReactNode, useMemo, useRef, useState } from "react";
+import { ContextMainInterface } from "../../contexts/ContextMain";
+import { ContextValuesInterface } from "../../contexts/ContextValues";
 import { CreateFormArg } from "../../types/CreateFormArg";
 import { getComponentName } from "../../utils/getComponentName";
 
-export interface FormHandlerProps<Values extends unknown> {
+export interface FormHandlerProps<Values> {
   initialValues: Values;
   children: ReactNode;
 }
 
-export const FormHandler = <Values extends unknown>({ initialValues, children }: FormHandlerProps<Values>) => {
-  const [values, setValues] = useState<Values>(initialValues);
-  const [errors, setErrors] = useState<any>({});
+export interface CreateFormHandlerDependencies<Values> {
+  ContextMain: Context<ContextMainInterface<Values>>;
+  ContextValues: Context<ContextValuesInterface<Values>>;
+}
 
-  const nextContext = {
-    values,
-    setValues,
-    errors,
-    setErrors,
-  } as const;
+export const createFormHandler = <Values extends unknown>(arg: CreateFormArg, {
+  ContextMain,
+  ContextValues,
+}: CreateFormHandlerDependencies<Values>) => {
+  const FormHandler = ({ initialValues, children }: FormHandlerProps<Values>) => {
+    const [values, setValues] = useState<Values>(initialValues);
+    const [errors, setErrors] = useState<any>({});
 
-  const context = useRef<typeof nextContext>(nextContext);
-  Object.assign(context.current, nextContext);
+    const valuesContext: ContextValuesInterface<Values> = useMemo(() => ({
+      values,
+      setValues,
+    }), [values, setValues]);
 
-  return (
-    <ContextMain.Provider value={context.current}>
-      {children}
-    </ContextMain.Provider>
-  )
-};
+    const nextContext = {
+      ...valuesContext,
+      errors,
+      setErrors,
+    } as const;
 
-export const createFormHandler = <Values extends unknown>(arg: CreateFormArg) => {
-  const FormHandlerComponent = (props: FormHandlerProps<Values>) => <FormHandler<Values> {...props} />;
+    const context = useRef<typeof nextContext>(nextContext);
+    Object.assign(context.current, nextContext);
 
-  FormHandlerComponent.name = getComponentName(arg, FormHandler);
+    return (
+      <ContextMain.Provider value={context.current}>
+        <ContextValues.Provider value={valuesContext}>
+          {children}
+        </ContextValues.Provider>
+      </ContextMain.Provider>
+    )
+  };
 
-  return FormHandlerComponent;
+  FormHandler.name = getComponentName(arg, FormHandler);
+
+  return FormHandler;
 };

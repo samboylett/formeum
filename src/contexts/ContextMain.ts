@@ -1,11 +1,8 @@
 import { createContext } from "react";
+import { ContextValuesInterface, defaultContextValues } from "./ContextValues";
 
-export interface ContextMainInterface {
-  values: any;
-  setValues: (values: any) => void;
-}
+export interface ContextMainInterface<Values> extends ContextValuesInterface<Values> {}
 
-export const ContextMain = createContext<ContextMainInterface>({
-  values: {},
-  setValues: () => {}
+export const createContextMain = <Values>() => createContext<ContextMainInterface<Values>>({
+  ...defaultContextValues
 });
