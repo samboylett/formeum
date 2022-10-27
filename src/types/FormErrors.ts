@@ -1,3 +1,3 @@
-export type FormErrors<Values extends object> = Partial<{
+export type FormErrors<Values> = Partial<{
   [K in keyof Values]: Values[K] extends object ? FormErrors<Values[K]> : string;
 }>;
