@@ -1,1 +1,1 @@
-export const TEST = 'foo';
+export * from './components/TSXForm';
