@@ -1,4 +1,5 @@
 import { useMemo, useRef } from "react";
+import { ContextErrorsInterface } from "../contexts/ContextErrors";
 import { ContextMainInterface } from "../contexts/ContextMain";
 import { ContextValuesInterface } from "../contexts/ContextValues";
 import { UseFormHandlerReturn } from "./useFormHandler";
@@ -9,6 +10,7 @@ export interface UseGetFormContextsArg<Values> {
 
 export interface UseGetFormContextsReturn<Values> {
   valuesContext: ContextValuesInterface<Values>;
+  errorsContext: ContextErrorsInterface<Values>;
   mainContext: ContextMainInterface<Values>;
 }
 
@@ -26,17 +28,17 @@ export const createUseGetFormContexts = <Values>() => {
       setValues,
     }), [values, setValues]);
 
-    const nextContext = {
-      ...valuesContext,
+    const errorsContext: ContextErrorsInterface<Values> = useMemo(() => ({
       errors,
       setErrors,
-    } as const;
+    }), [errors, setErrors]);
 
-    const context = useRef<typeof nextContext>(nextContext);
-    Object.assign(context.current, nextContext);
+    const context = useRef<ContextMainInterface<Values>>(handler);
+    Object.assign(context.current, handler);
 
     return {
       valuesContext,
+      errorsContext,
       mainContext: context.current,
     };
   };
