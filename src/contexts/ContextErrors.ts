@@ -8,7 +8,7 @@ export interface ContextErrorsInterface<Values> {
 
 export const defaultContextErrors = {
   errors: {},
-  setErrors: () => {}
+  setErrors: () => null
 } as const;
 
 export const createContextErrors = <Values>() => createContext<ContextErrorsInterface<Values>>(defaultContextErrors);
