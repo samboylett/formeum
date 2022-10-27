@@ -21,8 +21,14 @@ export default [
     ],
     plugins: [
       resolve(),
-      commonjs(),
+      commonjs({
+        include: 'node_modules/**'
+      }),
       typescript({ tsconfig: "./tsconfig.json" }),
+    ],
+    external: [
+      ...Object.keys(packageJson.dependencies || {}),
+      ...Object.keys(packageJson.peerDependencies || {}),
     ],
   },
   {

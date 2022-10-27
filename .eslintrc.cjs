@@ -15,5 +15,6 @@ module.exports = {
   rules: {
     "@typescript-eslint/no-unnecessary-type-constraint": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "react/react-in-jsx-scope": "off",
   },
 };
