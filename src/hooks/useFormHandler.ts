@@ -1,7 +1,10 @@
-import { useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { EventEmitter } from 'events';
 import { FormErrors } from "../types/FormErrors";
 import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from "../constants/events";
+import { O } from 'ts-toolbelt';
+import { DeepIndex } from "../types/DeepIndex";
+import { merge, set } from 'lodash';
 
 export interface UseFormHandlerArg<Values> {
   initialValues: Values;
@@ -13,6 +16,9 @@ export interface UseFormHandlerReturn<Values> {
   errors: any;
   setErrors: (errors: any) => void;
   events: EventEmitter;
+  setFieldValue: <Name extends string & O.Paths<Values>>(name: Name, value: DeepIndex<Values, Name>) => void;
+  setFieldError: <Name extends string & O.Paths<Values>>(name: Name, error: string | undefined) => void;
+  handleChangeEvent: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
 }
 
 export const createUseFormHandler = <Values>() => {
@@ -33,12 +39,29 @@ export const createUseFormHandler = <Values>() => {
       events.emit(EVENT_ERRORS_CHANGE, newErrors);
     }, [baseSetErrors, events]);
 
+    const setFieldValue = <Name extends string & O.Paths<Values>>(name: Name, value: DeepIndex<Values, Name>) => {
+      setValues(merge({}, values, set({}, name, value)));
+    }
+
+    const setFieldError = <Name extends string & O.Paths<Values>>(name: Name, error: string | undefined) => {
+      setErrors(merge({}, errors, set({}, name, error)));
+    }
+
+    const handleChangeEvent = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+      const { name, value } = event.target || event.currentTarget;
+
+      setFieldValue(name as any, value as any);
+    };
+
     return {
       values,
       setValues,
       errors,
       setErrors,
       events,
+      setFieldValue,
+      setFieldError,
+      handleChangeEvent,
     };
   };
 
