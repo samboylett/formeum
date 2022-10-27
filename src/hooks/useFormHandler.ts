@@ -39,19 +39,19 @@ export const createUseFormHandler = <Values>() => {
       events.emit(EVENT_ERRORS_CHANGE, newErrors);
     }, [baseSetErrors, events]);
 
-    const setFieldValue = <Name extends string & O.Paths<Values>>(name: Name, value: DeepIndex<Values, Name>) => {
+    const setFieldValue = useCallback(<Name extends string & O.Paths<Values>>(name: Name, value: DeepIndex<Values, Name>) => {
       setValues(merge({}, values, set({}, name, value)));
-    }
+    }, [setValues, values]);
 
-    const setFieldError = <Name extends string & O.Paths<Values>>(name: Name, error: string | undefined) => {
+    const setFieldError = useCallback(<Name extends string & O.Paths<Values>>(name: Name, error: string | undefined) => {
       setErrors(merge({}, errors, set({}, name, error)));
-    }
+    }, [setErrors, errors]);
 
-    const handleChangeEvent = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleChangeEvent = useCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = event.target || event.currentTarget;
 
       setFieldValue(name as any, value as any);
-    };
+    }, [setFieldValue]);
 
     return {
       values,
