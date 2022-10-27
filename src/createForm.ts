@@ -1,3 +1,4 @@
+import { createFormField } from "./components/FormField";
 import { createFormHandler } from "./components/FormHandler";
 import { createContextErrors } from "./contexts/ContextErrors";
 import { createContextMain } from "./contexts/ContextMain";
@@ -26,6 +27,8 @@ export function createForm<Values extends unknown>(arg: CreateFormArg) {
     useGetFormContexts,
   });
 
+  const FormField = createFormField<Values>(arg, { useField });
+
   return {
     useMainContext,
     useFormHandler,
@@ -36,5 +39,6 @@ export function createForm<Values extends unknown>(arg: CreateFormArg) {
     ContextValues,
     ContextErrors,
     FormHandler,
+    FormField,
   } as const;
 }
