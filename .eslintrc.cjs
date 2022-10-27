@@ -4,17 +4,13 @@ module.exports = {
   root: true,
   parserOptions: {
     ecmaFeatures: {
-      jsx: true,
-    },
+      jsx: true
+    }
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-  ],
+  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "plugin:storybook/recommended"],
   rules: {
     "@typescript-eslint/no-unnecessary-type-constraint": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "react/react-in-jsx-scope": "off",
-  },
+    "react/react-in-jsx-scope": "off"
+  }
 };
