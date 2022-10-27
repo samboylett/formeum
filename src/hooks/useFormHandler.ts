@@ -1,11 +1,11 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { EventEmitter } from 'events';
 import { FormErrors } from "../types/FormErrors";
 import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from "../constants/events";
-import { O } from 'ts-toolbelt';
 import { DeepIndex } from "../types/DeepIndex";
 import { merge, set, isEqual } from 'lodash';
 import { ValuesFields } from "../types/ValuesFields";
+import { useMemoCallback } from "./useMemoCallback";
 
 export interface UseFormHandlerArg<Values> {
   initialValues: Values;
@@ -29,15 +29,15 @@ export const createUseFormHandler = <Values>() => {
     const [values, baseSetValues] = useState<Values>(initialValues);
     const [errors, baseSetErrors] = useState<FormErrors<Values>>({});
 
-    const setErrors = useCallback((newErrors: FormErrors<Values>) => {
+    const setErrors = useMemoCallback((newErrors: FormErrors<Values>) => {
       if (isEqual(newErrors, errors)) return;
 
       baseSetErrors(newErrors);
 
       events.emit(EVENT_ERRORS_CHANGE, newErrors);
-    }, [baseSetErrors, events]);
+    });
 
-    const setValues = useCallback(async (newValues: Values, shouldValidate?: boolean) => {
+    const setValues = useMemoCallback(async (newValues: Values, shouldValidate?: boolean) => {
       if (isEqual(newValues, values)) return;
 
       baseSetValues(newValues);
@@ -47,26 +47,26 @@ export const createUseFormHandler = <Values>() => {
       }
 
       events.emit(EVENT_VALUES_CHANGE, newValues);
-    }, [baseSetValues, events]);
+    });
 
-    const setFieldValue = useCallback(async <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => {
+    const setFieldValue = useMemoCallback(async <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => {
       const newValues = merge({}, values, set({}, name, value));
       setValues(newValues);
 
       if (shouldValidate && validate) {
         setErrors(await validate(newValues, name))
       }
-    }, [setValues, values]);
+    });
 
-    const setFieldError = useCallback(<Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => {
+    const setFieldError = useMemoCallback(<Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => {
       setErrors(merge({}, errors, set({}, name, error)));
-    }, [setErrors, errors]);
+    });
 
-    const handleChangeEvent = useCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleChangeEvent = useMemoCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = event.target || event.currentTarget;
 
       setFieldValue(name as any, value as any);
-    }, [setFieldValue]);
+    });
 
     return {
       values,

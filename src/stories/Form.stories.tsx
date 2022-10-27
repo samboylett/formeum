@@ -36,6 +36,16 @@ export const Form = () => {
           </label>
         )}
       </FormField>
+
+      <FormField name="bar">
+        {({ name, value, changeValue }) => (
+          <label>
+            Bar
+
+            <input type="number" name={name} value={value} onChange={e => changeValue(parseInt(e.target.value))} />
+          </label>
+        )}
+      </FormField>
     </FormHandler>
   );
 };

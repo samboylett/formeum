@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import { O } from 'ts-toolbelt';
+import { useEffect, useState } from 'react';
 import { DeepIndex } from '../types/DeepIndex';
 import { UseMainContextReturn } from './useMainContext';
 import { get } from 'lodash';
 import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
 import { FormErrors } from '../types/FormErrors';
 import { ValuesFields } from '../types/ValuesFields';
+import { useMemoCallback } from './useMemoCallback';
 
 export interface UseFieldArg<Name> {
   name: Name;
@@ -55,13 +55,13 @@ export const createUseField = <Values>({ useMainContext }: CreateUseFieldDepende
       }
     }, [events, values, name, setValue]);
 
-    const changeValue = useCallback((newValue: DeepIndex<Values, Name>) => {
+    const changeValue = useMemoCallback((newValue: DeepIndex<Values, Name>) => {
       setFieldValue(name, newValue);
-    }, [setFieldValue]);
+    });
 
-    const changeError = useCallback((newError: string | undefined) => {
+    const changeError = useMemoCallback((newError: string | undefined) => {
       setFieldError(name, newError);
-    }, [setFieldError]);
+    });
 
     return {
       value,
