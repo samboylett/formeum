@@ -46,6 +46,16 @@ export const Form = () => {
           </label>
         )}
       </FormField>
+
+      <FormField name="subForm.yup">
+        {({ name, value, changeValue }) => (
+          <label>
+            Sub Form Yup
+
+            <input name={name} value={value} onChange={e => changeValue(e.target.value)} />
+          </label>
+        )}
+      </FormField>
     </FormHandler>
   );
 };
