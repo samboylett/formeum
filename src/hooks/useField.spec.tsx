@@ -2,6 +2,8 @@ import { createForm } from '../createForm';
 import { renderHook, RenderHookResult } from "@testing-library/react";
 import { UseFieldArg, UseFieldReturn } from './useField';
 import EventEmitter from 'events';
+import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
+import { act } from 'react-dom/test-utils';
 
 interface Values {
   foo: string;
@@ -17,8 +19,15 @@ describe("useField", () => {
 
   describe("when rendered", () => {
     let hook: RenderHookResult<UseFieldReturn<Values, "foo">, UseFieldArg<"foo">>;
+    let events: EventEmitter;
+    let setFieldError: jest.Mock;
+    let setFieldValue: jest.Mock;
 
     beforeEach(() => {
+      events = new EventEmitter();
+      setFieldError = jest.fn();
+      setFieldValue = jest.fn();
+
       hook = renderHook<UseFieldReturn<Values, "foo">, UseFieldArg<"foo">>(useField, {
         initialProps: {
           name: "foo",
@@ -32,10 +41,10 @@ describe("useField", () => {
             errors: {},
             setValues: jest.fn(),
             setErrors: jest.fn(),
-            setFieldError: jest.fn(),
-            setFieldValue: jest.fn(),
+            setFieldError,
+            setFieldValue,
             handleChangeEvent: jest.fn(),
-            events: new EventEmitter(),
+            events,
           }}>
             {children}
           </ContextMain.Provider>
@@ -51,6 +60,104 @@ describe("useField", () => {
       expect(hook.result.current).toEqual(expect.objectContaining({
         [prop]: value,
       }));
+    });
+
+    describe("when changeValue called", () => {
+      beforeEach(() => {
+        hook.result.current.changeValue("test");
+      });
+
+      test("calls setFieldValue with field name and new value", () => {
+        expect(setFieldValue).toHaveBeenCalledWith("foo", "test");
+      });
+    });
+
+    describe("when changeError called", () => {
+      beforeEach(() => {
+        hook.result.current.changeError("wrong");
+      });
+
+      test("calls setFieldError with field name and new error", () => {
+        expect(setFieldError).toHaveBeenCalledWith("foo", "wrong");
+      });
+    });
+
+    describe("when value updates", () => {
+      beforeEach(() => {
+        act(() => {
+          events.emit(EVENT_VALUES_CHANGE, {
+            foo: "2",
+            bar: "3",
+          });
+        });
+      });
+
+      test.each([
+        ["value", "2"],
+        ["error", undefined],
+      ] as const)("returns %s as %j", (prop, value) => {
+        expect(hook.result.current).toEqual(expect.objectContaining({
+          [prop]: value,
+        }));
+      });
+    });
+
+    describe("when different value updates", () => {
+      beforeEach(() => {
+        act(() => {
+          events.emit(EVENT_VALUES_CHANGE, {
+            foo: "1",
+            bar: "3",
+          });
+        });
+      });
+
+      test.each([
+        ["value", "1"],
+        ["error", undefined],
+      ] as const)("returns %s as %j", (prop, value) => {
+        expect(hook.result.current).toEqual(expect.objectContaining({
+          [prop]: value,
+        }));
+      });
+    });
+
+    describe("when error updates", () => {
+      beforeEach(() => {
+        act(() => {
+          events.emit(EVENT_ERRORS_CHANGE, {
+            foo: "An error",
+          });
+        });
+      });
+
+      test.each([
+        ["value", "1"],
+        ["error", "An error"],
+      ] as const)("returns %s as %j", (prop, value) => {
+        expect(hook.result.current).toEqual(expect.objectContaining({
+          [prop]: value,
+        }));
+      });
+    });
+
+    describe("when different error updates", () => {
+      beforeEach(() => {
+        act(() => {
+          events.emit(EVENT_ERRORS_CHANGE, {
+            bar: "An error",
+          });
+        });
+      });
+
+      test.each([
+        ["value", "1"],
+        ["error", undefined],
+      ] as const)("returns %s as %j", (prop, value) => {
+        expect(hook.result.current).toEqual(expect.objectContaining({
+          [prop]: value,
+        }));
+      });
     });
   });
 });
