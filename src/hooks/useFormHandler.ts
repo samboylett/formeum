@@ -5,7 +5,7 @@ import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from "../constants/events";
 import { DeepIndex } from "../types/DeepIndex";
 import { merge, set, isEqual } from 'lodash';
 import { ValuesFields } from "../types/ValuesFields";
-import { useMemoCallback } from "./useMemoCallback";
+import useEventCallback from 'use-event-callback';
 
 export interface UseFormHandlerArg<Values> {
   initialValues: Values;
@@ -29,7 +29,7 @@ export const createUseFormHandler = <Values>() => {
     const [values, baseSetValues] = useState<Values>(initialValues);
     const [errors, baseSetErrors] = useState<FormErrors<Values>>({});
 
-    const setErrors = useMemoCallback((newErrors: FormErrors<Values>) => {
+    const setErrors = useEventCallback((newErrors: FormErrors<Values>) => {
       if (isEqual(newErrors, errors)) return;
 
       baseSetErrors(newErrors);
@@ -37,7 +37,7 @@ export const createUseFormHandler = <Values>() => {
       events.emit(EVENT_ERRORS_CHANGE, newErrors);
     });
 
-    const setValues = useMemoCallback(async (newValues: Values, shouldValidate?: boolean) => {
+    const setValues = useEventCallback(async (newValues: Values, shouldValidate?: boolean) => {
       if (isEqual(newValues, values)) return;
 
       baseSetValues(newValues);
@@ -49,7 +49,7 @@ export const createUseFormHandler = <Values>() => {
       events.emit(EVENT_VALUES_CHANGE, newValues);
     });
 
-    const setFieldValue = useMemoCallback(async <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => {
+    const setFieldValue = useEventCallback(async <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => {
       const newValues = merge({}, values, set({}, name, value));
       setValues(newValues);
 
@@ -58,11 +58,11 @@ export const createUseFormHandler = <Values>() => {
       }
     });
 
-    const setFieldError = useMemoCallback(<Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => {
+    const setFieldError = useEventCallback(<Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => {
       setErrors(merge({}, errors, set({}, name, error)));
     });
 
-    const handleChangeEvent = useMemoCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleChangeEvent = useEventCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { name, value } = event.target || event.currentTarget;
 
       setFieldValue(name as any, value as any);

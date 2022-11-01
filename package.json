@@ -55,6 +55,7 @@
   "dependencies": {
     "events": "^3.3.0",
     "lodash": "^4.17.21",
-    "ts-toolbelt": "^9.6.0"
+    "ts-toolbelt": "^9.6.0",
+    "use-event-callback": "^0.1.0"
   }
 }

@@ -5,7 +5,8 @@ import { get } from 'lodash';
 import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
 import { FormErrors } from '../types/FormErrors';
 import { ValuesFields } from '../types/ValuesFields';
-import { useMemoCallback } from './useMemoCallback';
+import useEventCallback from 'use-event-callback';
+
 
 export interface UseFieldArg<Name> {
   name: Name;
@@ -55,11 +56,11 @@ export const createUseField = <Values>({ useMainContext }: CreateUseFieldDepende
       }
     }, [events, values, name, setValue]);
 
-    const changeValue = useMemoCallback((newValue: DeepIndex<Values, Name>) => {
+    const changeValue = useEventCallback((newValue: DeepIndex<Values, Name>) => {
       setFieldValue(name, newValue);
     });
 
-    const changeError = useMemoCallback((newError: string | undefined) => {
+    const changeError = useEventCallback((newError: string | undefined) => {
       setFieldError(name, newError);
     });
 
