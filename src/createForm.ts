@@ -27,8 +27,8 @@ export function createForm<Values extends unknown>(arg: CreateFormArg) {
   const useGetFormContexts = createUseGetFormContexts<Values>();
   const useFieldValue = createUseFieldValue<Values>({ useMainContext });
   const useFieldError = createUseFieldError<Values>({ useMainContext });
-  const useField = createUseField<Values>({ useFieldValue, useFieldError });
   const useChangeHandler = createUseChangeHandler<Values>({ useFieldValue });
+  const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler });
 
   const FormHandler = createFormHandler<Values>(arg, {
     ContextMain,
