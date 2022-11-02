@@ -4,6 +4,7 @@ import { createContextErrors } from "./contexts/ContextErrors";
 import { createContextMain } from "./contexts/ContextMain";
 import { createContextValues } from "./contexts/ContextValues";
 import { createUseField } from "./hooks/useField";
+import { createUseFieldError } from "./hooks/useFieldError";
 import { createUseFieldValue } from "./hooks/useFieldValue";
 import { createUseFormHandler } from "./hooks/useFormHandler";
 import { createUseGetFormContexts } from "./hooks/useGetFormContexts";
@@ -19,7 +20,8 @@ export function createForm<Values extends unknown>(arg: CreateFormArg) {
   const useFormHandler = createUseFormHandler<Values>();
   const useGetFormContexts = createUseGetFormContexts<Values>();
   const useFieldValue = createUseFieldValue<Values>({ useMainContext });
-  const useField = createUseField<Values>({ useMainContext, useFieldValue });
+  const useFieldError = createUseFieldError<Values>({ useMainContext });
+  const useField = createUseField<Values>({ useFieldValue, useFieldError });
 
   const FormHandler = createFormHandler<Values>(arg, {
     ContextMain,

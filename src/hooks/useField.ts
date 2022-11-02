@@ -7,6 +7,7 @@ import { FormErrors } from '../types/FormErrors';
 import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';
 import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue';
+import { UseFieldErrorArg, UseFieldErrorReturn } from './useFieldError';
 
 
 export interface UseFieldArg<Name> {
@@ -22,35 +23,13 @@ export interface UseFieldReturn<Values, Name extends ValuesFields<Values>> {
 }
 
 export interface CreateUseFieldDependencies<Values> {
-  useMainContext: () => UseMainContextReturn<Values>;
   useFieldValue: <Name extends ValuesFields<Values>>(arg: UseFieldValueArg<Name>) => UseFieldValueReturn<Values, Name>;
+  useFieldError: <Name extends ValuesFields<Values>>(arg: UseFieldErrorArg<Name>) => UseFieldErrorReturn;
 }
 
-export const createUseField = <Values>({ useMainContext, useFieldValue }: CreateUseFieldDependencies<Values>) => {
+export const createUseField = <Values>({ useFieldValue, useFieldError }: CreateUseFieldDependencies<Values>) => {
   const useField = <Name extends ValuesFields<Values>>({ name }: UseFieldArg<Name>): UseFieldReturn<Values, Name> => {
-    const { events, errors, setFieldError } = useMainContext();
-    const [error, setError] = useState<string | undefined>(get(errors, name));
-
-    useEffect(() => {
-      const handleError = (newErrors: FormErrors<Values>) => {
-        const newError = get(newErrors, name);
-
-        if (error !== newError) {
-          setError(newError);
-        }
-      };
-
-      events.on(EVENT_ERRORS_CHANGE, handleError);
-
-      return () => {
-        events.off(EVENT_ERRORS_CHANGE, handleError);
-      }
-    }, [events, name]);
-
-    const changeError = useEventCallback((newError: string | undefined) => {
-      setFieldError(name, newError);
-    });
-
+    const { error, changeError } = useFieldError<Name>({ name });
     const { value, changeValue } = useFieldValue<Name>({ name });
 
     return useMemo(() => ({

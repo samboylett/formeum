@@ -17,11 +17,11 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> 
   changeValue: (newValue: DeepIndex<Values, Name>) => void;
 }
 
-export interface CreateUseFieldDependencies<Values> {
+export interface CreateUseFieldValueDependencies<Values> {
   useMainContext: () => UseMainContextReturn<Values>;
 }
 
-export const createUseFieldValue = <Values>({ useMainContext }: CreateUseFieldDependencies<Values>) => {
+export const createUseFieldValue = <Values>({ useMainContext }: CreateUseFieldValueDependencies<Values>) => {
   const useFieldValue = <Name extends ValuesFields<Values>>({ name }: UseFieldValueArg<Name>): UseFieldValueReturn<Values, Name> => {
     const { events, values, setFieldValue } = useMainContext();
     const [value, setValue] = useState<DeepIndex<Values, Name>>(get(values, name));
