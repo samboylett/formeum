@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DeepIndex } from '../types/DeepIndex';
 import { UseMainContextReturn } from './useMainContext';
 import { get } from 'lodash';
@@ -64,13 +64,19 @@ export const createUseField = <Values>({ useMainContext }: CreateUseFieldDepende
       setFieldError(name, newError);
     });
 
-    return {
+    return useMemo(() => ({
       value,
       error,
       name,
       changeValue,
       changeError,
-    };
+    }), [
+      value,
+      error,
+      name,
+      changeValue,
+      changeError,
+    ]);
   };
 
   return useField;

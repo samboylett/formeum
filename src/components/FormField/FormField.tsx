@@ -1,4 +1,4 @@
-import { memo, ReactNode } from "react";
+import { memo, ReactNode, useMemo } from "react";
 import { UseFieldArg, UseFieldReturn } from "../../hooks/useField";
 import { CreateFormArg } from "../../types/CreateFormArg";
 import { ValuesFields } from "../../types/ValuesFields";
@@ -17,11 +17,11 @@ export const createFormField = <Values extends unknown>(arg: CreateFormArg, {
   const FormField = <Name extends ValuesFields<Values>>({ children, ...rest }: FormFieldProps<Values, Name>) => {
     const arg = useField<Name>(rest);
 
-    return (
+    return useMemo(() => (
       <>
         {children(arg)}
       </>
-    )
+    ), [children, arg])
   };
 
   return memo(FormField) as typeof FormField;
