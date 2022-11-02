@@ -4,7 +4,6 @@ import { ContextMainInterface } from "../contexts/ContextMain";
 import { ContextValuesInterface } from "../contexts/ContextValues";
 import { UseFormHandlerArg, UseFormHandlerReturn } from "../hooks/useFormHandler";
 import { UseGetFormContextsArg, UseGetFormContextsReturn } from "../hooks/useGetFormContexts";
-import { CreateFormArg } from "../types/CreateFormArg";
 
 export interface FormHandlerProps<Values> {
   initialValues: Values;
@@ -19,7 +18,7 @@ export interface CreateFormHandlerDependencies<Values> {
   useGetFormContexts: (arg: UseGetFormContextsArg<Values>) => UseGetFormContextsReturn<Values>;
 }
 
-export const createFormHandler = <Values extends unknown>(arg: CreateFormArg, {
+export const createFormHandler = <Values extends unknown>({
   ContextMain,
   ContextValues,
   ContextErrors,
