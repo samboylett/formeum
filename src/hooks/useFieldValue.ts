@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { DeepIndex } from '../types/DeepIndex';
 import { UseMainContextReturn } from './useMainContext';
 import { get } from 'lodash';
-import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
-import { FormErrors } from '../types/FormErrors';
+import { EVENT_VALUES_CHANGE } from '../constants/events';
 import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';
 
