@@ -28,11 +28,11 @@ export const Form = () => {
       }
     }}>
       <FormField name="foo">
-        {({ name, value, changeValue }) => (
+        {({ name, value, handleChangeEvent }) => (
           <label>
             Foo
 
-            <input name={name} value={value} onChange={e => changeValue(e.target.value)} />
+            <input name={name} value={value} onChange={handleChangeEvent} />
           </label>
         )}
       </FormField>
@@ -48,11 +48,11 @@ export const Form = () => {
       </FormField>
 
       <FormField name="subForm.yup">
-        {({ name, value, changeValue }) => (
+        {({ name, value, handleChangeEvent }) => (
           <label>
             Sub Form Yup
 
-            <input name={name} value={value} onChange={e => changeValue(e.target.value)} />
+            <input name={name} value={value} onChange={handleChangeEvent} />
           </label>
         )}
       </FormField>
