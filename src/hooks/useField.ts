@@ -6,6 +6,7 @@ import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
 import { FormErrors } from '../types/FormErrors';
 import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';
+import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue';
 
 
 export interface UseFieldArg<Name> {
@@ -22,23 +23,15 @@ export interface UseFieldReturn<Values, Name extends ValuesFields<Values>> {
 
 export interface CreateUseFieldDependencies<Values> {
   useMainContext: () => UseMainContextReturn<Values>;
+  useFieldValue: <Name extends ValuesFields<Values>>(arg: UseFieldValueArg<Name>) => UseFieldValueReturn<Values, Name>;
 }
 
-export const createUseField = <Values>({ useMainContext }: CreateUseFieldDependencies<Values>) => {
+export const createUseField = <Values>({ useMainContext, useFieldValue }: CreateUseFieldDependencies<Values>) => {
   const useField = <Name extends ValuesFields<Values>>({ name }: UseFieldArg<Name>): UseFieldReturn<Values, Name> => {
-    const { events, values, errors, setFieldValue, setFieldError } = useMainContext();
-    const [value, setValue] = useState<DeepIndex<Values, Name>>(get(values, name));
+    const { events, errors, setFieldError } = useMainContext();
     const [error, setError] = useState<string | undefined>(get(errors, name));
 
     useEffect(() => {
-      const handleChange = (newValues: Values) => {
-        const newValue = get(newValues, name);
-
-        if (values !== newValue) {
-          setValue(newValue);
-        }
-      };
-
       const handleError = (newErrors: FormErrors<Values>) => {
         const newError = get(newErrors, name);
 
@@ -47,22 +40,18 @@ export const createUseField = <Values>({ useMainContext }: CreateUseFieldDepende
         }
       };
 
-      events.on(EVENT_VALUES_CHANGE, handleChange);
       events.on(EVENT_ERRORS_CHANGE, handleError);
 
       return () => {
-        events.off(EVENT_VALUES_CHANGE, handleChange);
         events.off(EVENT_ERRORS_CHANGE, handleError);
       }
-    }, [events, values, name, setValue]);
-
-    const changeValue = useEventCallback((newValue: DeepIndex<Values, Name>) => {
-      setFieldValue(name, newValue);
-    });
+    }, [events, name]);
 
     const changeError = useEventCallback((newError: string | undefined) => {
       setFieldError(name, newError);
     });
+
+    const { value, changeValue } = useFieldValue<Name>({ name });
 
     return useMemo(() => ({
       value,
