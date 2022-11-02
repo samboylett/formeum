@@ -1,10 +1,10 @@
 import { Context, ReactNode } from "react";
-import { ContextErrorsInterface } from "../../contexts/ContextErrors";
-import { ContextMainInterface } from "../../contexts/ContextMain";
-import { ContextValuesInterface } from "../../contexts/ContextValues";
-import { UseFormHandlerArg, UseFormHandlerReturn } from "../../hooks/useFormHandler";
-import { UseGetFormContextsArg, UseGetFormContextsReturn } from "../../hooks/useGetFormContexts";
-import { CreateFormArg } from "../../types/CreateFormArg";
+import { ContextErrorsInterface } from "../contexts/ContextErrors";
+import { ContextMainInterface } from "../contexts/ContextMain";
+import { ContextValuesInterface } from "../contexts/ContextValues";
+import { UseFormHandlerArg, UseFormHandlerReturn } from "../hooks/useFormHandler";
+import { UseGetFormContextsArg, UseGetFormContextsReturn } from "../hooks/useGetFormContexts";
+import { CreateFormArg } from "../types/CreateFormArg";
 
 export interface FormHandlerProps<Values> {
   initialValues: Values;

@@ -1,7 +1,7 @@
 import { memo, ReactNode, useMemo } from "react";
-import { UseFieldArg, UseFieldReturn } from "../../hooks/useField";
-import { CreateFormArg } from "../../types/CreateFormArg";
-import { ValuesFields } from "../../types/ValuesFields";
+import { UseFieldArg, UseFieldReturn } from "../hooks/useField";
+import { CreateFormArg } from "../types/CreateFormArg";
+import { ValuesFields } from "../types/ValuesFields";
 
 export interface FormFieldProps<Values, Name extends ValuesFields<Values>> extends UseFieldArg<Name> {
   children: (arg: UseFieldReturn<Values, Name>) => ReactNode;
