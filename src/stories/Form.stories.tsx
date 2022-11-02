@@ -17,7 +17,7 @@ interface FormDataType {
 const form = createForm<FormDataType>({});
 
 export const Form = () => {
-  const { FormHandler, FormField } = form;
+  const { FormHandler, FormField, FormValues } = form;
 
   return (
     <FormHandler initialValues={{
@@ -56,6 +56,12 @@ export const Form = () => {
           </label>
         )}
       </FormField>
+
+      <pre>
+        <FormValues>
+          {values => JSON.stringify(values, null, 2)}
+        </FormValues>
+      </pre>
     </FormHandler>
   );
 };
