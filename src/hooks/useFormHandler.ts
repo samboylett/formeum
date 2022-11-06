@@ -1,5 +1,4 @@
 import { ChangeEvent, useMemo, useState } from "react";
-import { EventEmitter } from 'events';
 import { FormErrors } from "../types/FormErrors";
 import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from "../constants/events";
 import { DeepIndex } from "../types/DeepIndex";
@@ -17,7 +16,6 @@ export interface UseFormHandlerReturn<Values> {
   setValues: (values: Values, shouldValidate?: boolean) => void;
   errors: any;
   setErrors: (errors: any) => void;
-  events: EventEmitter;
   setFieldValue: <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => void;
   setFieldError: <Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => void;
   handleChangeEvent: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
@@ -25,7 +23,6 @@ export interface UseFormHandlerReturn<Values> {
 
 export const createUseFormHandler = <Values>() => {
   const useFormHandler = ({ initialValues, validate }: UseFormHandlerArg<Values>): UseFormHandlerReturn<Values> => {
-    const events = useMemo(() => new EventEmitter(), []);
     const [values, baseSetValues] = useState<Values>(initialValues);
     const [errors, baseSetErrors] = useState<FormErrors<Values>>({});
 
@@ -33,8 +30,6 @@ export const createUseFormHandler = <Values>() => {
       if (isEqual(newErrors, errors)) return;
 
       baseSetErrors(newErrors);
-
-      events.emit(EVENT_ERRORS_CHANGE, newErrors);
     });
 
     const setValues = useEventCallback(async (newValues: Values, shouldValidate?: boolean) => {
@@ -45,8 +40,6 @@ export const createUseFormHandler = <Values>() => {
       if (shouldValidate && validate) {
         setErrors(await validate(newValues));
       }
-
-      events.emit(EVENT_VALUES_CHANGE, newValues);
     });
 
     const setFieldValue = useEventCallback(async <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => {
@@ -73,7 +66,6 @@ export const createUseFormHandler = <Values>() => {
       setValues,
       errors,
       setErrors,
-      events,
       setFieldValue,
       setFieldError,
       handleChangeEvent,

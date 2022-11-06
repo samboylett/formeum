@@ -1,16 +1,13 @@
-import { createContext } from "react";
-import { defaultContextValues } from "./ContextValues";
-import { EventEmitter } from 'events';
-import { defaultContextErrors } from "./ContextErrors";
 import { UseFormHandlerReturn } from "../hooks/useFormHandler";
+import { createFastContext } from "react-fast-context";
 
 export type ContextMainInterface<Values> = UseFormHandlerReturn<Values>
 
-export const createContextMain = <Values>() => createContext<ContextMainInterface<Values>>({
-  ...defaultContextValues,
-  ...defaultContextErrors,
-
-  events: new EventEmitter(),
+export const createContextMain = <Values>() => createFastContext<ContextMainInterface<Values>>({
+  errors: {},
+  setErrors: () => null,
+  values: null as any,
+  setValues: () => null,
   handleChangeEvent: () => null,
   setFieldValue: () => null,
   setFieldError: () => null,

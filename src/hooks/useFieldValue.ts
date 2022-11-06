@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { DeepIndex } from '../types/DeepIndex';
-import { UseMainContextReturn } from './useMainContext';
-import { get } from 'lodash';
+import { UseMainContextArg, UseMainContextReturn } from './useMainContext';
+import { get, isEqual } from 'lodash';
 import { EVENT_VALUES_CHANGE } from '../constants/events';
 import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';
@@ -17,29 +17,18 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> 
 }
 
 export interface CreateUseFieldValueDependencies<Values> {
-  useMainContext: () => UseMainContextReturn<Values>;
+  useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
 }
 
 export const createUseFieldValue = <Values>({ useMainContext }: CreateUseFieldValueDependencies<Values>) => {
   const useFieldValue = <Name extends ValuesFields<Values>>({ name }: UseFieldValueArg<Name>): UseFieldValueReturn<Values, Name> => {
-    const { events, values, setFieldValue } = useMainContext();
-    const [value, setValue] = useState<DeepIndex<Values, Name>>(get(values, name));
-
-    useEffect(() => {
-      const handleChange = (newValues: Values) => {
-        const newValue = get(newValues, name);
-
-        if (values !== newValue) {
-          setValue(newValue);
-        }
-      };
-
-      events.on(EVENT_VALUES_CHANGE, handleChange);
-
-      return () => {
-        events.off(EVENT_VALUES_CHANGE, handleChange);
+    const { values, setFieldValue } = useMainContext({
+      shouldUpdate: (oldValue, newValue) => {
+        return !isEqual(get(oldValue.values, name), get(newValue.values, name));
       }
-    }, [events, values, name, setValue]);
+    });
+
+    const value = useMemo(() => get(values, name), [values, name]);
 
     const changeValue = useEventCallback((newValue: DeepIndex<Values, Name>) => {
       setFieldValue(name, newValue);
