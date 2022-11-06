@@ -1,7 +1,6 @@
 import { createForm } from '../createForm';
 import { renderHook, RenderHookResult } from "@testing-library/react";
 import { UseFieldArg, UseFieldReturn } from './useField';
-import EventEmitter from 'events';
 import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
 import { act } from 'react-dom/test-utils';
 
@@ -10,7 +9,7 @@ interface Values {
   bar: string;
 }
 
-const { useField, ContextMain } = createForm<Values>({});
+const { useField, ContextMain } = createForm<Values>();
 
 describe("useField", () => {
   test("is a function", () => {
@@ -19,12 +18,10 @@ describe("useField", () => {
 
   describe("when rendered", () => {
     let hook: RenderHookResult<UseFieldReturn<Values, "foo">, UseFieldArg<"foo">>;
-    let events: EventEmitter;
     let setFieldError: jest.Mock;
     let setFieldValue: jest.Mock;
 
     beforeEach(() => {
-      events = new EventEmitter();
       setFieldError = jest.fn();
       setFieldValue = jest.fn();
 
@@ -44,7 +41,6 @@ describe("useField", () => {
             setFieldError,
             setFieldValue,
             handleChangeEvent: jest.fn(),
-            events,
           }}>
             {children}
           </ContextMain.Provider>
@@ -79,84 +75,6 @@ describe("useField", () => {
 
       test("calls setFieldError with field name and new error", () => {
         expect(setFieldError).toHaveBeenCalledWith("foo", "wrong");
-      });
-    });
-
-    describe("when value updates", () => {
-      beforeEach(() => {
-        act(() => {
-          events.emit(EVENT_VALUES_CHANGE, {
-            foo: "2",
-            bar: "3",
-          });
-        });
-      });
-
-      test.each([
-        ["value", "2"],
-        ["error", undefined],
-      ] as const)("returns %s as %j", (prop, value) => {
-        expect(hook.result.current).toEqual(expect.objectContaining({
-          [prop]: value,
-        }));
-      });
-    });
-
-    describe("when different value updates", () => {
-      beforeEach(() => {
-        act(() => {
-          events.emit(EVENT_VALUES_CHANGE, {
-            foo: "1",
-            bar: "3",
-          });
-        });
-      });
-
-      test.each([
-        ["value", "1"],
-        ["error", undefined],
-      ] as const)("returns %s as %j", (prop, value) => {
-        expect(hook.result.current).toEqual(expect.objectContaining({
-          [prop]: value,
-        }));
-      });
-    });
-
-    describe("when error updates", () => {
-      beforeEach(() => {
-        act(() => {
-          events.emit(EVENT_ERRORS_CHANGE, {
-            foo: "An error",
-          });
-        });
-      });
-
-      test.each([
-        ["value", "1"],
-        ["error", "An error"],
-      ] as const)("returns %s as %j", (prop, value) => {
-        expect(hook.result.current).toEqual(expect.objectContaining({
-          [prop]: value,
-        }));
-      });
-    });
-
-    describe("when different error updates", () => {
-      beforeEach(() => {
-        act(() => {
-          events.emit(EVENT_ERRORS_CHANGE, {
-            bar: "An error",
-          });
-        });
-      });
-
-      test.each([
-        ["value", "1"],
-        ["error", undefined],
-      ] as const)("returns %s as %j", (prop, value) => {
-        expect(hook.result.current).toEqual(expect.objectContaining({
-          [prop]: value,
-        }));
       });
     });
   });
