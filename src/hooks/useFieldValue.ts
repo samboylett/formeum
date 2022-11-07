@@ -4,6 +4,7 @@ import { UseMainContextArg, UseMainContextReturn } from './useMainContext';
 import { get, isEqual } from 'lodash';
 import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';
+import { UseFieldTouchedArg, UseFieldTouchedReturn } from './useFieldTouched';
 
 
 export interface UseFieldValueArg<Name> {
@@ -17,9 +18,10 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> 
 
 export interface CreateUseFieldValueDependencies<Values> {
   useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
+  useFieldTouched: <Name extends ValuesFields<Values>>(arg: UseFieldTouchedArg<Name>) => UseFieldTouchedReturn;
 }
 
-export const createUseFieldValue = <Values>({ useMainContext }: CreateUseFieldValueDependencies<Values>) => {
+export const createUseFieldValue = <Values>({ useMainContext, useFieldTouched }: CreateUseFieldValueDependencies<Values>) => {
   const useFieldValue = <Name extends ValuesFields<Values>>({ name }: UseFieldValueArg<Name>): UseFieldValueReturn<Values, Name> => {
     const { values, setFieldValue } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {
@@ -27,10 +29,14 @@ export const createUseFieldValue = <Values>({ useMainContext }: CreateUseFieldVa
       }
     });
 
+    const { isTouched, setIsTouched } = useFieldTouched<Name>({ name });
+
     const value = useMemo(() => get(values, name), [values, name]);
 
     const changeValue = useEventCallback((newValue: DeepIndex<Values, Name>) => {
       setFieldValue(name, newValue);
+
+      if (!isTouched) setIsTouched(true);
     });
 
     return useMemo(() => ({
