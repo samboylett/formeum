@@ -28,7 +28,7 @@ export const createUseFieldError = <Values>({ useMainContext }: CreateUseFieldEr
       }
     });
 
-    const error = useMemo(() => get(errors, name), [errors, name]);
+    const error = useMemo(() => errors[name], [errors, name]);
 
     const changeError = useEventCallback((newError: string | undefined) => {
       setFieldError(name, newError);
