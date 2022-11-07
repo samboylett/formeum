@@ -8,13 +8,15 @@ import { createUseFieldError } from "./hooks/useFieldError";
 import { createUseFieldTouched } from "./hooks/useFieldTouched";
 import { createUseFieldValue } from "./hooks/useFieldValue";
 import { createUseFormHandler } from "./hooks/useFormHandler";
+import { createUseFormHandlerStateless } from "./hooks/useFormHandlerStateless";
 import { createUseMainContext } from "./hooks/useMainContext";
 
 export function createForm<Values extends unknown>() {
   const ContextMain = createContextMain<Values>();
 
   const useMainContext = createUseMainContext<Values>({ ContextMain });
-  const useFormHandler = createUseFormHandler<Values>();
+  const useFormHandlerStateless = createUseFormHandlerStateless<Values>();
+  const useFormHandler = createUseFormHandler<Values>({ useFormHandlerStateless });
   const useFieldTouched = createUseFieldTouched<Values>({ useMainContext });
   const useFieldValue = createUseFieldValue<Values>({ useMainContext, useFieldTouched });
   const useFieldError = createUseFieldError<Values>({ useMainContext });
