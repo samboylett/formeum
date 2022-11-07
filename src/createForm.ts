@@ -15,11 +15,11 @@ export function createForm<Values extends unknown>() {
 
   const useMainContext = createUseMainContext<Values>({ ContextMain });
   const useFormHandler = createUseFormHandler<Values>();
-  const useFieldValue = createUseFieldValue<Values>({ useMainContext });
-  const useFieldError = createUseFieldError<Values>({ useMainContext });
   const useFieldTouched = createUseFieldTouched<Values>({ useMainContext });
+  const useFieldValue = createUseFieldValue<Values>({ useMainContext, useFieldTouched });
+  const useFieldError = createUseFieldError<Values>({ useMainContext });
   const useChangeHandler = createUseChangeHandler<Values>({ useFieldValue });
-  const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler });
+  const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched });
 
   const FormHandler = createFormHandler<Values>({
     useFormHandler,
