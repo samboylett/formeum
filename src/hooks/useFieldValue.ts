@@ -13,7 +13,9 @@ export interface UseFieldValueArg<Name> {
 
 export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> {
   value: DeepIndex<Values, Name>;
+  initialValue: DeepIndex<Values, Name>;
   changeValue: (newValue: DeepIndex<Values, Name>) => void;
+  hasChanged: boolean;
 }
 
 export interface CreateUseFieldValueDependencies<Values> {
@@ -23,15 +25,16 @@ export interface CreateUseFieldValueDependencies<Values> {
 
 export const createUseFieldValue = <Values>({ useMainContext, useFieldTouched }: CreateUseFieldValueDependencies<Values>) => {
   const useFieldValue = <Name extends ValuesFields<Values>>({ name }: UseFieldValueArg<Name>): UseFieldValueReturn<Values, Name> => {
-    const { values, setFieldValue } = useMainContext({
+    const { values, initialValues, setFieldValue } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {
-        return !isEqual(get(oldValue.values, name), get(newValue.values, name));
+        return (['values', 'initialValues'] as const).some(v => !isEqual(get(oldValue[v], name), get(newValue[v], name)));
       }
     });
 
     const { isTouched, setIsTouched } = useFieldTouched<Name>({ name });
 
     const value = useMemo(() => get(values, name), [values, name]);
+    const initialValue = useMemo(() => get(initialValues, name), [initialValues, name]);
 
     const changeValue = useEventCallback((newValue: DeepIndex<Values, Name>) => {
       setFieldValue(name, newValue);
@@ -39,12 +42,18 @@ export const createUseFieldValue = <Values>({ useMainContext, useFieldTouched }:
       if (!isTouched) setIsTouched(true);
     });
 
+    const hasChanged = useMemo(() => !isEqual(value, initialValue), [value, initialValue]);
+
     return useMemo(() => ({
       value,
       changeValue,
+      initialValue,
+      hasChanged,
     }), [
       value,
       changeValue,
+      initialValue,
+      hasChanged,
     ]);
   };
 

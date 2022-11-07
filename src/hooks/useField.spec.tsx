@@ -34,6 +34,10 @@ describe("useField", () => {
               foo: "1",
               bar: "2",
             },
+            initialValues: {
+              foo: "1",
+              bar: "2",
+            },
             errors: {},
             touched: [],
             setValues: jest.fn(),

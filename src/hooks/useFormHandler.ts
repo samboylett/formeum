@@ -14,6 +14,7 @@ export interface UseFormHandlerArg<Values> {
 
 export interface UseFormHandlerReturn<Values> {
   values: Values;
+  initialValues: Values;
   setValues: (values: Values, shouldValidate?: boolean) => void;
   errors: FormErrors<Values>;
   setErrors: (errors: FormErrors<Values>) => void;
@@ -80,6 +81,7 @@ export const createUseFormHandler = <Values>() => {
       setFieldValue,
       setFieldError,
       setFieldTouched,
+      initialValues,
     };
   };
 
