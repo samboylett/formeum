@@ -8,6 +8,7 @@ import useEventCallback from 'use-event-callback';
 export interface UseFormHandlerArg<Values> {
   initialValues: Values;
   validate?: (values: Values, fieldName?: ValuesFields<Values>) => Promise<FormErrors<Values>>;
+  validateOnChange?: boolean;
 }
 
 export interface UseFormHandlerReturn<Values> {
@@ -20,7 +21,7 @@ export interface UseFormHandlerReturn<Values> {
 }
 
 export const createUseFormHandler = <Values>() => {
-  const useFormHandler = ({ initialValues, validate }: UseFormHandlerArg<Values>): UseFormHandlerReturn<Values> => {
+  const useFormHandler = ({ initialValues, validate, validateOnChange = false }: UseFormHandlerArg<Values>): UseFormHandlerReturn<Values> => {
     const [values, baseSetValues] = useState<Values>(initialValues);
     const [errors, baseSetErrors] = useState<FormErrors<Values>>({});
 
@@ -30,7 +31,7 @@ export const createUseFormHandler = <Values>() => {
       baseSetErrors(newErrors);
     });
 
-    const setValues = useEventCallback(async (newValues: Values, shouldValidate?: boolean) => {
+    const setValues = useEventCallback(async (newValues: Values, shouldValidate: boolean = validateOnChange) => {
       if (isEqual(newValues, values)) return;
 
       baseSetValues(newValues);

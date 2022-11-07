@@ -2,10 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { DeepIndex } from '../types/DeepIndex';
 import { UseMainContextArg, UseMainContextReturn } from './useMainContext';
 import { get, isEqual } from 'lodash';
-import { EVENT_VALUES_CHANGE } from '../constants/events';
 import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';
-
 
 export interface UseFieldValueArg<Name> {
   name: Name;

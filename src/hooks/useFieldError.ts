@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { UseMainContextArg, UseMainContextReturn } from './useMainContext';
 import { get, isEqual } from 'lodash';
-import { EVENT_ERRORS_CHANGE } from '../constants/events';
 import { FormErrors } from '../types/FormErrors';
 import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';

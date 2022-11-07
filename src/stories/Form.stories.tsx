@@ -14,7 +14,7 @@ interface FormDataType {
   };
 }
 
-const form = createForm<FormDataType>({});
+const form = createForm<FormDataType>();
 
 export const Form = () => {
   const { FormHandler, FormField, FormValues } = form;

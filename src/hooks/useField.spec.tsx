@@ -1,7 +1,6 @@
 import { createForm } from '../createForm';
 import { renderHook, RenderHookResult } from "@testing-library/react";
 import { UseFieldArg, UseFieldReturn } from './useField';
-import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from '../constants/events';
 import { act } from 'react-dom/test-utils';
 
 interface Values {
@@ -40,7 +39,6 @@ describe("useField", () => {
             setErrors: jest.fn(),
             setFieldError,
             setFieldValue,
-            handleChangeEvent: jest.fn(),
           }}>
             {children}
           </ContextMain.Provider>
