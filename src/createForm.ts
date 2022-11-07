@@ -5,6 +5,7 @@ import { createContextMain } from "./contexts/ContextMain";
 import { createUseChangeHandler } from "./hooks/useChangeHandler";
 import { createUseField } from "./hooks/useField";
 import { createUseFieldError } from "./hooks/useFieldError";
+import { createUseFieldTouched } from "./hooks/useFieldTouched";
 import { createUseFieldValue } from "./hooks/useFieldValue";
 import { createUseFormHandler } from "./hooks/useFormHandler";
 import { createUseMainContext } from "./hooks/useMainContext";
@@ -16,6 +17,7 @@ export function createForm<Values extends unknown>() {
   const useFormHandler = createUseFormHandler<Values>();
   const useFieldValue = createUseFieldValue<Values>({ useMainContext });
   const useFieldError = createUseFieldError<Values>({ useMainContext });
+  const useFieldTouched = createUseFieldTouched<Values>({ useMainContext });
   const useChangeHandler = createUseChangeHandler<Values>({ useFieldValue });
   const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler });
 
@@ -33,6 +35,7 @@ export function createForm<Values extends unknown>() {
     useField,
     useFieldError,
     useFieldValue,
+    useFieldTouched,
     useChangeHandler,
 
     ContextMain,

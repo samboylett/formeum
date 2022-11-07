@@ -35,10 +35,13 @@ describe("useField", () => {
               bar: "2",
             },
             errors: {},
+            touched: [],
             setValues: jest.fn(),
             setErrors: jest.fn(),
+            setTouched: jest.fn(),
             setFieldError,
             setFieldValue,
+            setFieldTouched: jest.fn(),
           }}>
             {children}
           </ContextMain.Provider>
