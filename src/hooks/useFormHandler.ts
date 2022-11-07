@@ -18,7 +18,6 @@ export interface UseFormHandlerReturn<Values> {
   setErrors: (errors: any) => void;
   setFieldValue: <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => void;
   setFieldError: <Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => void;
-  handleChangeEvent: (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
 }
 
 export const createUseFormHandler = <Values>() => {
@@ -55,12 +54,6 @@ export const createUseFormHandler = <Values>() => {
       setErrors(merge({}, errors, set({}, name, error)));
     });
 
-    const handleChangeEvent = useEventCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-      const { name, value } = event.target || event.currentTarget;
-
-      setFieldValue(name as any, value as any);
-    });
-
     return {
       values,
       setValues,
@@ -68,7 +61,6 @@ export const createUseFormHandler = <Values>() => {
       setErrors,
       setFieldValue,
       setFieldError,
-      handleChangeEvent,
     };
   };
 
