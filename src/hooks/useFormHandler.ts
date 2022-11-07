@@ -1,6 +1,5 @@
 import { ChangeEvent, useMemo, useState } from "react";
 import { FormErrors } from "../types/FormErrors";
-import { EVENT_ERRORS_CHANGE, EVENT_VALUES_CHANGE } from "../constants/events";
 import { DeepIndex } from "../types/DeepIndex";
 import { merge, set, isEqual } from 'lodash';
 import { ValuesFields } from "../types/ValuesFields";
@@ -14,8 +13,8 @@ export interface UseFormHandlerArg<Values> {
 export interface UseFormHandlerReturn<Values> {
   values: Values;
   setValues: (values: Values, shouldValidate?: boolean) => void;
-  errors: any;
-  setErrors: (errors: any) => void;
+  errors: FormErrors<Values>;
+  setErrors: (errors: FormErrors<Values>) => void;
   setFieldValue: <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => void;
   setFieldError: <Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => void;
 }
@@ -51,7 +50,10 @@ export const createUseFormHandler = <Values>() => {
     });
 
     const setFieldError = useEventCallback(<Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => {
-      setErrors(merge({}, errors, set({}, name, error)));
+      setErrors({
+        ...errors,
+        [name]: error,
+      });
     });
 
     return {

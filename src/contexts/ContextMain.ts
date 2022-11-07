@@ -8,7 +8,6 @@ export const createContextMain = <Values>() => createFastContext<ContextMainInte
   setErrors: () => null,
   values: null as any,
   setValues: () => null,
-  handleChangeEvent: () => null,
   setFieldValue: () => null,
   setFieldError: () => null,
 });

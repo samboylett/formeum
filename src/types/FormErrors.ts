@@ -1,3 +1,3 @@
-export type FormErrors<Values> = Partial<{
-  [K in keyof Values]: Values[K] extends object ? FormErrors<Values[K]> : string;
-}>;
+import { ValuesFields } from "./ValuesFields";
+
+export type FormErrors<Values> = Partial<Record<ValuesFields<Values>, string>>;
