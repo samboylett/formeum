@@ -12,6 +12,7 @@ import { createUseFieldTouched } from "./hooks/useFieldTouched";
 import { createUseFieldValue } from "./hooks/useFieldValue";
 import { createUseFormHandler } from "./hooks/useFormHandler";
 import { createUseFormHandlerStateless } from "./hooks/useFormHandlerStateless";
+import { createUseHTMLCheckbox } from "./hooks/useHTMLCheckbox";
 import { createUseHTMLInput } from "./hooks/useHTMLInput";
 import { createUseMainContext } from "./hooks/useMainContext";
 
@@ -30,6 +31,7 @@ export function createForm<Values extends unknown>() {
   const useFieldFocus = createUseFieldFocus<Values>({ useCurrentContext, useFieldTouched });
   const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur, useFieldFocus });
   const useHTMLInput = createUseHTMLInput<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler });
+  const useHTMLCheckbox = createUseHTMLCheckbox<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler });
 
   const FormHandler = createFormHandler<Values>({
     useFormHandler,
@@ -51,6 +53,7 @@ export function createForm<Values extends unknown>() {
     useFieldBlur,
     useFieldFocus,
     useHTMLInput,
+    useHTMLCheckbox,
 
     ContextMain,
 
