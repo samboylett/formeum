@@ -6,6 +6,7 @@ import { ValuesFields } from '../types/ValuesFields';
 import useEventCallback from 'use-event-callback';
 import { UseFieldTouchedArg, UseFieldTouchedReturn } from './useFieldTouched';
 import { UseCurrentContextReturn } from './useCurrentContext';
+import { UseFieldChangeValueArg, UseFieldChangeValueReturn } from './useFieldChangeValue';
 
 
 export interface UseFieldValueArg<Name> {
@@ -21,11 +22,10 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> 
 
 export interface CreateUseFieldValueDependencies<Values> {
   useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
-  useCurrentContext: () => UseCurrentContextReturn<Values>;
-  useFieldTouched: <Name extends ValuesFields<Values>>(arg: UseFieldTouchedArg<Name>) => UseFieldTouchedReturn;
+  useFieldChangeValue: <Name extends ValuesFields<Values>>(arg: UseFieldChangeValueArg<Name>) => UseFieldChangeValueReturn<Values, Name>;
 }
 
-export const createUseFieldValue = <Values>({ useMainContext, useFieldTouched, useCurrentContext }: CreateUseFieldValueDependencies<Values>) => {
+export const createUseFieldValue = <Values>({ useMainContext, useFieldChangeValue }: CreateUseFieldValueDependencies<Values>) => {
   /**
    * Logic around a fields value. Handles getting the field value out of the main context, the initial value, changing the value and if the value has changed.
    * 
@@ -33,23 +33,15 @@ export const createUseFieldValue = <Values>({ useMainContext, useFieldTouched, u
    * @returns {UseFieldValueReturn<Values, Name>}
    */
   const useFieldValue = <Name extends ValuesFields<Values>>({ name }: UseFieldValueArg<Name>): UseFieldValueReturn<Values, Name> => {
-    const contextRef = useCurrentContext();
     const { values, initialValues, setFieldValue } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {
         return (['values', 'initialValues'] as const).some(v => !isEqual(get(oldValue[v], name), get(newValue[v], name)));
       }
     });
-
-    const { isTouched, setIsTouched } = useFieldTouched<Name>({ name });
+    const { changeValue } = useFieldChangeValue<Name>({ name });
 
     const value = useMemo(() => get(values, name), [values, name]);
     const initialValue = useMemo(() => get(initialValues, name), [initialValues, name]);
-
-    const changeValue = useEventCallback((newValue: DeepIndex<Values, Name>) => {
-      setFieldValue(name, newValue);
-
-      if (!isTouched && contextRef.current.touchOnChange) setIsTouched(true);
-    });
 
     const hasChanged = useMemo(() => !isEqual(value, initialValue), [value, initialValue]);
 
