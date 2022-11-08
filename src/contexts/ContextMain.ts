@@ -14,4 +14,5 @@ export const createContextMain = <Values>() => createFastContext<ContextMainInte
   setFieldValue: () => null,
   setFieldError: () => null,
   setFieldTouched: () => null,
+  touchOnChange: true,
 });

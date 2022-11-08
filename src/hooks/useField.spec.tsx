@@ -40,6 +40,7 @@ describe("useField", () => {
             },
             errors: {},
             touched: new Set(),
+            touchOnChange: true,
             setValues: jest.fn(),
             setErrors: jest.fn(),
             setTouched: jest.fn(),
