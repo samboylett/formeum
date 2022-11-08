@@ -76,9 +76,9 @@ export const createUseFormHandlerStateless = <Values>() => {
     });
 
     const setFieldTouched = useEventCallback(<Name extends ValuesFields<Values>>(name: Name, isTouched: boolean) => {
-      const nextTouched = touched.filter(n => n !== name);
+      const nextTouched = new Set([...touched]);
 
-      if (isTouched) nextTouched.push(name);
+      nextTouched[isTouched ? 'add' : 'delete'](name);
 
       onTouched(nextTouched);
     });

@@ -22,7 +22,7 @@ export const createUseFieldTouched = <Values>({ useMainContext }: CreateUseField
   const useFieldTouched = <Name extends ValuesFields<Values>>({ name }: UseFieldTouchedArg<Name>): UseFieldTouchedReturn => {
     const { touched, setFieldTouched } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {
-        return oldValue.touched.includes(name) !== newValue.touched.includes(name);
+        return oldValue.touched.has(name) !== newValue.touched.has(name);
       }
     });
 
@@ -30,7 +30,7 @@ export const createUseFieldTouched = <Values>({ useMainContext }: CreateUseField
       setFieldTouched(name, nextIsTouched);
     });
 
-    const isTouched = useMemo(() => touched.includes(name), [touched, name]);
+    const isTouched = useMemo(() => touched.has(name), [touched, name]);
 
     return useMemo(() => ({
       isTouched,
