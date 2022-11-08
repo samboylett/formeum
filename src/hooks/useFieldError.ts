@@ -12,6 +12,12 @@ export interface UseFieldErrorArg<Name> {
 
 export interface UseFieldErrorReturn {
   error: string | undefined;
+
+  /**
+   * Set the fields error state.
+   * 
+   * @param {string|undefined} error
+   */
   changeError: (error: string | undefined) => void;
 }
 

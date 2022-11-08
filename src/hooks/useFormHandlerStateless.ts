@@ -27,20 +27,65 @@ export interface UseFormHandlerStatelessArg<Values> {
 export interface UseFormHandlerStatelessReturn<Values> {
   values: Values;
   initialValues: Values;
-  setValues: (values: Values, shouldValidate?: boolean) => void;
-  errors: FormErrors<Values>;
-  setErrors: (errors: FormErrors<Values>) => void;
   touched: FormTouched<Values>;
-  setTouched: (touched: FormTouched<Values>) => void;
-  setFieldValue: <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => void;
-  setFieldError: <Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => void;
-  setFieldTouched: <Name extends ValuesFields<Values>>(name: Name, touched: boolean) => void;
+  errors: FormErrors<Values>;
   touchOnChange: boolean;
   touchOnBlur: boolean;
   touchOnFocus: boolean;
   validateOnChange: boolean;
   validateOnBlur: boolean;
   validateOnFocus: boolean;
+
+  /**
+   * Update the form data in its entirity.
+   * 
+   * @param {Values} values
+   * @param {boolean?} shouldValidate
+   */
+  setValues: (values: Values, shouldValidate?: boolean) => void;
+
+  /**
+   * Set the entire form errors object.
+   * 
+   * @param {FormErrors<Values>} errors
+   */
+  setErrors: (errors: FormErrors<Values>) => void;
+  
+  /**
+   * Set the entire form touched set
+   * 
+   * @param {FormTouched<Values>} touched
+   */
+  setTouched: (touched: FormTouched<Values>) => void;
+
+  /**
+   * Set a fields value
+   * 
+   * @param {Name} name
+   * @param {DeepIndex<Values, Name>} value
+   * @param {boolean?} shouldValidate
+   */
+  setFieldValue: <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => void;
+  
+  /**
+   * Set a fields error
+   * 
+   * @param {Name} name
+   * @param {string|undefined} error
+   */
+  setFieldError: <Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => void;
+
+  /**
+   * Set a fields touched state
+   * 
+   * @param {Name} name
+   * @param {boolean} touched
+   */
+  setFieldTouched: <Name extends ValuesFields<Values>>(name: Name, touched: boolean) => void;
+
+  /**
+   * Run the validation and set the errors from the result.
+   */
   runValidation: (arg: { newValues?: Values, fieldName?: ValuesFields<Values> }) => Promise<void>;
 }
 

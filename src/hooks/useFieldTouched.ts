@@ -11,6 +11,12 @@ export interface UseFieldTouchedArg<Name> {
 
 export interface UseFieldTouchedReturn {
   isTouched: boolean;
+
+  /**
+   * Set whether the field is marked as touched or not.
+   * 
+   * @param {boolean} nextIsTouched
+   */
   setIsTouched: (nextIsTouched: boolean) => void;
 }
 

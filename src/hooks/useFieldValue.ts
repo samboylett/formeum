@@ -13,10 +13,9 @@ export interface UseFieldValueArg<Name> {
   name: Name;
 }
 
-export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> {
+export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> extends UseFieldChangeValueReturn<Values, Name> {
   value: DeepIndex<Values, Name>;
   initialValue: DeepIndex<Values, Name>;
-  changeValue: (newValue: DeepIndex<Values, Name>) => void;
   hasChanged: boolean;
 }
 

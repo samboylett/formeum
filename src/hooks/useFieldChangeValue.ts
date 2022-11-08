@@ -13,6 +13,11 @@ export interface UseFieldChangeValueArg<Name> {
 }
 
 export interface UseFieldChangeValueReturn<Values, Name extends ValuesFields<Values>> {
+  /**
+   * Change the fields value.
+   * 
+   * @param {DeepIndex<Values, Name>} newValue
+   */
   changeValue: (newValue: DeepIndex<Values, Name>) => void;
 }
 

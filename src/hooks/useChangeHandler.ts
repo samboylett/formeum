@@ -9,11 +9,21 @@ export interface UseChangeHandlerArg<Name> {
   name: Name;
 }
 
-export interface UseChangeHandlerReturn<Values, Name extends ValuesFields<Values>> {
-  changeValue: (newValue: DeepIndex<Values, Name>) => void;
+export interface UseChangeHandlerReturn<Values, Name extends ValuesFields<Values>> extends UseFieldChangeValueReturn<Values, Name> {
+  /**
+   * Handle a change event for a native input. Only supports string values.
+   * 
+   * @param {ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>} event
+   */
   handleChangeEvent: DeepIndex<Values, Name> extends string
     ? ((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void)
     : never;
+
+  /**
+   * Handle a change event for a native checkbox. Only supports boolean values.
+   * 
+   * @param {ChangeEvent<HTMLInputElement>} event
+   */
   handleCheckboxEvent: DeepIndex<Values, Name> extends boolean
     ? ((event: ChangeEvent<HTMLInputElement>) => void)
     : never;
