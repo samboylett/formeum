@@ -5,6 +5,7 @@ import { UseFieldErrorArg, UseFieldErrorReturn } from './useFieldError';
 import { UseChangeHandlerArg, UseChangeHandlerReturn } from './useChangeHandler';
 import { UseFieldTouchedArg, UseFieldTouchedReturn } from './useFieldTouched';
 import { UseFieldBlurArg, UseFieldBlurReturn } from './useFieldBlur';
+import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus';
 
 
 export interface UseFieldArg<Name> {
@@ -21,15 +22,17 @@ export interface CreateUseFieldDependencies<Values> {
   useFieldTouched: <Name extends ValuesFields<Values>>(arg: UseFieldTouchedArg<Name>) => UseFieldTouchedReturn;
   useChangeHandler: <Name extends ValuesFields<Values>>(arg: UseChangeHandlerArg<Name>) => UseChangeHandlerReturn<Values, Name>;
   useFieldBlur: <Name extends ValuesFields<Values>>(arg: UseFieldBlurArg<Name>) => UseFieldBlurReturn;
+  useFieldFocus: <Name extends ValuesFields<Values>>(arg: UseFieldFocusArg<Name>) => UseFieldFocusReturn;
 }
 
-export const createUseField = <Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur }: CreateUseFieldDependencies<Values>) => {
+export const createUseField = <Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur, useFieldFocus }: CreateUseFieldDependencies<Values>) => {
   const useField = <Name extends ValuesFields<Values>>({ name }: UseFieldArg<Name>): UseFieldReturn<Values, Name> => {
     const fieldError = useFieldError<Name>({ name });
     const fieldValue = useFieldValue<Name>({ name });
     const fieldTouched = useFieldTouched<Name>({ name });
     const changeHandlers = useChangeHandler<Name>({ name });
     const blurHandlers = useFieldBlur<Name>({ name });
+    const focusHandlers = useFieldFocus<Name>({ name });
 
     return useMemo(() => ({
       name,
@@ -38,6 +41,7 @@ export const createUseField = <Values>({ useFieldValue, useFieldError, useChange
       ...fieldTouched,
       ...changeHandlers,
       ...blurHandlers,
+      ...focusHandlers,
     }), [
       name,
       fieldValue,
@@ -45,6 +49,7 @@ export const createUseField = <Values>({ useFieldValue, useFieldError, useChange
       fieldTouched,
       changeHandlers,
       blurHandlers,
+      focusHandlers,
     ]);
   };
 

@@ -42,6 +42,7 @@ describe("useField", () => {
             touched: new Set(),
             touchOnChange: true,
             touchOnBlur: true,
+            touchOnFocus: false,
             setValues: jest.fn(),
             setErrors: jest.fn(),
             setTouched: jest.fn(),
