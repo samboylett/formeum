@@ -20,5 +20,7 @@ export const createContextMain = <Values>() => createFastContext<ContextMainInte
   validateOnBlur: true,
   validateOnChange: false,
   validateOnFocus: false,
-  runValidation: () => Promise.resolve(),
+  validateOnSubmit: true,
+  submitForm: () => Promise.reject(),
+  runValidation: () => Promise.reject(),
 });

@@ -26,7 +26,7 @@ export const Form = () => {
       subForm: {
         yup: '',
       }
-    }}>
+    }} onSubmit={() => null}>
       <FormField name="foo">
         {({ name, value, handleChangeEvent }) => (
           <label>

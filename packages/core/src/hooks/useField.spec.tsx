@@ -46,6 +46,7 @@ describe("useField", () => {
             validateOnBlur: true,
             validateOnChange: false,
             validateOnFocus: false,
+            validateOnSubmit: true,
             setValues: jest.fn(),
             setErrors: jest.fn(),
             setTouched: jest.fn(),
@@ -53,6 +54,7 @@ describe("useField", () => {
             setFieldValue,
             setFieldTouched: jest.fn(),
             runValidation: jest.fn(),
+            submitForm: jest.fn(),
           }}>
             {children}
           </ContextMain.Provider>
