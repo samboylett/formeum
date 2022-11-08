@@ -39,7 +39,7 @@ describe("useField", () => {
               bar: "2",
             },
             errors: {},
-            touched: [],
+            touched: new Set(),
             setValues: jest.fn(),
             setErrors: jest.fn(),
             setTouched: jest.fn(),

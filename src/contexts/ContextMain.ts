@@ -9,7 +9,7 @@ export const createContextMain = <Values>() => createFastContext<ContextMainInte
   values: null as any,
   initialValues: null as any,
   setValues: () => null,
-  touched: [],
+  touched: new Set(),
   setTouched: () => null,
   setFieldValue: () => null,
   setFieldError: () => null,

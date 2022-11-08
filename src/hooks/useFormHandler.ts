@@ -15,7 +15,7 @@ export const createUseFormHandler = <Values>({ useFormHandlerStateless }: Create
   const useFormHandler = (arg: UseFormHandlerArg<Values>): UseFormHandlerReturn<Values> => {
     const [values, onValues] = useState<Values>(arg.initialValues);
     const [errors, onErrors] = useState<FormErrors<Values>>({});
-    const [touched, onTouched] = useState<FormTouched<Values>>([]);
+    const [touched, onTouched] = useState<FormTouched<Values>>(new Set());
 
     return useFormHandlerStateless({
       ...arg,
