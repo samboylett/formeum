@@ -5,6 +5,7 @@ import { merge, set, isEqual } from 'lodash';
 import { ValuesFields } from "../types/ValuesFields";
 import useEventCallback from 'use-event-callback';
 import { FormTouched } from "../types/FormTouched";
+const latest = require('promise-latest');
 
 export interface UseFormHandlerStatelessArg<Values> {
   initialValues: Values;
@@ -46,7 +47,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
 export const createUseFormHandlerStateless = <Values>() => {
   const useFormHandlerStateless = ({
     initialValues,
-    validate,
+    validate: baseValidate,
     validateOnChange = false,
     validateOnBlur = true,
     validateOnFocus = false,
@@ -66,9 +67,10 @@ export const createUseFormHandlerStateless = <Values>() => {
       onErrors(newErrors);
     });
 
-    const runValidation: UseFormHandlerStatelessReturn<Values>['runValidation'] = useEventCallback(async ({ newValues = values, fieldName }) => {
-      if (!validate) return;
+    const notLatestvalidate: NonNullable<typeof baseValidate> = useEventCallback(baseValidate || (() => Promise.resolve({})));
+    const validate: NonNullable<typeof baseValidate> = useMemo(() => latest(notLatestvalidate), [notLatestvalidate]);
 
+    const runValidation: UseFormHandlerStatelessReturn<Values>['runValidation'] = useEventCallback(async ({ newValues = values, fieldName }) => {
       setErrors(await validate(newValues, fieldName));
     });
 
