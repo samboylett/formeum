@@ -16,6 +16,7 @@ import { createUseFormHandlerStateless } from "./hooks/useFormHandlerStateless";
 import { createUseHTMLCheckbox } from "./hooks/useHTMLCheckbox";
 import { createUseHTMLInput } from "./hooks/useHTMLInput";
 import { createUseMainContext } from "./hooks/useMainContext";
+import { createUseReactInput } from "./hooks/useReactInput";
 
 /**
  * Create fully typed context, hooks and components for a form based on the generic type argument.
@@ -37,6 +38,7 @@ export function createForm<Values extends unknown>() {
   const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur, useFieldFocus });
   const useHTMLInput = createUseHTMLInput<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler });
   const useHTMLCheckbox = createUseHTMLCheckbox<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler });
+  const useReactInput = createUseReactInput<Values>({ useFieldBlur, useFieldFocus, useFieldValue });
 
   const FormHandler = createFormHandler<Values>({
     useFormHandler,
@@ -59,6 +61,7 @@ export function createForm<Values extends unknown>() {
     useFieldFocus,
     useHTMLInput,
     useHTMLCheckbox,
+    useReactInput,
 
     ContextMain,
 
