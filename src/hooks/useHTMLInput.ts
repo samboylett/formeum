@@ -13,9 +13,10 @@ export interface UseHTMLInputArg<Name> {
     name: Name;
 }
 
-export interface UseHTMLInputReturn<Name> extends UseFieldBlurReturn {
+export interface UseHTMLInputReturn<Values, Name extends ValuesFields<Values>> extends UseFieldBlurReturn, UseFieldFocusReturn {
     name: Name;
     value: string;
+    onChange: UseChangeHandlerReturn<Values, Name>['handleChangeEvent'];
 }
 
 export interface CreateUseFieldFocusDependencies<Values> {
@@ -26,7 +27,7 @@ export interface CreateUseFieldFocusDependencies<Values> {
 }
 
 export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler }: CreateUseFieldFocusDependencies<Values>) => {
-    const useHTMLInput = <Name extends ValuesFields<Values>>({ name }: UseHTMLInputArg<Name>): UseHTMLInputReturn<Name> => {
+    const useHTMLInput = <Name extends ValuesFields<Values>>({ name }: UseHTMLInputArg<Name>): UseHTMLInputReturn<Values, Name> => {
         const { value: baseValue } = useFieldValue<Name>({ name });
         const { onFocus } = useFieldFocus<Name>({ name });
         const { onBlur } = useFieldBlur<Name>({ name });
@@ -36,7 +37,6 @@ export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFi
 
         return useMemo(() => ({
             name,
-            id: name,
             value,
             onBlur,
             onFocus,
