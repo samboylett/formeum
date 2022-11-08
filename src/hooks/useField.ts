@@ -12,7 +12,7 @@ export interface UseFieldArg<Name> {
   name: Name;
 }
 
-export interface UseFieldReturn<Values, Name extends ValuesFields<Values>> extends UseFieldValueReturn<Values, Name>, UseFieldErrorReturn, UseChangeHandlerReturn<Values, Name>, UseFieldBlurReturn {
+export interface UseFieldReturn<Values, Name extends ValuesFields<Values>> extends UseFieldValueReturn<Values, Name>, UseFieldErrorReturn, UseChangeHandlerReturn<Values, Name>, UseFieldBlurReturn, UseFieldFocusReturn {
   name: Name;
 }
 
