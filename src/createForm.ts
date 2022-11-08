@@ -31,7 +31,7 @@ export function createForm<Values extends unknown>() {
   const useFieldChangeValue = createUseFieldChangeValue<Values>({ useFieldTouched, useCurrentContext });
   const useFieldValue = createUseFieldValue<Values>({ useMainContext, useFieldChangeValue });
   const useFieldError = createUseFieldError<Values>({ useMainContext });
-  const useChangeHandler = createUseChangeHandler<Values>({ useFieldValue });
+  const useChangeHandler = createUseChangeHandler<Values>({ useFieldChangeValue });
   const useFieldBlur = createUseFieldBlur<Values>({ useCurrentContext, useFieldTouched });
   const useFieldFocus = createUseFieldFocus<Values>({ useCurrentContext, useFieldTouched });
   const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur, useFieldFocus });

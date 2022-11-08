@@ -3,6 +3,7 @@ import { DeepIndex } from '../types/DeepIndex';
 import { ValuesFields } from '../types/ValuesFields';
 import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue';
 import useEventCallback from 'use-event-callback';
+import { UseFieldChangeValueArg, UseFieldChangeValueReturn } from './useFieldChangeValue';
 
 export interface UseChangeHandlerArg<Name> {
   name: Name;
@@ -19,10 +20,10 @@ export interface UseChangeHandlerReturn<Values, Name extends ValuesFields<Values
 }
 
 export interface CreateUseChangeHandlerDependencies<Values> {
-  useFieldValue: <Name extends ValuesFields<Values>>(arg: UseFieldValueArg<Name>) => UseFieldValueReturn<Values, Name>;
+  useFieldChangeValue: <Name extends ValuesFields<Values>>(arg: UseFieldChangeValueArg<Name>) => UseFieldChangeValueReturn<Values, Name>;
 }
 
-export const createUseChangeHandler = <Values>({ useFieldValue }: CreateUseChangeHandlerDependencies<Values>) => {
+export const createUseChangeHandler = <Values>({ useFieldChangeValue }: CreateUseChangeHandlerDependencies<Values>) => {
   /**
    * Get native change handlers for a field.
    * 
@@ -30,7 +31,7 @@ export const createUseChangeHandler = <Values>({ useFieldValue }: CreateUseChang
    * @returns {UseChangeHandlerReturn<Values, Name>}
    */
   const useChangeHandler = <Name extends ValuesFields<Values>>({ name }: UseChangeHandlerArg<Name>): UseChangeHandlerReturn<Values, Name> => {
-    const { changeValue } = useFieldValue<Name>({ name });
+    const { changeValue } = useFieldChangeValue<Name>({ name });
 
     const handleChangeEvent: any = useEventCallback((event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
       const { value } = event.target || event.currentTarget;
