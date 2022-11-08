@@ -9,6 +9,11 @@ export interface CreateUseCurrentContextDependencies<Values> {
 export type UseCurrentContextReturn<Values> = Readonly<MutableRefObject<ContextMainInterface<Values>>>;
 
 export const createUseCurrentContext = <Values>({ ContextMain }: CreateUseCurrentContextDependencies<Values>) => {
+  /**
+   * Use the context as a ref object, and never trigger a re-render.
+   * 
+   * @returns {UseCurrentContextReturn<Values>}
+   */
   const useCurrentContext = (): UseCurrentContextReturn<Values> => useCurrentContextBase(ContextMain);
 
   return useCurrentContext;

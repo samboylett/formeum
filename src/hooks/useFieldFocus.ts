@@ -18,6 +18,12 @@ export interface CreateUseFieldFocusDependencies<Values> {
 }
 
 export const createUseFieldFocus = <Values>({ useFieldTouched, useCurrentContext }: CreateUseFieldFocusDependencies<Values>) => {
+    /**
+     * Handle the focus logic. Handles touch on focus and validate on focus logic.
+     * 
+     * @param {UseFieldTouchedArg<Name>} arg
+     * @returns {UseFieldFocusReturn}
+     */
     const useFieldFocus = <Name extends ValuesFields<Values>>({ name }: UseFieldTouchedArg<Name>): UseFieldFocusReturn => {
         const { setIsTouched } = useFieldTouched<Name>({ name });
         const contextRef = useCurrentContext();

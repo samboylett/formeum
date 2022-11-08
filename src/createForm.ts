@@ -16,6 +16,9 @@ import { createUseHTMLCheckbox } from "./hooks/useHTMLCheckbox";
 import { createUseHTMLInput } from "./hooks/useHTMLInput";
 import { createUseMainContext } from "./hooks/useMainContext";
 
+/**
+ * Create fully typed context, hooks and components for a form based on the generic type argument.
+ */
 export function createForm<Values extends unknown>() {
   const ContextMain = createContextMain<Values>();
 

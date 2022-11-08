@@ -19,6 +19,12 @@ export interface CreateUseFieldTouchedDependencies<Values> {
 }
 
 export const createUseFieldTouched = <Values>({ useMainContext }: CreateUseFieldTouchedDependencies<Values>) => {
+  /**
+   * Check and change if the field has been touched or not.
+   * 
+   * @param {UseFieldTouchedArg<Name>} arg
+   * @returns {UseFieldTouchedReturn}
+   */
   const useFieldTouched = <Name extends ValuesFields<Values>>({ name }: UseFieldTouchedArg<Name>): UseFieldTouchedReturn => {
     const { touched, setFieldTouched } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {

@@ -45,6 +45,12 @@ export interface UseFormHandlerStatelessReturn<Values> {
 }
 
 export const createUseFormHandlerStateless = <Values>() => {
+  /**
+   * The base form handler logic as a controlled component, i.e. stateless.
+   * 
+   * @param {UseFormHandlerStatelessArg<Values>} arg
+   * @returns {UseFormHandlerStatelessReturn<Values>}
+   */
   const useFormHandlerStateless = ({
     initialValues,
     validate: baseValidate,

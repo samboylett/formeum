@@ -23,6 +23,12 @@ export interface CreateUseChangeHandlerDependencies<Values> {
 }
 
 export const createUseChangeHandler = <Values>({ useFieldValue }: CreateUseChangeHandlerDependencies<Values>) => {
+  /**
+   * Get native change handlers for a field.
+   * 
+   * @param {UseChangeHandlerArg<Name>} arg
+   * @returns {UseChangeHandlerReturn<Values, Name>}
+   */
   const useChangeHandler = <Name extends ValuesFields<Values>>({ name }: UseChangeHandlerArg<Name>): UseChangeHandlerReturn<Values, Name> => {
     const { changeValue } = useFieldValue<Name>({ name });
 

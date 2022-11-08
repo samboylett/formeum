@@ -20,6 +20,12 @@ export interface CreateUseFieldErrorDependencies<Values> {
 }
 
 export const createUseFieldError = <Values>({ useMainContext }: CreateUseFieldErrorDependencies<Values>) => {
+  /**
+   * Get or change the fields error.
+   * 
+   * @param {UseFieldErrorArg<Name>} arg
+   * @returns {UseFieldErrorReturn}
+   */
   const useFieldError = <Name extends ValuesFields<Values>>({ name }: UseFieldErrorArg<Name>): UseFieldErrorReturn => {
     const { errors, setFieldError } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {

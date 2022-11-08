@@ -12,6 +12,12 @@ export interface CreateUseFormHandlerDependencies<Values> {
 }
 
 export const createUseFormHandler = <Values>({ useFormHandlerStateless }: CreateUseFormHandlerDependencies<Values>) => {
+  /**
+   * The base form handler logic as an uncontrolled component, i.e. all state is handled.
+   * 
+   * @param {UseFormHandlerArg<Values>} arg
+   * @returns {UseFormHandlerReturn<Values>}
+   */
   const useFormHandler = (arg: UseFormHandlerArg<Values>): UseFormHandlerReturn<Values> => {
     const [values, onValues] = useState<Values>(arg.initialValues);
     const [errors, onErrors] = useState<FormErrors<Values>>({});

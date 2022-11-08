@@ -26,6 +26,12 @@ export interface CreateUseFieldValueDependencies<Values> {
 }
 
 export const createUseFieldValue = <Values>({ useMainContext, useFieldTouched, useCurrentContext }: CreateUseFieldValueDependencies<Values>) => {
+  /**
+   * Logic around a fields value. Handles getting the field value out of the main context, the initial value, changing the value and if the value has changed.
+   * 
+   * @param {UseFieldValueArg<Name>} arg 
+   * @returns {UseFieldValueReturn<Values, Name>}
+   */
   const useFieldValue = <Name extends ValuesFields<Values>>({ name }: UseFieldValueArg<Name>): UseFieldValueReturn<Values, Name> => {
     const contextRef = useCurrentContext();
     const { values, initialValues, setFieldValue } = useMainContext({

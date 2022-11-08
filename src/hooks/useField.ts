@@ -26,6 +26,12 @@ export interface CreateUseFieldDependencies<Values> {
 }
 
 export const createUseField = <Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur, useFieldFocus }: CreateUseFieldDependencies<Values>) => {
+  /**
+   * Get every single logic handler for a field.
+   * 
+   * @param {UseFieldArg<Name>} arg
+   * @returns {UseFieldReturn<Values, Name>}
+   */
   const useField = <Name extends ValuesFields<Values>>({ name }: UseFieldArg<Name>): UseFieldReturn<Values, Name> => {
     const fieldError = useFieldError<Name>({ name });
     const fieldValue = useFieldValue<Name>({ name });

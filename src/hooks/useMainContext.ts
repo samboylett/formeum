@@ -11,6 +11,12 @@ export interface UseMainContextArg<Values> {
 };
 
 export const createUseMainContext = <Values>({ ContextMain }: CreateUseMainContextDependencies<Values>) => {
+  /**
+   * Use the form context.
+   * 
+   * @param {UseMainContextArg<Values>} arg 
+   * @returns {UseMainContextReturn<Values>}
+   */
   const useMainContext = ({ shouldUpdate }: UseMainContextArg<Values>): UseMainContextReturn<Values> => useFastContext(ContextMain, shouldUpdate);
 
   return useMainContext;

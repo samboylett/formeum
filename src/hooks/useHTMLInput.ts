@@ -23,6 +23,12 @@ export interface CreateUseFieldFocusDependencies<Values> {
 }
 
 export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler }: CreateUseFieldFocusDependencies<Values>) => {
+    /**
+     * Get the props to be used on a native HTML input, textarea or select element.
+     * 
+     * @param {UseHTMLInputArg<Name>} 
+     * @returns {UseHTMLInputReturn<Values, Name>}
+     */
     const useHTMLInput = <Name extends ValuesFields<Values>>({ name }: UseHTMLInputArg<Name>): UseHTMLInputReturn<Values, Name> => {
         const { value: baseValue } = useFieldValue<Name>({ name });
         const { onFocus } = useFieldFocus<Name>({ name });

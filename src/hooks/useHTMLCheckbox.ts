@@ -23,6 +23,12 @@ export interface CreateUseFieldFocusDependencies<Values> {
 }
 
 export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler }: CreateUseFieldFocusDependencies<Values>) => {
+    /**
+     * Get the props to use for a native HTML checkbox input as a boolean value.
+     * 
+     * @param {UseHTMLCheckboxArg<Name>} arg 
+     * @returns {UseHTMLCheckboxReturn<Values, Name>}
+     */
     const useHTMLCheckbox = <Name extends ValuesFields<Values>>({ name }: UseHTMLCheckboxArg<Name>): UseHTMLCheckboxReturn<Values, Name> => {
         const { value: baseValue } = useFieldValue<Name>({ name });
         const { onFocus } = useFieldFocus<Name>({ name });
