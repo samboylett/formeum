@@ -13,6 +13,7 @@ export interface UseFormHandlerStatelessArg<Values> {
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
   validateOnFocus?: boolean;
+  validateOnSubmit?: boolean;
   values: Values;
   onValues: (newValue: Values) => void;
   errors: FormErrors<Values>;
@@ -22,6 +23,7 @@ export interface UseFormHandlerStatelessArg<Values> {
   touchOnChange?: boolean;
   touchOnBlur?: boolean;
   touchOnFocus?: boolean;
+  onSubmit: (values: Values) => void;
 }
 
 export interface UseFormHandlerStatelessReturn<Values> {
@@ -35,6 +37,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
   validateOnChange: boolean;
   validateOnBlur: boolean;
   validateOnFocus: boolean;
+  validateOnSubmit: boolean;
 
   /**
    * Update the form data in its entirity.
@@ -86,7 +89,14 @@ export interface UseFormHandlerStatelessReturn<Values> {
   /**
    * Run the validation and set the errors from the result.
    */
-  runValidation: (arg: { newValues?: Values, fieldName?: ValuesFields<Values> }) => Promise<void>;
+  runValidation: (arg: { newValues?: Values, fieldName?: ValuesFields<Values> }) => Promise<FormErrors<Values>>;
+
+  /**
+   * Submit the form.
+   * 
+   * @param {boolean?} shouldValidate
+   */
+  submitForm: (shouldValidate?: boolean) => Promise<void>;
 }
 
 export const createUseFormHandlerStateless = <Values>() => {
@@ -102,12 +112,14 @@ export const createUseFormHandlerStateless = <Values>() => {
     validateOnChange = false,
     validateOnBlur = true,
     validateOnFocus = false,
+    validateOnSubmit = true,
     values,
     onValues,
     errors,
     onErrors,
     touched,
     onTouched,
+    onSubmit,
     touchOnChange = true,
     touchOnBlur = true,
     touchOnFocus = false,
@@ -122,7 +134,21 @@ export const createUseFormHandlerStateless = <Values>() => {
     const validate: NonNullable<typeof baseValidate> = useMemo(() => latest(notLatestvalidate), [notLatestvalidate]);
 
     const runValidation: UseFormHandlerStatelessReturn<Values>['runValidation'] = useEventCallback(async ({ newValues = values, fieldName }) => {
-      setErrors(await validate(newValues, fieldName));
+      const nextErrors: FormErrors<Values> = await validate(newValues, fieldName);
+
+      setErrors(nextErrors);
+
+      return nextErrors;
+    });
+
+    const submitForm = useEventCallback(async (shouldValidate: boolean = validateOnSubmit) => {
+      if (shouldValidate) {
+        const nextErrors = await runValidation({ newValues: values });
+
+        if (Object.keys(nextErrors).length) return;
+      }
+
+      await onSubmit(values);
     });
 
     const setValues = useEventCallback(async (newValues: Values, shouldValidate: boolean = validateOnChange) => {
@@ -169,6 +195,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       setFieldValue,
       setFieldError,
       setFieldTouched,
+      submitForm,
       initialValues,
       touchOnChange,
       touchOnBlur,
@@ -177,6 +204,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       validateOnChange,
       validateOnFocus,
       runValidation,
+      validateOnSubmit,
     };
   };
 

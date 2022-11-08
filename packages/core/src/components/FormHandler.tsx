@@ -3,8 +3,7 @@ import { FastContext } from 'react-fast-context';
 import { ContextMainInterface } from "../contexts/ContextMain";
 import { UseFormHandlerArg, UseFormHandlerReturn } from "../hooks/useFormHandler";
 
-export interface FormHandlerProps<Values> {
-  initialValues: Values;
+export interface FormHandlerProps<Values> extends UseFormHandlerArg<Values> {
   children: ReactNode;
 }
 
@@ -17,8 +16,8 @@ export const createFormHandler = <Values extends unknown>({
   ContextMain,
   useFormHandler,
 }: CreateFormHandlerDependencies<Values>) => {
-  const FormHandler = ({ initialValues, children }: FormHandlerProps<Values>) => {
-    const handler = useFormHandler({ initialValues });
+  const FormHandler = ({ children, ...rest }: FormHandlerProps<Values>) => {
+    const handler = useFormHandler(rest);
 
     return (
       <ContextMain.Provider value={handler}>
