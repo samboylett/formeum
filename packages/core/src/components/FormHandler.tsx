@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useMemo } from "react";
 import { FastContext } from 'react-fast-context';
 import { ContextMainInterface } from "../contexts/ContextMain";
 import { UseFormHandlerArg, UseFormHandlerReturn } from "../hooks/useFormHandler";
@@ -22,7 +22,7 @@ export const createFormHandler = <Values extends unknown>({
 
     return (
       <ContextMain.Provider value={handler}>
-        {children}
+        {useMemo(() => children, [children])}
       </ContextMain.Provider>
     )
   };

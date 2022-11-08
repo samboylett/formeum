@@ -1,5 +1,8 @@
 import { createFormField } from "./components/FormField";
 import { createFormHandler } from "./components/FormHandler";
+import { createFormHTMLCheckbox } from "./components/FormHTMLCheckbox";
+import { createFormHTMLInput } from "./components/FormHTMLInput";
+import { createFormReactInput } from "./components/FormReactInput";
 import { createFormValues } from "./components/FormValues";
 import { createContextMain } from "./contexts/ContextMain";
 import { createUseChangeHandler } from "./hooks/useChangeHandler";
@@ -47,6 +50,9 @@ export function createForm<Values extends unknown>() {
 
   const FormField = createFormField<Values>({ useField });
   const FormValues = createFormValues<Values>({ useMainContext });
+  const FormHTMLInput = createFormHTMLInput<Values>({ useHTMLInput });
+  const FormHTMLCheckbox = createFormHTMLCheckbox<Values>({ useHTMLCheckbox });
+  const FormReactInput = createFormReactInput<Values>({ useReactInput });
 
   return {
     useMainContext,
@@ -68,5 +74,8 @@ export function createForm<Values extends unknown>() {
     FormHandler,
     FormField,
     FormValues,
+    FormHTMLInput,
+    FormHTMLCheckbox,
+    FormReactInput,
   } as const;
 }
