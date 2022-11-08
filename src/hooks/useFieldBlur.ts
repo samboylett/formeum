@@ -26,6 +26,12 @@ export const createUseFieldBlur = <Values>({ useFieldTouched, useCurrentContext 
             if (contextRef.current.touchOnBlur) {
                 setIsTouched(true);
             }
+
+            if (contextRef.current.validateOnBlur) {
+                contextRef.current.runValidation({
+                    fieldName: name,
+                });
+            }
         });
 
         return useMemo(() => ({

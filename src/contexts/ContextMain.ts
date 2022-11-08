@@ -17,4 +17,7 @@ export const createContextMain = <Values>() => createFastContext<ContextMainInte
   touchOnChange: true,
   touchOnBlur: true,
   touchOnFocus: false,
+  validateOnBlur: true,
+  validateOnChange: false,
+  validateOnFocus: false,
 });

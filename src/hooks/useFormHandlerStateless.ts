@@ -10,6 +10,8 @@ export interface UseFormHandlerStatelessArg<Values> {
   initialValues: Values;
   validate?: (values: Values, fieldName?: ValuesFields<Values>) => Promise<FormErrors<Values>>;
   validateOnChange?: boolean;
+  validateOnBlur?: boolean;
+  validateOnFocus?: boolean;
   values: Values;
   onValues: (newValue: Values) => void;
   errors: FormErrors<Values>;
@@ -35,6 +37,10 @@ export interface UseFormHandlerStatelessReturn<Values> {
   touchOnChange: boolean;
   touchOnBlur: boolean;
   touchOnFocus: boolean;
+  validateOnChange: boolean;
+  validateOnBlur: boolean;
+  validateOnFocus: boolean;
+  runValidation: (arg: { newValues?: Values, fieldName?: ValuesFields<Values> }) => Promise<void>;
 }
 
 export const createUseFormHandlerStateless = <Values>() => {
@@ -42,6 +48,8 @@ export const createUseFormHandlerStateless = <Values>() => {
     initialValues,
     validate,
     validateOnChange = false,
+    validateOnBlur = true,
+    validateOnFocus = false,
     values,
     onValues,
     errors,
@@ -58,13 +66,19 @@ export const createUseFormHandlerStateless = <Values>() => {
       onErrors(newErrors);
     });
 
+    const runValidation: UseFormHandlerStatelessReturn<Values>['runValidation'] = useEventCallback(async ({ newValues = values, fieldName }) => {
+      if (!validate) return;
+
+      setErrors(await validate(newValues, fieldName));
+    });
+
     const setValues = useEventCallback(async (newValues: Values, shouldValidate: boolean = validateOnChange) => {
       if (isEqual(newValues, values)) return;
 
       onValues(newValues);
 
-      if (shouldValidate && validate) {
-        setErrors(await validate(newValues));
+      if (shouldValidate) {
+        await runValidation({ newValues });
       }
     });
 
@@ -72,8 +86,8 @@ export const createUseFormHandlerStateless = <Values>() => {
       const newValues = merge({}, values, set({}, name, value));
       setValues(newValues);
 
-      if (shouldValidate && validate) {
-        setErrors(await validate(newValues, name))
+      if (shouldValidate) {
+        await runValidation({ newValues, fieldName: name })
       }
     });
 
@@ -106,6 +120,10 @@ export const createUseFormHandlerStateless = <Values>() => {
       touchOnChange,
       touchOnBlur,
       touchOnFocus,
+      validateOnBlur,
+      validateOnChange,
+      validateOnFocus,
+      runValidation,
     };
   };
 

@@ -26,6 +26,12 @@ export const createUseFieldFocus = <Values>({ useFieldTouched, useCurrentContext
             if (contextRef.current.touchOnFocus) {
                 setIsTouched(true);
             }
+
+            if (contextRef.current.validateOnFocus) {
+                contextRef.current.runValidation({
+                    fieldName: name,
+                });
+            }
         });
 
         return useMemo(() => ({
