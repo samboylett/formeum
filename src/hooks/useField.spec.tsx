@@ -52,6 +52,7 @@ describe("useField", () => {
             setFieldError,
             setFieldValue,
             setFieldTouched: jest.fn(),
+            runValidation: jest.fn(),
           }}>
             {children}
           </ContextMain.Provider>
