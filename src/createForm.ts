@@ -5,6 +5,7 @@ import { createContextMain } from "./contexts/ContextMain";
 import { createUseChangeHandler } from "./hooks/useChangeHandler";
 import { createUseCurrentContext } from "./hooks/useCurrentContext";
 import { createUseField } from "./hooks/useField";
+import { createUseFieldBlur } from "./hooks/useFieldBlur";
 import { createUseFieldError } from "./hooks/useFieldError";
 import { createUseFieldTouched } from "./hooks/useFieldTouched";
 import { createUseFieldValue } from "./hooks/useFieldValue";
@@ -23,7 +24,8 @@ export function createForm<Values extends unknown>() {
   const useFieldValue = createUseFieldValue<Values>({ useMainContext, useFieldTouched, useCurrentContext });
   const useFieldError = createUseFieldError<Values>({ useMainContext });
   const useChangeHandler = createUseChangeHandler<Values>({ useFieldValue });
-  const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched });
+  const useFieldBlur = createUseFieldBlur<Values>({ useCurrentContext, useFieldTouched });
+  const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur });
 
   const FormHandler = createFormHandler<Values>({
     useFormHandler,
@@ -42,6 +44,7 @@ export function createForm<Values extends unknown>() {
     useFieldTouched,
     useChangeHandler,
     useCurrentContext,
+    useFieldBlur,
 
     ContextMain,
 

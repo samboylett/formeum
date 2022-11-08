@@ -17,6 +17,7 @@ export interface UseFormHandlerStatelessArg<Values> {
   touched: FormTouched<Values>;
   onTouched: (touched: FormTouched<Values>) => void;
   touchOnChange?: boolean;
+  touchOnBlur?: boolean;
 }
 
 export interface UseFormHandlerStatelessReturn<Values> {
@@ -31,6 +32,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
   setFieldError: <Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => void;
   setFieldTouched: <Name extends ValuesFields<Values>>(name: Name, touched: boolean) => void;
   touchOnChange: boolean;
+  touchOnBlur: boolean;
 }
 
 export const createUseFormHandlerStateless = <Values>() => {
@@ -45,6 +47,7 @@ export const createUseFormHandlerStateless = <Values>() => {
     touched,
     onTouched,
     touchOnChange = true,
+    touchOnBlur = true,
   }: UseFormHandlerStatelessArg<Values>): UseFormHandlerStatelessReturn<Values> => {
     const setErrors = useEventCallback((newErrors: FormErrors<Values>) => {
       if (isEqual(newErrors, errors)) return;
@@ -98,6 +101,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       setFieldTouched,
       initialValues,
       touchOnChange,
+      touchOnBlur,
     };
   };
 

@@ -26,11 +26,13 @@ export const createUseFieldTouched = <Values>({ useMainContext }: CreateUseField
       }
     });
 
+    const isTouched = useMemo(() => touched.has(name), [touched, name]);
+
     const setIsTouched = useEventCallback((nextIsTouched: boolean) => {
+      if (nextIsTouched === isTouched) return;
+      
       setFieldTouched(name, nextIsTouched);
     });
-
-    const isTouched = useMemo(() => touched.has(name), [touched, name]);
 
     return useMemo(() => ({
       isTouched,
