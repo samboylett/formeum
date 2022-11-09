@@ -1,35 +1,35 @@
 import { Meta } from "@storybook/react";
-import { createForm, FormHTMLInputProps, ValuesFields } from "../lib";
+import { createForm, FormHTMLCheckboxProps, ValuesFields } from "../lib";
 import "./NativeInputs.css";
 
 interface StoryValues {
-  stringField: string;
-  erroredField: string;
-  filledField: string;
+  booleanField: boolean;
+  erroredField: boolean;
+  trueField: boolean;
 
   subForm: {
-    stringField: string,
+    booleanField: boolean,
   },
 }
 
 const storyForm = createForm<StoryValues>();
 
 export default {
-  title: "FormHTMLInput",
+  title: "FormHTMLCheckbox",
   parameters: {
     viewMode: 'docs',
   },
-  component: storyForm.FormHTMLInput,
+  component: storyForm.FormHTMLCheckbox,
   decorators: [
     Story => (   
       <storyForm.FormHandler
         initialValues={{
-          stringField: "",
-          erroredField: "",
-          filledField: "Value",
+          booleanField: false,
+          erroredField: false,
+          trueField: true,
 
           subForm: {
-            stringField: "",
+            booleanField: false,
           },
         }}
         validateOnMount
@@ -42,28 +42,28 @@ export default {
       </storyForm.FormHandler>
     )
   ]
-} as Meta<FormHTMLInputProps<StoryValues, ValuesFields<StoryValues>>>;
+} as Meta<FormHTMLCheckboxProps<StoryValues, ValuesFields<StoryValues>>>;
 
 export const Default = () => (
-  <storyForm.FormHTMLInput name="stringField">
+  <storyForm.FormHTMLCheckbox name="booleanField">
     {(props) => <input {...props} />}
-  </storyForm.FormHTMLInput>
+  </storyForm.FormHTMLCheckbox>
 );
 
 export const SubForm = () => (
-  <storyForm.FormHTMLInput name="subForm.stringField">
+  <storyForm.FormHTMLCheckbox name="subForm.booleanField">
     {(props) => <input {...props} />}
-  </storyForm.FormHTMLInput>
+  </storyForm.FormHTMLCheckbox>
 );
 
 export const Errored = () => (
-  <storyForm.FormHTMLInput name="erroredField">
+  <storyForm.FormHTMLCheckbox name="erroredField">
     {(props) => <input {...props} />}
-  </storyForm.FormHTMLInput>
+  </storyForm.FormHTMLCheckbox>
 );
 
-export const Filled = () => (
-  <storyForm.FormHTMLInput name="filledField">
+export const True = () => (
+  <storyForm.FormHTMLCheckbox name="trueField">
     {(props) => <input {...props} />}
-  </storyForm.FormHTMLInput>
+  </storyForm.FormHTMLCheckbox>
 );
