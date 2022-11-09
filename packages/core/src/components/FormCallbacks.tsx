@@ -1,5 +1,5 @@
-import { memo, ReactElement, ReactNode, useMemo } from 'react'
-import { UseFormCallbacksReturn } from '../hooks/useFormCallbacks'
+import { memo, ReactElement, ReactNode, useMemo } from "react";
+import { UseFormCallbacksReturn } from "../hooks/useFormCallbacks";
 
 export interface FormCallbacksProps<Values> {
   children: (arg: UseFormCallbacksReturn<Values>) => ReactNode;
@@ -16,7 +16,7 @@ export interface CreateFormCallbacksDependencies<Values> {
  * @private
  */
 export const createFormCallbacks = <Values extends unknown>({
-  useFormCallbacks
+  useFormCallbacks,
 }: CreateFormCallbacksDependencies<Values>) => {
   /**
    * Get all form handler functions.
@@ -24,12 +24,12 @@ export const createFormCallbacks = <Values extends unknown>({
    * @returns {ReactElement}
    */
   const FormCallbacks = ({
-    children
+    children,
   }: FormCallbacksProps<Values>): ReactElement => {
-    const arg = useFormCallbacks()
+    const arg = useFormCallbacks();
 
-    return useMemo(() => <>{children(arg)}</>, [children, arg])
-  }
+    return useMemo(() => <>{children(arg)}</>, [children, arg]);
+  };
 
-  return memo(FormCallbacks) as typeof FormCallbacks
-}
+  return memo(FormCallbacks) as typeof FormCallbacks;
+};

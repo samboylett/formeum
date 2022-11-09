@@ -1,9 +1,9 @@
-import { useMemo } from 'react'
-import { DeepIndex } from '../types/DeepIndex'
-import { ValuesFields } from '../types/ValuesFields'
-import useEventCallback from 'use-event-callback'
-import { UseFieldTouchedArg, UseFieldTouchedReturn } from './useFieldTouched'
-import { UseCurrentContextReturn } from './useCurrentContext'
+import { useMemo } from "react";
+import { DeepIndex } from "../types/DeepIndex";
+import { ValuesFields } from "../types/ValuesFields";
+import useEventCallback from "use-event-callback";
+import { UseFieldTouchedArg, UseFieldTouchedReturn } from "./useFieldTouched";
+import { UseCurrentContextReturn } from "./useCurrentContext";
 
 export interface UseFieldChangeValueArg<Name> {
   name: Name;
@@ -36,7 +36,7 @@ export interface CreateUseFieldChangeValueDependencies<Values> {
  */
 export const createUseFieldChangeValue = <Values>({
   useFieldTouched,
-  useCurrentContext
+  useCurrentContext,
 }: CreateUseFieldChangeValueDependencies<Values>) => {
   /**
    * Logic around changing fields value.
@@ -45,26 +45,26 @@ export const createUseFieldChangeValue = <Values>({
    * @returns {UseFieldChangeValueReturn<Values, Name>}
    */
   const useFieldChangeValue = <Name extends ValuesFields<Values>>({
-    name
+    name,
   }: UseFieldChangeValueArg<Name>): UseFieldChangeValueReturn<Values, Name> => {
-    const contextRef = useCurrentContext()
-    const { isTouched, setIsTouched } = useFieldTouched<Name>({ name })
+    const contextRef = useCurrentContext();
+    const { isTouched, setIsTouched } = useFieldTouched<Name>({ name });
 
     const changeValue = useEventCallback(
       (newValue: DeepIndex<Values, Name>) => {
-        contextRef.current.setFieldValue(name, newValue)
+        contextRef.current.setFieldValue(name, newValue);
 
-        if (!isTouched && contextRef.current.touchOnChange) setIsTouched(true)
+        if (!isTouched && contextRef.current.touchOnChange) setIsTouched(true);
       }
-    )
+    );
 
     return useMemo(
       () => ({
-        changeValue
+        changeValue,
       }),
       [changeValue]
-    )
-  }
+    );
+  };
 
-  return useFieldChangeValue
-}
+  return useFieldChangeValue;
+};

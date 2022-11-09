@@ -1,18 +1,18 @@
-import { useMemo } from 'react'
-import { pick } from 'lodash'
-import { UseCurrentContextReturn } from './useCurrentContext'
-import { UseFormHandlerReturn } from './useFormHandler'
+import { useMemo } from "react";
+import { pick } from "lodash";
+import { UseCurrentContextReturn } from "./useCurrentContext";
+import { UseFormHandlerReturn } from "./useFormHandler";
 
 export type UseFormCallbacksReturn<Values> = Pick<
   UseFormHandlerReturn<Values>,
-  | 'submitForm'
-  | 'setValues'
-  | 'setErrors'
-  | 'setTouched'
-  | 'setFieldValue'
-  | 'setFieldError'
-  | 'setFieldTouched'
-  | 'runValidation'
+  | "submitForm"
+  | "setValues"
+  | "setErrors"
+  | "setTouched"
+  | "setFieldValue"
+  | "setFieldError"
+  | "setFieldTouched"
+  | "runValidation"
 >;
 
 /**
@@ -26,7 +26,7 @@ export interface CreateUseFormCallbacksDependencies<Values> {
  * @private
  */
 export const createUseFormCallbacks = <Values>({
-  useCurrentContext
+  useCurrentContext,
 }: CreateUseFormCallbacksDependencies<Values>) => {
   /**
    * Get all functions from the form handler. Will never trigger a re-render.
@@ -34,24 +34,24 @@ export const createUseFormCallbacks = <Values>({
    * @returns {UseFormCallbacksReturn<Values>}
    */
   const useFormCallbacks = (): UseFormCallbacksReturn<Values> => {
-    const contextRef = useCurrentContext()
+    const contextRef = useCurrentContext();
 
     return useMemo<UseFormCallbacksReturn<Values>>(
       () =>
         pick(
           contextRef.current,
-          'submitForm',
-          'setValues',
-          'setErrors',
-          'setTouched',
-          'setFieldValue',
-          'setFieldError',
-          'setFieldTouched',
-          'runValidation'
+          "submitForm",
+          "setValues",
+          "setErrors",
+          "setTouched",
+          "setFieldValue",
+          "setFieldError",
+          "setFieldTouched",
+          "runValidation"
         ),
       [contextRef]
-    )
-  }
+    );
+  };
 
-  return useFormCallbacks
-}
+  return useFormCallbacks;
+};

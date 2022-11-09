@@ -1,9 +1,9 @@
-import React, { ReactNode, useRef } from 'react'
-import { createForm } from '../createForm'
+import React, { ReactNode, useRef } from "react";
+import { createForm } from "../createForm";
 
 export default {
-  title: 'Form'
-}
+  title: "Form",
+};
 
 interface FormDataType {
   foo: string;
@@ -15,19 +15,19 @@ interface FormDataType {
   };
 }
 
-const form = createForm<FormDataType>()
+const form = createForm<FormDataType>();
 
 const RenderCount = ({ children }: { children?: ReactNode }) => {
-  const count = useRef(0)
+  const count = useRef(0);
 
-  count.current++
+  count.current++;
 
   return (
-    <div style={{ display: 'flex', columnGap: '10px' }}>
+    <div style={{ display: "flex", columnGap: "10px" }}>
       {children} <div>Render count: {count.current}</div>
     </div>
-  )
-}
+  );
+};
 
 export const Form = () => {
   const {
@@ -37,32 +37,32 @@ export const Form = () => {
     FormHTMLCheckbox,
     FormValues,
     ContextMain,
-    FormCallbacks
-  } = form
+    FormCallbacks,
+  } = form;
 
   return (
     <FormHandler
       initialValues={{
-        foo: '',
+        foo: "",
         bar: 0,
         yes: false,
         subForm: {
-          foo: ''
-        }
+          foo: "",
+        },
       }}
       onSubmit={() => new Promise<void>((r) => setTimeout(r, 500))}
       validate={(values) =>
         Promise.resolve({
-          bar: values.bar === 5 ? undefined : 'Must be 5',
-          'subForm.foo': values.subForm.foo === '' ? 'Required' : undefined
+          bar: values.bar === 5 ? undefined : "Must be 5",
+          "subForm.foo": values.subForm.foo === "" ? "Required" : undefined,
         })
       }
     >
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          rowGap: '10px'
+          display: "flex",
+          flexDirection: "column",
+          rowGap: "10px",
         }}
       >
         <div>
@@ -136,7 +136,7 @@ export const Form = () => {
                   {
                     touched: [...context.touched],
                     errors: context.errors,
-                    isSubmitting: context.isSubmitting
+                    isSubmitting: context.isSubmitting,
                   },
                   null,
                   2
@@ -147,5 +147,5 @@ export const Form = () => {
         </pre>
       </div>
     </FormHandler>
-  )
-}
+  );
+};

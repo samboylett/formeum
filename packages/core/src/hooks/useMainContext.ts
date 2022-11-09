@@ -1,9 +1,9 @@
 import {
   FastContext,
   useFastContext,
-  FastContextShouldUpdate
-} from 'react-fast-context'
-import { ContextMainInterface } from '../contexts/ContextMain'
+  FastContextShouldUpdate,
+} from "react-fast-context";
+import { ContextMainInterface } from "../contexts/ContextMain";
 
 /**
  * @private
@@ -22,7 +22,7 @@ export interface UseMainContextArg<Values> {
  * @private
  */
 export const createUseMainContext = <Values>({
-  ContextMain
+  ContextMain,
 }: CreateUseMainContextDependencies<Values>) => {
   /**
    * Use the form context.
@@ -31,9 +31,9 @@ export const createUseMainContext = <Values>({
    * @returns {UseMainContextReturn<Values>}
    */
   const useMainContext = ({
-    shouldUpdate
+    shouldUpdate,
   }: UseMainContextArg<Values>): UseMainContextReturn<Values> =>
-    useFastContext(ContextMain, shouldUpdate)
+    useFastContext(ContextMain, shouldUpdate);
 
-  return useMainContext
-}
+  return useMainContext;
+};

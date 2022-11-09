@@ -1,7 +1,7 @@
-import { MutableRefObject, useLayoutEffect, useMemo, useRef } from 'react'
-import { ValuesFields } from '../types/ValuesFields'
-import { UseFieldErrorArg, UseFieldErrorReturn } from './useFieldError'
-import { UseFieldTouchedArg } from './useFieldTouched'
+import { MutableRefObject, useLayoutEffect, useMemo, useRef } from "react";
+import { ValuesFields } from "../types/ValuesFields";
+import { UseFieldErrorArg, UseFieldErrorReturn } from "./useFieldError";
+import { UseFieldTouchedArg } from "./useFieldTouched";
 
 export interface UseFieldRefArg<Name> {
   name: Name;
@@ -26,14 +26,14 @@ export interface CreateUseFieldRefDependencies<Values> {
 const hasSetCustomValidity = <T>(
   obj: T
 ): obj is T & { setCustomValidity: unknown } => {
-  return Boolean(obj && typeof obj === 'object' && 'setCustomValidity' in obj)
-}
+  return Boolean(obj && typeof obj === "object" && "setCustomValidity" in obj);
+};
 
 /**
  * @private
  */
 export const createUseFieldRef = <Values>({
-  useFieldError
+  useFieldError,
 }: CreateUseFieldRefDependencies<Values>) => {
   /**
    * Handle field logic which requires the native element.
@@ -42,29 +42,29 @@ export const createUseFieldRef = <Values>({
    * @returns {UseFieldRefReturn}
    */
   const useFieldRef = <Name extends ValuesFields<Values>>({
-    name
+    name,
   }: UseFieldTouchedArg<Name>): UseFieldRefReturn => {
-    const ref = useRef<any>(null)
-    const { error } = useFieldError<Name>({ name })
+    const ref = useRef<any>(null);
+    const { error } = useFieldError<Name>({ name });
 
     useLayoutEffect(() => {
-      const el: unknown = ref.current
+      const el: unknown = ref.current;
 
       if (
         hasSetCustomValidity(el) &&
-        typeof el.setCustomValidity === 'function'
+        typeof el.setCustomValidity === "function"
       ) {
-        el.setCustomValidity(error || '')
+        el.setCustomValidity(error || "");
       }
-    })
+    });
 
     return useMemo(
       () => ({
-        ref
+        ref,
       }),
       [ref]
-    )
-  }
+    );
+  };
 
-  return useFieldRef
-}
+  return useFieldRef;
+};

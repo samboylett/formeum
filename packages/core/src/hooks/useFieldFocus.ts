@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
-import { ValuesFields } from '../types/ValuesFields'
-import useEventCallback from 'use-event-callback'
-import { UseFieldTouchedArg, UseFieldTouchedReturn } from './useFieldTouched'
-import { UseCurrentContextReturn } from './useCurrentContext'
+import { useMemo } from "react";
+import { ValuesFields } from "../types/ValuesFields";
+import useEventCallback from "use-event-callback";
+import { UseFieldTouchedArg, UseFieldTouchedReturn } from "./useFieldTouched";
+import { UseCurrentContextReturn } from "./useCurrentContext";
 
 export interface UseFieldFocusArg<Name> {
   name: Name;
@@ -27,7 +27,7 @@ export interface CreateUseFieldFocusDependencies<Values> {
  */
 export const createUseFieldFocus = <Values>({
   useFieldTouched,
-  useCurrentContext
+  useCurrentContext,
 }: CreateUseFieldFocusDependencies<Values>) => {
   /**
    * Handle the focus logic. Handles touch on focus and validate on focus logic.
@@ -36,30 +36,30 @@ export const createUseFieldFocus = <Values>({
    * @returns {UseFieldFocusReturn}
    */
   const useFieldFocus = <Name extends ValuesFields<Values>>({
-    name
+    name,
   }: UseFieldTouchedArg<Name>): UseFieldFocusReturn => {
-    const { setIsTouched } = useFieldTouched<Name>({ name })
-    const contextRef = useCurrentContext()
+    const { setIsTouched } = useFieldTouched<Name>({ name });
+    const contextRef = useCurrentContext();
 
     const onFocus = useEventCallback(() => {
       if (contextRef.current.touchOnFocus) {
-        setIsTouched(true)
+        setIsTouched(true);
       }
 
       if (contextRef.current.validateOnFocus) {
         contextRef.current.runValidation({
-          fieldName: name
-        })
+          fieldName: name,
+        });
       }
-    })
+    });
 
     return useMemo(
       () => ({
-        onFocus
+        onFocus,
       }),
       [onFocus]
-    )
-  }
+    );
+  };
 
-  return useFieldFocus
-}
+  return useFieldFocus;
+};

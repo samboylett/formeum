@@ -1,13 +1,11 @@
-import { useMemo } from 'react'
-import { ValuesFields } from '../types/ValuesFields'
-import { UseFieldBlurArg, UseFieldBlurReturn } from './useFieldBlur'
-import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus'
-import {
-  UseChangeHandlerReturn
-} from './useChangeHandler'
-import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue'
-import { DeepIndex } from '../types/DeepIndex'
-import { UseFieldRefArg, UseFieldRefReturn } from './useFieldRef'
+import { useMemo } from "react";
+import { ValuesFields } from "../types/ValuesFields";
+import { UseFieldBlurArg, UseFieldBlurReturn } from "./useFieldBlur";
+import { UseFieldFocusArg, UseFieldFocusReturn } from "./useFieldFocus";
+import { UseChangeHandlerReturn } from "./useChangeHandler";
+import { UseFieldValueArg, UseFieldValueReturn } from "./useFieldValue";
+import { DeepIndex } from "../types/DeepIndex";
+import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
 
 export interface UseReactInputArg<Name> {
   name: Name;
@@ -19,7 +17,7 @@ export interface UseReactInputReturn<Values, Name extends ValuesFields<Values>>
     UseFieldRefReturn {
   name: Name;
   value: DeepIndex<Values, Name>;
-  onChange: UseChangeHandlerReturn<Values, Name>['changeValue'];
+  onChange: UseChangeHandlerReturn<Values, Name>["changeValue"];
 }
 
 /**
@@ -47,7 +45,7 @@ export const createUseReactInput = <Values>({
   useFieldValue,
   useFieldFocus,
   useFieldBlur,
-  useFieldRef
+  useFieldRef,
 }: CreateUseReactInputDependencies<Values>) => {
   /**
    * Get the props to be used on a React style input, i.e. the change event should contain just the field value in the first argument rather than a change event.
@@ -56,12 +54,12 @@ export const createUseReactInput = <Values>({
    * @returns {UseReactInputReturn<Values, Name>}
    */
   const useReactInput = <Name extends ValuesFields<Values>>({
-    name
+    name,
   }: UseReactInputArg<Name>): UseReactInputReturn<Values, Name> => {
-    const { value, changeValue } = useFieldValue<Name>({ name })
-    const { onFocus } = useFieldFocus<Name>({ name })
-    const { onBlur } = useFieldBlur<Name>({ name })
-    const { ref } = useFieldRef<Name>({ name })
+    const { value, changeValue } = useFieldValue<Name>({ name });
+    const { onFocus } = useFieldFocus<Name>({ name });
+    const { onBlur } = useFieldBlur<Name>({ name });
+    const { ref } = useFieldRef<Name>({ name });
 
     return useMemo(
       () => ({
@@ -70,11 +68,11 @@ export const createUseReactInput = <Values>({
         onBlur,
         onFocus,
         onChange: changeValue,
-        ref
+        ref,
       }),
       [name, value, onBlur, onFocus, changeValue, ref]
-    )
-  }
+    );
+  };
 
-  return useReactInput
-}
+  return useReactInput;
+};

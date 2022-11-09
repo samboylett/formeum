@@ -1,11 +1,11 @@
-import { ChangeEvent, useMemo } from 'react'
-import { DeepIndex } from '../types/DeepIndex'
-import { ValuesFields } from '../types/ValuesFields'
-import useEventCallback from 'use-event-callback'
+import { ChangeEvent, useMemo } from "react";
+import { DeepIndex } from "../types/DeepIndex";
+import { ValuesFields } from "../types/ValuesFields";
+import useEventCallback from "use-event-callback";
 import {
   UseFieldChangeValueArg,
-  UseFieldChangeValueReturn
-} from './useFieldChangeValue'
+  UseFieldChangeValueReturn,
+} from "./useFieldChangeValue";
 
 export interface UseChangeHandlerArg<Name> {
   name: Name;
@@ -51,7 +51,7 @@ export interface CreateUseChangeHandlerDependencies<Values> {
  * @private
  */
 export const createUseChangeHandler = <Values>({
-  useFieldChangeValue
+  useFieldChangeValue,
 }: CreateUseChangeHandlerDependencies<Values>) => {
   /**
    * Get native change handlers for a field.
@@ -60,9 +60,9 @@ export const createUseChangeHandler = <Values>({
    * @returns {UseChangeHandlerReturn<Values, Name>}
    */
   const useChangeHandler = <Name extends ValuesFields<Values>>({
-    name
+    name,
   }: UseChangeHandlerArg<Name>): UseChangeHandlerReturn<Values, Name> => {
-    const { changeValue } = useFieldChangeValue<Name>({ name })
+    const { changeValue } = useFieldChangeValue<Name>({ name });
 
     const handleChangeEvent: any = useEventCallback(
       (
@@ -70,29 +70,29 @@ export const createUseChangeHandler = <Values>({
           HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
         >
       ) => {
-        const { value } = event.target || event.currentTarget
+        const { value } = event.target || event.currentTarget;
 
-        changeValue(value as any)
+        changeValue(value as any);
       }
-    )
+    );
 
     const handleCheckboxEvent: any = useEventCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
-        const { checked } = event.target || event.currentTarget
+        const { checked } = event.target || event.currentTarget;
 
-        changeValue(checked as any)
+        changeValue(checked as any);
       }
-    )
+    );
 
     return useMemo(
       () => ({
         changeValue,
         handleChangeEvent,
-        handleCheckboxEvent
+        handleCheckboxEvent,
       }),
       [changeValue, handleChangeEvent, handleCheckboxEvent]
-    )
-  }
+    );
+  };
 
-  return useChangeHandler
-}
+  return useChangeHandler;
+};

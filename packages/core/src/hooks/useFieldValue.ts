@@ -1,12 +1,12 @@
-import { useMemo } from 'react'
-import { DeepIndex } from '../types/DeepIndex'
-import { UseMainContextArg, UseMainContextReturn } from './useMainContext'
-import { get, isEqual } from 'lodash'
-import { ValuesFields } from '../types/ValuesFields'
+import { useMemo } from "react";
+import { DeepIndex } from "../types/DeepIndex";
+import { UseMainContextArg, UseMainContextReturn } from "./useMainContext";
+import { get, isEqual } from "lodash";
+import { ValuesFields } from "../types/ValuesFields";
 import {
   UseFieldChangeValueArg,
-  UseFieldChangeValueReturn
-} from './useFieldChangeValue'
+  UseFieldChangeValueReturn,
+} from "./useFieldChangeValue";
 
 export interface UseFieldValueArg<Name> {
   name: Name;
@@ -36,7 +36,7 @@ export interface CreateUseFieldValueDependencies<Values> {
  */
 export const createUseFieldValue = <Values>({
   useMainContext,
-  useFieldChangeValue
+  useFieldChangeValue,
 }: CreateUseFieldValueDependencies<Values>) => {
   /**
    * Logic around a fields value. Handles getting the field value out of the main context, the initial value, changing the value and if the value has changed.
@@ -45,38 +45,38 @@ export const createUseFieldValue = <Values>({
    * @returns {UseFieldValueReturn<Values, Name>}
    */
   const useFieldValue = <Name extends ValuesFields<Values>>({
-    name
+    name,
   }: UseFieldValueArg<Name>): UseFieldValueReturn<Values, Name> => {
     const { values, initialValues } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {
-        return (['values', 'initialValues'] as const).some(
+        return (["values", "initialValues"] as const).some(
           (v) => !isEqual(get(oldValue[v], name), get(newValue[v], name))
-        )
-      }
-    })
-    const { changeValue } = useFieldChangeValue<Name>({ name })
+        );
+      },
+    });
+    const { changeValue } = useFieldChangeValue<Name>({ name });
 
-    const value = useMemo(() => get(values, name), [values, name])
+    const value = useMemo(() => get(values, name), [values, name]);
     const initialValue = useMemo(
       () => get(initialValues, name),
       [initialValues, name]
-    )
+    );
 
     const hasChanged = useMemo(
       () => !isEqual(value, initialValue),
       [value, initialValue]
-    )
+    );
 
     return useMemo(
       () => ({
         value,
         changeValue,
         initialValue,
-        hasChanged
+        hasChanged,
       }),
       [value, changeValue, initialValue, hasChanged]
-    )
-  }
+    );
+  };
 
-  return useFieldValue
-}
+  return useFieldValue;
+};

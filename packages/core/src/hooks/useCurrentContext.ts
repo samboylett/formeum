@@ -1,9 +1,9 @@
-import { MutableRefObject } from 'react'
+import { MutableRefObject } from "react";
 import {
   FastContext,
-  useCurrentContext as useCurrentContextBase
-} from 'react-fast-context'
-import { ContextMainInterface } from '../contexts/ContextMain'
+  useCurrentContext as useCurrentContextBase,
+} from "react-fast-context";
+import { ContextMainInterface } from "../contexts/ContextMain";
 
 /**
  * @private
@@ -20,7 +20,7 @@ export type UseCurrentContextReturn<Values> = Readonly<
  * @private
  */
 export const createUseCurrentContext = <Values>({
-  ContextMain
+  ContextMain,
 }: CreateUseCurrentContextDependencies<Values>) => {
   /**
    * Use the context as a ref object, and never trigger a re-render.
@@ -28,7 +28,7 @@ export const createUseCurrentContext = <Values>({
    * @returns {UseCurrentContextReturn<Values>}
    */
   const useCurrentContext = (): UseCurrentContextReturn<Values> =>
-    useCurrentContextBase(ContextMain)
+    useCurrentContextBase(ContextMain);
 
-  return useCurrentContext
-}
+  return useCurrentContext;
+};
