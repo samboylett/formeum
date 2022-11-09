@@ -11,7 +11,9 @@
     "test": "jest",
     "build": "rollup -c",
     "eslint": "eslint --max-warnings=0 --fix src/**/*",
+    "eslint:ci": "eslint --max-warnings=0 src/**/*",
     "prettier": "prettier --write ./src",
+    "prettier:ci": "prettier --check ./src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "docs": "typedoc --out docs src/index.ts"

@@ -10,15 +10,14 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  checks:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./packages/core
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+        node-version: [16.x, 18.x]
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
@@ -26,7 +25,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd packages/core
     - run: npm ci
     - run: npm run prettier:ci
     - run: npm run eslint:ci
