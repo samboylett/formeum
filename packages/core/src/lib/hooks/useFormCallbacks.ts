@@ -4,7 +4,7 @@ import { UseCurrentContextReturn } from "./useCurrentContext";
 import { UseFormHandlerReturn } from "./useFormHandler";
 import { ContextMainInterface } from "../contexts/ContextMain";
 
-const FORM_CALLBACK_NAMES = [
+export const FORM_CALLBACK_NAMES = [
   "submitForm",
   "setValues",
   "setErrors",
@@ -16,7 +16,7 @@ const FORM_CALLBACK_NAMES = [
   "onSubmit",
 ] as const;
 
-type FormCallbackNames = (typeof FORM_CALLBACK_NAMES)[number];
+export type FormCallbackNames = (typeof FORM_CALLBACK_NAMES)[number];
 
 export type UseFormCallbacksReturn<Values> = Pick<
   UseFormHandlerReturn<Values>,

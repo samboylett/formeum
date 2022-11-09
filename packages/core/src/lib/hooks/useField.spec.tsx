@@ -62,6 +62,7 @@ describe("useField", () => {
                 setFieldTouched: jest.fn(),
                 runValidation: jest.fn(),
                 submitForm: jest.fn(),
+                onSubmit: jest.fn(),
               }}
             >
               {children}
