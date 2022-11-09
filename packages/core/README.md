@@ -58,4 +58,4 @@ export const MyComponent = () => (
 );
 ```
 
-This is a basic example, but Formeum exports many different hooks and components which use each other internally, meaning you can extract different bits of logic you need and use the library in a way which suits you. It is recommended to look at the full JSDocs to see these.
+This is a basic example, but Formeum exports many different hooks and components which use each other internally, meaning you can extract different bits of logic you need and use the library in a way which suits you. It is recommended to look at the [full JSDocs](https://formeum.netlify.app/) to see these.
