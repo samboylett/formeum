@@ -18,7 +18,7 @@ interface FormDataType {
 const form = createForm<FormDataType>();
 
 export const Form = () => {
-  const { FormHandler, FormField, FormHTMLInput, FormHTMLCheckbox, FormValues, ContextMain, FormCallbacks } = form;
+  const { FormHandler, FormReactInput, FormHTMLInput, FormHTMLCheckbox, FormValues, ContextMain, FormCallbacks } = form;
 
   return (
     <FormHandler
@@ -45,11 +45,11 @@ export const Form = () => {
 
       <label>
         Bar
-        <FormField name="bar">
-          {({ name, value, changeValue, onFocus, onBlur }) => (
-            <input type="number" name={name} value={value} onFocus={onFocus} onBlur={onBlur} onChange={e => changeValue(parseInt(e.target.value))} />
+        <FormReactInput name="bar">
+          {({ onChange, ...props }) => (
+            <input type="number" {...props} onChange={e => onChange(parseInt(e.target.value))} />
           )}
-        </FormField>
+        </FormReactInput>
       </label>
 
       <label>
