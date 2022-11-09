@@ -1,5 +1,5 @@
 import React, { ReactNode, useRef } from "react";
-import { createForm } from "../createForm";
+import { createForm } from "../lib";
 
 export default {
   title: "Form",

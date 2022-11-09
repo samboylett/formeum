@@ -7,7 +7,7 @@ import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 export default [
   {
-    input: "src/lib/index.ts",
+    input: "./src/lib/index.ts",
     output: [
       {
         file: packageJson.main,
@@ -33,7 +33,7 @@ export default [
     ],
   },
   {
-    input: "dist/esm/index.d.ts",
+    input: "./src/lib/index.ts",
     output: [{ file: "dist/index.d.ts", format: "esm" }],
     plugins: [dts()],
   },
