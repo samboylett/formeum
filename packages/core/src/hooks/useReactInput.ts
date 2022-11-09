@@ -15,13 +15,13 @@ export interface UseReactInputReturn<Values, Name extends ValuesFields<Values>> 
     onChange: UseChangeHandlerReturn<Values, Name>['changeValue'];
 }
 
-export interface CreateUseFieldFocusDependencies<Values> {
+export interface CreateUseReactInputDependencies<Values> {
     useFieldValue: <Name extends ValuesFields<Values>>(arg: UseFieldValueArg<Name>) => UseFieldValueReturn<Values, Name>;
     useFieldFocus: <Name extends ValuesFields<Values>>(arg: UseFieldFocusArg<Name>) => UseFieldFocusReturn;
     useFieldBlur: <Name extends ValuesFields<Values>>(arg: UseFieldBlurArg<Name>) => UseFieldBlurReturn;
 }
 
-export const createUseReactInput = <Values>({ useFieldValue, useFieldFocus, useFieldBlur }: CreateUseFieldFocusDependencies<Values>) => {
+export const createUseReactInput = <Values>({ useFieldValue, useFieldFocus, useFieldBlur }: CreateUseReactInputDependencies<Values>) => {
     /**
      * Get the props to be used on a React style input, i.e. the change event should contain just the field value in the first argument rather than a change event.
      * 

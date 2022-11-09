@@ -15,14 +15,14 @@ export interface UseHTMLCheckboxReturn<Values, Name extends ValuesFields<Values>
     onChange: UseChangeHandlerReturn<Values, Name>['handleCheckboxEvent'];
 }
 
-export interface CreateUseFieldFocusDependencies<Values> {
+export interface CreateUseHTMLCheckboxDependencies<Values> {
     useFieldValue: <Name extends ValuesFields<Values>>(arg: UseFieldValueArg<Name>) => UseFieldValueReturn<Values, Name>;
     useFieldFocus: <Name extends ValuesFields<Values>>(arg: UseFieldFocusArg<Name>) => UseFieldFocusReturn;
     useFieldBlur: <Name extends ValuesFields<Values>>(arg: UseFieldBlurArg<Name>) => UseFieldBlurReturn;
     useChangeHandler: <Name extends ValuesFields<Values>>(arg: UseChangeHandlerArg<Name>) => UseChangeHandlerReturn<Values, Name>;
 }
 
-export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler }: CreateUseFieldFocusDependencies<Values>) => {
+export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler }: CreateUseHTMLCheckboxDependencies<Values>) => {
     /**
      * Get the props to use for a native HTML checkbox input as a boolean value.
      * 
