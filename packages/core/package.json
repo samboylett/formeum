@@ -16,7 +16,7 @@
     "prettier:ci": "prettier --check ./src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "docs": "typedoc --out docs src/index.ts"
+    "docs": "typedoc --out docs src/lib/index.ts"
   },
   "author": "Sam Boylett",
   "license": "GPL-3.0-or-later",
