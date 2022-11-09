@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { FormEventHandler, useEffect, useMemo } from "react";
 import { FormErrors } from "../types/FormErrors";
 import { DeepIndex } from "../types/DeepIndex";
 import { merge, set, isEqual } from "lodash";
@@ -123,6 +123,13 @@ export interface UseFormHandlerStatelessReturn<Values> {
    * @returns {Promise<void>}
    */
   submitForm: (shouldValidate?: boolean) => Promise<void>;
+
+  /**
+   * Submit the form via a form onSubmit event.
+   *
+   * @throws {AlreadySubmittingError}
+   */
+  onSubmit: FormEventHandler<HTMLFormElement>;
 }
 
 /**
@@ -149,7 +156,7 @@ export const createUseFormHandlerStateless = <Values>() => {
     onErrors,
     touched,
     onTouched,
-    onSubmit,
+    onSubmit: onOuterSubmit,
     touchOnChange = true,
     touchOnBlur = true,
     touchOnFocus = false,
@@ -196,12 +203,18 @@ export const createUseFormHandlerStateless = <Values>() => {
             if (Object.values(nextErrors).some(Boolean)) return;
           }
 
-          await onSubmit(values);
+          await onOuterSubmit(values);
         } finally {
           onIsSubmitting(false);
         }
       }
     );
+
+    const onSubmit: FormEventHandler<HTMLFormElement> = useEventCallback(event => {
+      event.preventDefault();
+
+      submitForm();
+    });
 
     const setValues = useEventCallback(
       async (newValues: Values, shouldValidate: boolean = validateOnChange) => {
@@ -280,6 +293,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       runValidation,
       validateOnSubmit,
       isSubmitting,
+      onSubmit,
     };
   };
 

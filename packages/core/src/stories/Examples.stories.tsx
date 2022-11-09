@@ -39,8 +39,8 @@ const Template: Story<FormHandlerProps<StoryValues>> = (args) => (
     {...args}
   >
     <storyForm.FormCallbacks>
-      {({ submitForm }) => (
-        <form onSubmit={() => submitForm()}>
+      {({ onSubmit }) => (
+        <form onSubmit={onSubmit}>
           <label>
             String field
 

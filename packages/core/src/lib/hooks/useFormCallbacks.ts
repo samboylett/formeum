@@ -2,17 +2,25 @@ import { useMemo } from "react";
 import { pick } from "lodash";
 import { UseCurrentContextReturn } from "./useCurrentContext";
 import { UseFormHandlerReturn } from "./useFormHandler";
+import { ContextMainInterface } from "../contexts/ContextMain";
+
+const FORM_CALLBACK_NAMES = [
+  "submitForm",
+  "setValues",
+  "setErrors",
+  "setTouched",
+  "setFieldValue",
+  "setFieldError",
+  "setFieldTouched",
+  "runValidation",
+  "onSubmit",
+] as const;
+
+type FormCallbackNames = (typeof FORM_CALLBACK_NAMES)[number];
 
 export type UseFormCallbacksReturn<Values> = Pick<
   UseFormHandlerReturn<Values>,
-  | "submitForm"
-  | "setValues"
-  | "setErrors"
-  | "setTouched"
-  | "setFieldValue"
-  | "setFieldError"
-  | "setFieldTouched"
-  | "runValidation"
+  FormCallbackNames
 >;
 
 /**
@@ -38,16 +46,9 @@ export const createUseFormCallbacks = <Values>({
 
     return useMemo<UseFormCallbacksReturn<Values>>(
       () =>
-        pick(
+        pick<ContextMainInterface<Values>, FormCallbackNames>(
           contextRef.current,
-          "submitForm",
-          "setValues",
-          "setErrors",
-          "setTouched",
-          "setFieldValue",
-          "setFieldError",
-          "setFieldTouched",
-          "runValidation"
+          ...FORM_CALLBACK_NAMES,
         ),
       [contextRef]
     );
