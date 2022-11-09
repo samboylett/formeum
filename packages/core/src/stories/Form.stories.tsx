@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement, ReactNode, useRef } from 'react';
 import { createForm } from "../createForm";
 
 export default {
@@ -16,6 +16,18 @@ interface FormDataType {
 }
 
 const form = createForm<FormDataType>();
+
+const RenderCount = ({ children }: { children?: ReactNode }) => {
+  const count = useRef(0);
+
+  count.current++;
+
+  return (
+    <div style={{ display: 'flex', columnGap: '10px' }}>
+      {children} <div>Render count: {count.current}</div>
+    </div>
+  )
+}
 
 export const Form = () => {
   const { FormHandler, FormReactInput, FormHTMLInput, FormHTMLCheckbox, FormValues, ContextMain, FormCallbacks } = form;
@@ -36,63 +48,76 @@ export const Form = () => {
         "subForm.foo": values.subForm.foo === "" ? "Required" : undefined,
       })}
     >
-      <label>
-        Foo
-        <FormHTMLInput name="foo">
-          {props => <input {...props} />}
-        </FormHTMLInput>
-      </label>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        rowGap: '10px',
+      }}>
+        <div>
+          <RenderCount />
+        </div>
+        <label>
+          Foo
+          <FormHTMLInput name="foo">
+            {props => <RenderCount><input {...props} /></RenderCount>}
+          </FormHTMLInput>
+        </label>
 
-      <label>
-        Bar
-        <FormReactInput name="bar">
-          {({ onChange, ...props }) => (
-            <input type="number" {...props} onChange={e => onChange(parseInt(e.target.value))} />
-          )}
-        </FormReactInput>
-      </label>
-
-      <label>
-        Yes
-        <FormHTMLCheckbox name="yes">
-          {props => <input {...props} />}
-        </FormHTMLCheckbox>
-      </label>
-
-      <label>
-        Sub Form Foo
-        <FormHTMLInput name="subForm.foo">
-          {props => <input {...props} />}
-        </FormHTMLInput>
-      </label>
-
-      <FormCallbacks>
-        {({ submitForm }) => (
-          <button onClick={() => submitForm()}>
-            Submit
-          </button>
-        )}
-      </FormCallbacks>
-
-      <pre>
-        <FormValues>
-          {values => JSON.stringify(values, null, 2)}
-        </FormValues>
-      </pre>
-
-      <pre>
-        <ContextMain.Consumer shouldUpdate={() => true}>
-            {context => (
-              <>
-                {JSON.stringify({
-                  touched: [...context.touched],
-                  errors: context.errors,
-                  isSubmitting: context.isSubmitting,
-                }, null, 2)}
-              </>
+        <label>
+          Bar
+          <FormReactInput name="bar">
+            {({ onChange, ...props }) => (
+              <RenderCount>
+                <input type="number" {...props} onChange={e => onChange(parseInt(e.target.value))} />
+              </RenderCount>
             )}
-        </ContextMain.Consumer>
-      </pre>
+          </FormReactInput>
+        </label>
+
+        <label>
+          Yes
+          <FormHTMLCheckbox name="yes">
+            {props => <RenderCount><input {...props} /></RenderCount>}
+          </FormHTMLCheckbox>
+        </label>
+
+        <label>
+          Sub Form Foo
+          <FormHTMLInput name="subForm.foo">
+            {props => <RenderCount><input {...props} /></RenderCount>}
+          </FormHTMLInput>
+        </label>
+
+        <FormCallbacks>
+          {({ submitForm }) => (
+            <RenderCount>
+              <button onClick={() => submitForm()}>
+                Submit
+              </button>
+            </RenderCount>
+          )}
+        </FormCallbacks>
+
+        <pre>
+          <FormValues>
+            {values => JSON.stringify(values, null, 2)}
+          </FormValues>
+        </pre>
+
+        <pre>
+          <ContextMain.Consumer shouldUpdate={() => true}>
+              {context => (
+                <>
+                  {JSON.stringify({
+                    touched: [...context.touched],
+                    errors: context.errors,
+                    isSubmitting: context.isSubmitting,
+                  }, null, 2)}
+                </>
+              )}
+          </ContextMain.Consumer>
+        </pre>
+      </div>
     </FormHandler>
   );
 };
