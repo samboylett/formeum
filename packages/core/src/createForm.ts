@@ -13,6 +13,7 @@ import { createUseFieldBlur } from "./hooks/useFieldBlur";
 import { createUseFieldChangeValue } from "./hooks/useFieldChangeValue";
 import { createUseFieldError } from "./hooks/useFieldError";
 import { createUseFieldFocus } from "./hooks/useFieldFocus";
+import { createUseFieldRef } from "./hooks/useFieldRef";
 import { createUseFieldTouched } from "./hooks/useFieldTouched";
 import { createUseFieldValue } from "./hooks/useFieldValue";
 import { createUseFormCallbacks } from "./hooks/useFormCallbacks";
@@ -40,10 +41,11 @@ export function createForm<Values extends unknown>() {
   const useChangeHandler = createUseChangeHandler<Values>({ useFieldChangeValue });
   const useFieldBlur = createUseFieldBlur<Values>({ useCurrentContext, useFieldTouched });
   const useFieldFocus = createUseFieldFocus<Values>({ useCurrentContext, useFieldTouched });
+  const useFieldRef = createUseFieldRef<Values>({ useFieldError });
   const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur, useFieldFocus });
-  const useHTMLInput = createUseHTMLInput<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler });
-  const useHTMLCheckbox = createUseHTMLCheckbox<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler });
-  const useReactInput = createUseReactInput<Values>({ useFieldBlur, useFieldFocus, useFieldValue });
+  const useHTMLInput = createUseHTMLInput<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef });
+  const useHTMLCheckbox = createUseHTMLCheckbox<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef });
+  const useReactInput = createUseReactInput<Values>({ useFieldBlur, useFieldFocus, useFieldValue, useFieldRef });
   const useFormCallbacks = createUseFormCallbacks<Values>({ useCurrentContext });
 
   const FormHandler = createFormHandler<Values>({
@@ -73,6 +75,7 @@ export function createForm<Values extends unknown>() {
     useHTMLCheckbox,
     useReactInput,
     useFormCallbacks,
+    useFieldRef,
 
     ContextMain,
 

@@ -5,12 +5,13 @@ import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus';
 import { UseChangeHandlerArg, UseChangeHandlerReturn } from './useChangeHandler';
 import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue';
 import { DeepIndex } from '../types/DeepIndex';
+import { UseFieldRefArg, UseFieldRefReturn } from './useFieldRef';
 
 export interface UseHTMLInputArg<Values, Name extends ValuesFields<Values>> {
     name: DeepIndex<Values, Name> extends string ? Name : never;
 }
 
-export interface UseHTMLInputReturn<Values, Name extends ValuesFields<Values>> extends UseFieldBlurReturn, UseFieldFocusReturn {
+export interface UseHTMLInputReturn<Values, Name extends ValuesFields<Values>> extends UseFieldBlurReturn, UseFieldFocusReturn, UseFieldRefReturn {
     name: Name;
     value: string;
     onChange: UseChangeHandlerReturn<Values, Name>['handleChangeEvent'];
@@ -21,9 +22,10 @@ export interface CreateUseHTMLInputDependencies<Values> {
     useFieldFocus: <Name extends ValuesFields<Values>>(arg: UseFieldFocusArg<Name>) => UseFieldFocusReturn;
     useFieldBlur: <Name extends ValuesFields<Values>>(arg: UseFieldBlurArg<Name>) => UseFieldBlurReturn;
     useChangeHandler: <Name extends ValuesFields<Values>>(arg: UseChangeHandlerArg<Name>) => UseChangeHandlerReturn<Values, Name>;
+    useFieldRef: <Name extends ValuesFields<Values>>(arg: UseFieldRefArg<Name>) => UseFieldRefReturn;
 }
 
-export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler }: CreateUseHTMLInputDependencies<Values>) => {
+export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef }: CreateUseHTMLInputDependencies<Values>) => {
     /**
      * Get the props to be used on a native HTML input, textarea or select element.
      * 
@@ -35,6 +37,7 @@ export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFi
         const { onFocus } = useFieldFocus<Name>({ name });
         const { onBlur } = useFieldBlur<Name>({ name });
         const { handleChangeEvent } = useChangeHandler<Name>({ name });
+        const { ref } = useFieldRef<Name>({ name });
 
         const value = `${baseValue}`;
 
@@ -44,12 +47,14 @@ export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFi
             onBlur,
             onFocus,
             onChange: handleChangeEvent,
+            ref,
         }), [
             name,
             value,
             onBlur,
             onFocus,
             handleChangeEvent,
+            ref,
         ]);
     };
 

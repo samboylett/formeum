@@ -5,12 +5,13 @@ import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus';
 import { UseChangeHandlerArg, UseChangeHandlerReturn } from './useChangeHandler';
 import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue';
 import { DeepIndex } from '../types/DeepIndex';
+import { UseFieldRefArg, UseFieldRefReturn } from './useFieldRef';
 
 export interface UseHTMLCheckboxArg<Values, Name extends ValuesFields<Values>> {
     name: DeepIndex<Values, Name> extends boolean ? Name : never;
 }
 
-export interface UseHTMLCheckboxReturn<Values, Name extends ValuesFields<Values>> extends UseFieldBlurReturn, UseFieldFocusReturn {
+export interface UseHTMLCheckboxReturn<Values, Name extends ValuesFields<Values>> extends UseFieldBlurReturn, UseFieldFocusReturn, UseFieldRefReturn {
     name: Name;
     value: string;
     onChange: UseChangeHandlerReturn<Values, Name>['handleCheckboxEvent'];
@@ -22,9 +23,10 @@ export interface CreateUseHTMLCheckboxDependencies<Values> {
     useFieldFocus: <Name extends ValuesFields<Values>>(arg: UseFieldFocusArg<Name>) => UseFieldFocusReturn;
     useFieldBlur: <Name extends ValuesFields<Values>>(arg: UseFieldBlurArg<Name>) => UseFieldBlurReturn;
     useChangeHandler: <Name extends ValuesFields<Values>>(arg: UseChangeHandlerArg<Name>) => UseChangeHandlerReturn<Values, Name>;
+    useFieldRef: <Name extends ValuesFields<Values>>(arg: UseFieldRefArg<Name>) => UseFieldRefReturn;
 }
 
-export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler }: CreateUseHTMLCheckboxDependencies<Values>) => {
+export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef }: CreateUseHTMLCheckboxDependencies<Values>) => {
     /**
      * Get the props to use for a native HTML checkbox input as a boolean value.
      * 
@@ -36,6 +38,7 @@ export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, us
         const { onFocus } = useFieldFocus<Name>({ name });
         const { onBlur } = useFieldBlur<Name>({ name });
         const { handleCheckboxEvent } = useChangeHandler<Name>({ name });
+        const { ref } = useFieldRef<Name>({ name });
 
         const value = `${baseValue}`;
 
@@ -45,13 +48,15 @@ export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, us
             onBlur,
             onFocus,
             onChange: handleCheckboxEvent,
-            type: "checkbox"
+            type: "checkbox",
+            ref,
         }), [
             name,
             value,
             onBlur,
             onFocus,
             handleCheckboxEvent,
+            ref,
         ]);
     };
 
