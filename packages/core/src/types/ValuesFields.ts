@@ -1,3 +1,3 @@
-import { O, S } from 'ts-toolbelt';
+import { O, S } from "ts-toolbelt";
 
-export type ValuesFields<Values> = S.Join<O.Paths<Values> & string[], '.'>;
+export type ValuesFields<Values> = S.Join<O.Paths<Values> & string[], ".">;

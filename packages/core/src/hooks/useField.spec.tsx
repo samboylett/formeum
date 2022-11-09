@@ -1,7 +1,7 @@
-import { createForm } from '../createForm';
+import { createForm } from "../createForm";
 import { renderHook, RenderHookResult } from "@testing-library/react";
-import { UseFieldArg, UseFieldReturn } from './useField';
-import { act } from 'react-dom/test-utils';
+import { UseFieldArg, UseFieldReturn } from "./useField";
+import { act } from "react-dom/test-utils";
 
 interface Values {
   foo: string;
@@ -16,7 +16,10 @@ describe("useField", () => {
   });
 
   describe("when rendered", () => {
-    let hook: RenderHookResult<UseFieldReturn<Values, "foo">, UseFieldArg<"foo">>;
+    let hook: RenderHookResult<
+      UseFieldReturn<Values, "foo">,
+      UseFieldArg<"foo">
+    >;
     let setFieldError: jest.Mock;
     let setFieldValue: jest.Mock;
 
@@ -24,53 +27,60 @@ describe("useField", () => {
       setFieldError = jest.fn();
       setFieldValue = jest.fn();
 
-      hook = renderHook<UseFieldReturn<Values, "foo">, UseFieldArg<"foo">>(useField, {
-        initialProps: {
-          name: "foo",
-        },
-        wrapper: ({ children }) => (
-          <ContextMain.Provider value={{
-            values: {
-              foo: "1",
-              bar: "2",
-            },
-            initialValues: {
-              foo: "1",
-              bar: "2",
-            },
-            errors: {},
-            touched: new Set(),
-            touchOnChange: true,
-            touchOnBlur: true,
-            touchOnFocus: false,
-            validateOnBlur: true,
-            validateOnChange: false,
-            validateOnFocus: false,
-            validateOnSubmit: true,
-            isSubmitting: false,
-            setValues: jest.fn(),
-            setErrors: jest.fn(),
-            setTouched: jest.fn(),
-            setFieldError,
-            setFieldValue,
-            setFieldTouched: jest.fn(),
-            runValidation: jest.fn(),
-            submitForm: jest.fn(),
-          }}>
-            {children}
-          </ContextMain.Provider>
-        ),
-      });
+      hook = renderHook<UseFieldReturn<Values, "foo">, UseFieldArg<"foo">>(
+        useField,
+        {
+          initialProps: {
+            name: "foo",
+          },
+          wrapper: ({ children }) => (
+            <ContextMain.Provider
+              value={{
+                values: {
+                  foo: "1",
+                  bar: "2",
+                },
+                initialValues: {
+                  foo: "1",
+                  bar: "2",
+                },
+                errors: {},
+                touched: new Set(),
+                touchOnChange: true,
+                touchOnBlur: true,
+                touchOnFocus: false,
+                validateOnBlur: true,
+                validateOnChange: false,
+                validateOnFocus: false,
+                validateOnSubmit: true,
+                isSubmitting: false,
+                setValues: jest.fn(),
+                setErrors: jest.fn(),
+                setTouched: jest.fn(),
+                setFieldError,
+                setFieldValue,
+                setFieldTouched: jest.fn(),
+                runValidation: jest.fn(),
+                submitForm: jest.fn(),
+              }}
+            >
+              {children}
+            </ContextMain.Provider>
+          ),
+        }
+      );
     });
 
     test.each([
       ["value", "1"],
       ["error", undefined],
-      ["name", "foo"]
+      ["name", "foo"],
     ] as const)("returns %s as %j", (prop, value) => {
-      expect(hook.result.current).toEqual(expect.objectContaining({
-        [prop]: value,
-      }));
+      expect(hook.result.current).toEqual(
+        expect.objectContaining({
+          [prop]: value,
+        })
+      );
     });
 
     describe("when changeValue called", () => {

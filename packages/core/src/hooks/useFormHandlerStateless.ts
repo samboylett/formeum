@@ -1,16 +1,19 @@
 import { ChangeEvent, useMemo, useState } from "react";
 import { FormErrors } from "../types/FormErrors";
 import { DeepIndex } from "../types/DeepIndex";
-import { merge, set, isEqual } from 'lodash';
+import { merge, set, isEqual } from "lodash";
 import { ValuesFields } from "../types/ValuesFields";
-import useEventCallback from 'use-event-callback';
+import useEventCallback from "use-event-callback";
 import { FormTouched } from "../types/FormTouched";
 import { AlreadySubmittingError } from "../errors/AlreadySubmittingError";
-const latest = require('promise-latest');
+const latest = require("promise-latest");
 
 export interface UseFormHandlerStatelessArg<Values> {
   initialValues: Values;
-  validate?: (values: Values, fieldName?: ValuesFields<Values>) => Promise<FormErrors<Values>>;
+  validate?: (
+    values: Values,
+    fieldName?: ValuesFields<Values>
+  ) => Promise<FormErrors<Values>>;
   validateOnChange?: boolean;
   validateOnBlur?: boolean;
   validateOnFocus?: boolean;
@@ -45,7 +48,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
 
   /**
    * Update the form data in its entirity.
-   * 
+   *
    * @param {Values} values
    * @param {boolean?} shouldValidate
    */
@@ -53,51 +56,64 @@ export interface UseFormHandlerStatelessReturn<Values> {
 
   /**
    * Set the entire form errors object.
-   * 
+   *
    * @param {FormErrors<Values>} errors
    */
   setErrors: (errors: FormErrors<Values>) => void;
-  
+
   /**
    * Set the entire form touched set
-   * 
+   *
    * @param {FormTouched<Values>} touched
    */
   setTouched: (touched: FormTouched<Values>) => void;
 
   /**
    * Set a fields value
-   * 
+   *
    * @param {Name} name
    * @param {DeepIndex<Values, Name>} value
    * @param {boolean?} shouldValidate
    */
-  setFieldValue: <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => void;
-  
+  setFieldValue: <Name extends ValuesFields<Values>>(
+    name: Name,
+    value: DeepIndex<Values, Name>,
+    shouldValidate?: boolean
+  ) => void;
+
   /**
    * Set a fields error
-   * 
+   *
    * @param {Name} name
    * @param {string|undefined} error
    */
-  setFieldError: <Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => void;
+  setFieldError: <Name extends ValuesFields<Values>>(
+    name: Name,
+    error: string | undefined
+  ) => void;
 
   /**
    * Set a fields touched state
-   * 
+   *
    * @param {Name} name
    * @param {boolean} touched
    */
-  setFieldTouched: <Name extends ValuesFields<Values>>(name: Name, touched: boolean) => void;
+  setFieldTouched: <Name extends ValuesFields<Values>>(
+    name: Name,
+    touched: boolean
+  ) => void;
 
   /**
    * Run the validation and set the errors from the result.
    */
-  runValidation: (arg: { newValues?: Values, fieldName?: ValuesFields<Values> }) => Promise<FormErrors<Values>>;
+  runValidation: (arg: {
+    newValues?: Values;
+    fieldName?: ValuesFields<Values>;
+  }) => Promise<FormErrors<Values>>;
 
   /**
    * Submit the form.
-   * 
+   *
    * @param {boolean?} shouldValidate
    * @throws {AlreadySubmittingError}
    * @returns {Promise<void>}
@@ -111,7 +127,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
 export const createUseFormHandlerStateless = <Values>() => {
   /**
    * The base form handler logic as a controlled component, i.e. stateless.
-   * 
+   *
    * @param {UseFormHandlerStatelessArg<Values>} arg
    * @returns {UseFormHandlerStatelessReturn<Values>}
    */
@@ -141,70 +157,95 @@ export const createUseFormHandlerStateless = <Values>() => {
       onErrors(newErrors);
     });
 
-    const notLatestvalidate: NonNullable<typeof baseValidate> = useEventCallback(baseValidate || (() => Promise.resolve({})));
-    const validate: NonNullable<typeof baseValidate> = useMemo(() => latest(notLatestvalidate), [notLatestvalidate]);
+    const notLatestvalidate: NonNullable<typeof baseValidate> =
+      useEventCallback(baseValidate || (() => Promise.resolve({})));
+    const validate: NonNullable<typeof baseValidate> = useMemo(
+      () => latest(notLatestvalidate),
+      [notLatestvalidate]
+    );
 
-    const runValidation: UseFormHandlerStatelessReturn<Values>['runValidation'] = useEventCallback(async ({ newValues = values, fieldName }) => {
-      const nextErrors: FormErrors<Values> = await validate(newValues, fieldName);
+    const runValidation: UseFormHandlerStatelessReturn<Values>["runValidation"] =
+      useEventCallback(async ({ newValues = values, fieldName }) => {
+        const nextErrors: FormErrors<Values> = await validate(
+          newValues,
+          fieldName
+        );
 
-      setErrors(nextErrors);
+        setErrors(nextErrors);
 
-      return nextErrors;
-    });
+        return nextErrors;
+      });
 
-    const submitForm = useEventCallback(async (shouldValidate: boolean = validateOnSubmit) => {
-      if (isSubmitting) {
-        throw new AlreadySubmittingError("Already submitting form");
-      }
-
-      try {
-        onIsSubmitting(true);
-
-        if (shouldValidate) {
-          const nextErrors = await runValidation({ newValues: values });
-
-          if (Object.values(nextErrors).some(Boolean)) return;
+    const submitForm = useEventCallback(
+      async (shouldValidate: boolean = validateOnSubmit) => {
+        if (isSubmitting) {
+          throw new AlreadySubmittingError("Already submitting form");
         }
 
-        await onSubmit(values);
-      } finally {
-        onIsSubmitting(false);
+        try {
+          onIsSubmitting(true);
+
+          if (shouldValidate) {
+            const nextErrors = await runValidation({ newValues: values });
+
+            if (Object.values(nextErrors).some(Boolean)) return;
+          }
+
+          await onSubmit(values);
+        } finally {
+          onIsSubmitting(false);
+        }
       }
-    });
+    );
 
-    const setValues = useEventCallback(async (newValues: Values, shouldValidate: boolean = validateOnChange) => {
-      if (isEqual(newValues, values)) return;
+    const setValues = useEventCallback(
+      async (newValues: Values, shouldValidate: boolean = validateOnChange) => {
+        if (isEqual(newValues, values)) return;
 
-      onValues(newValues);
+        onValues(newValues);
 
-      if (shouldValidate) {
-        await runValidation({ newValues });
+        if (shouldValidate) {
+          await runValidation({ newValues });
+        }
       }
-    });
+    );
 
-    const setFieldValue = useEventCallback(async <Name extends ValuesFields<Values>>(name: Name, value: DeepIndex<Values, Name>, shouldValidate?: boolean) => {
-      const newValues = merge({}, values, set({}, name, value));
-      setValues(newValues);
+    const setFieldValue = useEventCallback(
+      async <Name extends ValuesFields<Values>>(
+        name: Name,
+        value: DeepIndex<Values, Name>,
+        shouldValidate?: boolean
+      ) => {
+        const newValues = merge({}, values, set({}, name, value));
+        setValues(newValues);
 
-      if (shouldValidate) {
-        await runValidation({ newValues, fieldName: name })
+        if (shouldValidate) {
+          await runValidation({ newValues, fieldName: name });
+        }
       }
-    });
+    );
 
-    const setFieldError = useEventCallback(<Name extends ValuesFields<Values>>(name: Name, error: string | undefined) => {
-      setErrors({
-        ...errors,
-        [name]: error,
-      });
-    });
+    const setFieldError = useEventCallback(
+      <Name extends ValuesFields<Values>>(
+        name: Name,
+        error: string | undefined
+      ) => {
+        setErrors({
+          ...errors,
+          [name]: error,
+        });
+      }
+    );
 
-    const setFieldTouched = useEventCallback(<Name extends ValuesFields<Values>>(name: Name, isTouched: boolean) => {
-      const nextTouched = new Set([...touched]);
+    const setFieldTouched = useEventCallback(
+      <Name extends ValuesFields<Values>>(name: Name, isTouched: boolean) => {
+        const nextTouched = new Set([...touched]);
 
-      nextTouched[isTouched ? 'add' : 'delete'](name);
+        nextTouched[isTouched ? "add" : "delete"](name);
 
-      onTouched(nextTouched);
-    });
+        onTouched(nextTouched);
+      }
+    );
 
     return {
       values,

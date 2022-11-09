@@ -33,20 +33,62 @@ export function createForm<Values extends unknown>() {
   const useMainContext = createUseMainContext<Values>({ ContextMain });
   const useCurrentContext = createUseCurrentContext<Values>({ ContextMain });
   const useFormHandlerStateless = createUseFormHandlerStateless<Values>();
-  const useFormHandler = createUseFormHandler<Values>({ useFormHandlerStateless });
+  const useFormHandler = createUseFormHandler<Values>({
+    useFormHandlerStateless,
+  });
   const useFieldTouched = createUseFieldTouched<Values>({ useMainContext });
-  const useFieldChangeValue = createUseFieldChangeValue<Values>({ useFieldTouched, useCurrentContext });
-  const useFieldValue = createUseFieldValue<Values>({ useMainContext, useFieldChangeValue });
+  const useFieldChangeValue = createUseFieldChangeValue<Values>({
+    useFieldTouched,
+    useCurrentContext,
+  });
+  const useFieldValue = createUseFieldValue<Values>({
+    useMainContext,
+    useFieldChangeValue,
+  });
   const useFieldError = createUseFieldError<Values>({ useMainContext });
-  const useChangeHandler = createUseChangeHandler<Values>({ useFieldChangeValue });
-  const useFieldBlur = createUseFieldBlur<Values>({ useCurrentContext, useFieldTouched });
-  const useFieldFocus = createUseFieldFocus<Values>({ useCurrentContext, useFieldTouched });
+  const useChangeHandler = createUseChangeHandler<Values>({
+    useFieldChangeValue,
+  });
+  const useFieldBlur = createUseFieldBlur<Values>({
+    useCurrentContext,
+    useFieldTouched,
+  });
+  const useFieldFocus = createUseFieldFocus<Values>({
+    useCurrentContext,
+    useFieldTouched,
+  });
   const useFieldRef = createUseFieldRef<Values>({ useFieldError });
-  const useField = createUseField<Values>({ useFieldValue, useFieldError, useChangeHandler, useFieldTouched, useFieldBlur, useFieldFocus });
-  const useHTMLInput = createUseHTMLInput<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef });
-  const useHTMLCheckbox = createUseHTMLCheckbox<Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef });
-  const useReactInput = createUseReactInput<Values>({ useFieldBlur, useFieldFocus, useFieldValue, useFieldRef });
-  const useFormCallbacks = createUseFormCallbacks<Values>({ useCurrentContext });
+  const useField = createUseField<Values>({
+    useFieldValue,
+    useFieldError,
+    useChangeHandler,
+    useFieldTouched,
+    useFieldBlur,
+    useFieldFocus,
+  });
+  const useHTMLInput = createUseHTMLInput<Values>({
+    useFieldValue,
+    useFieldFocus,
+    useFieldBlur,
+    useChangeHandler,
+    useFieldRef,
+  });
+  const useHTMLCheckbox = createUseHTMLCheckbox<Values>({
+    useFieldValue,
+    useFieldFocus,
+    useFieldBlur,
+    useChangeHandler,
+    useFieldRef,
+  });
+  const useReactInput = createUseReactInput<Values>({
+    useFieldBlur,
+    useFieldFocus,
+    useFieldValue,
+    useFieldRef,
+  });
+  const useFormCallbacks = createUseFormCallbacks<Values>({
+    useCurrentContext,
+  });
 
   const FormHandler = createFormHandler<Values>({
     useFormHandler,

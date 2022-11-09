@@ -17,21 +17,19 @@ export interface CreateFormCallbacksDependencies<Values> {
  * @private
  */
 export const createFormCallbacks = <Values extends unknown>({
-    useFormCallbacks,
+  useFormCallbacks,
 }: CreateFormCallbacksDependencies<Values>) => {
-    /**
-     * Get all form handler functions.
-     * @param {FormCallbacksProps<Values>} props 
-     * @returns {ReactElement}
-     */
-  const FormCallbacks = ({ children }: FormCallbacksProps<Values>): ReactElement => {
+  /**
+   * Get all form handler functions.
+   * @param {FormCallbacksProps<Values>} props
+   * @returns {ReactElement}
+   */
+  const FormCallbacks = ({
+    children,
+  }: FormCallbacksProps<Values>): ReactElement => {
     const arg = useFormCallbacks();
 
-    return useMemo(() => (
-      <>
-        {children(arg)}
-      </>
-    ), [children, arg])
+    return useMemo(() => <>{children(arg)}</>, [children, arg]);
   };
 
   return memo(FormCallbacks) as typeof FormCallbacks;
