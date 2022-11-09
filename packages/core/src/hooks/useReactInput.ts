@@ -4,6 +4,7 @@ import { UseFieldBlurArg, UseFieldBlurReturn } from './useFieldBlur';
 import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus';
 import { UseChangeHandlerArg, UseChangeHandlerReturn } from './useChangeHandler';
 import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue';
+import { DeepIndex } from '../types/DeepIndex';
 
 export interface UseReactInputArg<Name> {
     name: Name;
@@ -11,7 +12,7 @@ export interface UseReactInputArg<Name> {
 
 export interface UseReactInputReturn<Values, Name extends ValuesFields<Values>> extends UseFieldBlurReturn, UseFieldFocusReturn {
     name: Name;
-    value: string;
+    value: DeepIndex<Values, Name>;
     onChange: UseChangeHandlerReturn<Values, Name>['changeValue'];
 }
 
@@ -29,11 +30,9 @@ export const createUseReactInput = <Values>({ useFieldValue, useFieldFocus, useF
      * @returns {UseReactInputReturn<Values, Name>}
      */
     const useReactInput = <Name extends ValuesFields<Values>>({ name }: UseReactInputArg<Name>): UseReactInputReturn<Values, Name> => {
-        const { value: baseValue, changeValue } = useFieldValue<Name>({ name });
+        const { value, changeValue } = useFieldValue<Name>({ name });
         const { onFocus } = useFieldFocus<Name>({ name });
         const { onBlur } = useFieldBlur<Name>({ name });
-
-        const value = `${baseValue}`;
 
         return useMemo(() => ({
             name,
