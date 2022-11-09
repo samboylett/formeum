@@ -8,8 +8,8 @@ interface StoryValues {
   trueField: boolean;
 
   subForm: {
-    booleanField: boolean,
-  },
+    booleanField: boolean;
+  };
 }
 
 const storyForm = createForm<StoryValues>();
@@ -18,7 +18,7 @@ export default {
   title: "FormHTMLCheckbox",
   component: storyForm.FormHTMLCheckbox,
   decorators: [
-    story => (   
+    (story) => (
       <storyForm.FormHandler
         initialValues={{
           booleanField: false,
@@ -31,14 +31,16 @@ export default {
         }}
         validateOnMount
         onSubmit={() => Promise.resolve()}
-        validate={() => Promise.resolve({
-          erroredField: "Error",
-        })}
+        validate={() =>
+          Promise.resolve({
+            erroredField: "Error",
+          })
+        }
       >
         {story()}
       </storyForm.FormHandler>
-    )
-  ]
+    ),
+  ],
 } as Meta<FormHTMLCheckboxProps<StoryValues, ValuesFields<StoryValues>>>;
 
 export const Default = () => (

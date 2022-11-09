@@ -8,8 +8,8 @@ interface StoryValues {
   filledField: string;
 
   subForm: {
-    stringField: string,
-  },
+    stringField: string;
+  };
 }
 
 const storyForm = createForm<StoryValues>();
@@ -18,7 +18,7 @@ export default {
   title: "FormHTMLInput",
   component: storyForm.FormHTMLInput,
   decorators: [
-    story => (   
+    (story) => (
       <storyForm.FormHandler
         initialValues={{
           stringField: "",
@@ -31,14 +31,16 @@ export default {
         }}
         validateOnMount
         onSubmit={() => Promise.resolve()}
-        validate={() => Promise.resolve({
-          erroredField: "Error",
-        })}
+        validate={() =>
+          Promise.resolve({
+            erroredField: "Error",
+          })
+        }
       >
         {story()}
       </storyForm.FormHandler>
-    )
-  ]
+    ),
+  ],
 } as Meta<FormHTMLInputProps<StoryValues, ValuesFields<StoryValues>>>;
 
 export const Default = () => (

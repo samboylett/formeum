@@ -210,11 +210,13 @@ export const createUseFormHandlerStateless = <Values>() => {
       }
     );
 
-    const onSubmit: FormEventHandler<HTMLFormElement> = useEventCallback(event => {
-      event.preventDefault();
+    const onSubmit: FormEventHandler<HTMLFormElement> = useEventCallback(
+      (event) => {
+        event.preventDefault();
 
-      submitForm();
-    });
+        submitForm();
+      }
+    );
 
     const setValues = useEventCallback(
       async (newValues: Values, shouldValidate: boolean = validateOnChange) => {

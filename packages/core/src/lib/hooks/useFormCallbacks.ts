@@ -16,7 +16,7 @@ export const FORM_CALLBACK_NAMES = [
   "onSubmit",
 ] as const;
 
-export type FormCallbackNames = (typeof FORM_CALLBACK_NAMES)[number];
+export type FormCallbackNames = typeof FORM_CALLBACK_NAMES[number];
 
 export type UseFormCallbacksReturn<Values> = Pick<
   UseFormHandlerReturn<Values>,
@@ -48,7 +48,7 @@ export const createUseFormCallbacks = <Values>({
       () =>
         pick<ContextMainInterface<Values>, FormCallbackNames>(
           contextRef.current,
-          ...FORM_CALLBACK_NAMES,
+          ...FORM_CALLBACK_NAMES
         ),
       [contextRef]
     );

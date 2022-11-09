@@ -9,30 +9,33 @@ interface StoryValues {
   filledField: string;
 
   subForm: {
-    stringField: string,
-  },
+    stringField: string;
+  };
 }
 
 const storyForm = createForm<StoryValues>();
 
 interface UpperCaseInputProps {
-    value: string;
-    onChange: (newValue: string) => void;
+  value: string;
+  onChange: (newValue: string) => void;
 }
 
-const UpperCaseInput = forwardRef<HTMLInputElement, UpperCaseInputProps>(({ onChange, ...props }, ref) => (
+const UpperCaseInput = forwardRef<HTMLInputElement, UpperCaseInputProps>(
+  ({ onChange, ...props }, ref) => (
     <input
-        onChange={e => onChange(e.target.value.toUpperCase())}
-        {...props}
-        ref={ref}
+      onChange={(e) => onChange(e.target.value.toUpperCase())}
+      {...props}
+      ref={ref}
     />
-));
+  )
+);
+UpperCaseInput.displayName = "UpperCaseInput";
 
 export default {
   title: "FormReactInput",
   component: storyForm.FormReactInput,
   decorators: [
-    story => (   
+    (story) => (
       <storyForm.FormHandler
         initialValues={{
           stringField: "",
@@ -45,13 +48,15 @@ export default {
         }}
         validateOnMount
         onSubmit={() => Promise.resolve()}
-        validate={() => Promise.resolve({
-          erroredField: "Error",
-        })}
+        validate={() =>
+          Promise.resolve({
+            erroredField: "Error",
+          })
+        }
       >
         {story()}
       </storyForm.FormHandler>
-    )
+    ),
   ],
 } as Meta<FormReactInputProps<StoryValues, ValuesFields<StoryValues>>>;
 

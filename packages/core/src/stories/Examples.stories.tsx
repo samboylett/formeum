@@ -27,70 +27,63 @@ export default {
       },
     },
     onSubmit: () => Promise.resolve(),
-    validate: (values) => Promise.resolve({
-      requiredField: values.requiredField.length === 0 ? "Required" : undefined,
-    }),
+    validate: (values) =>
+      Promise.resolve({
+        requiredField:
+          values.requiredField.length === 0 ? "Required" : undefined,
+      }),
   },
   component: storyForm.FormHandler,
 } as Meta<FormHandlerProps<StoryValues>>;
 
 const Template: Story<FormHandlerProps<StoryValues>> = (args) => (
-  <storyForm.FormHandler
-    {...args}
-  >
+  <storyForm.FormHandler {...args}>
     <storyForm.FormCallbacks>
       {({ onSubmit }) => (
         <form onSubmit={onSubmit}>
           <label>
             String field
-
             <storyForm.FormHTMLInput name="stringField">
-              {props => <input {...props} />}
+              {(props) => <input {...props} />}
             </storyForm.FormHTMLInput>
           </label>
 
           <label>
             Required field
-
             <storyForm.FormHTMLInput name="requiredField">
-              {props => <input {...props} />}
+              {(props) => <input {...props} />}
             </storyForm.FormHTMLInput>
           </label>
 
           <label>
             Boolean field
-
             <storyForm.FormHTMLCheckbox name="booleanField">
-              {props => <input {...props} />}
+              {(props) => <input {...props} />}
             </storyForm.FormHTMLCheckbox>
           </label>
 
           <fieldset>
             Sub Form
-            
             <label>
               String field
-
               <storyForm.FormHTMLInput name="subForm.stringField">
-                {props => <input {...props} />}
+                {(props) => <input {...props} />}
               </storyForm.FormHTMLInput>
             </label>
           </fieldset>
 
-          <button type="submit">
-            Submit
-          </button>
+          <button type="submit">Submit</button>
         </form>
       )}
     </storyForm.FormCallbacks>
 
     <pre>
       <storyForm.FormValues>
-        {values => JSON.stringify(values, null, 2)}
+        {(values) => JSON.stringify(values, null, 2)}
       </storyForm.FormValues>
     </pre>
   </storyForm.FormHandler>
-)
+);
 
 export const Default = Template.bind({});
 
