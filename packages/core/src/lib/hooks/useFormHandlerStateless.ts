@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { FormErrors } from "../types/FormErrors";
 import { DeepIndex } from "../types/DeepIndex";
 import { merge, set, isEqual } from "lodash";
@@ -20,6 +20,7 @@ export interface UseFormHandlerStatelessArg<Values> {
   validateOnBlur?: boolean;
   validateOnFocus?: boolean;
   validateOnSubmit?: boolean;
+  validateOnMount?: boolean;
   values: Values;
   onValues: (newValue: Values) => void;
   errors: FormErrors<Values>;
@@ -46,6 +47,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
   validateOnBlur: boolean;
   validateOnFocus: boolean;
   validateOnSubmit: boolean;
+  validateOnMount: boolean;
   isSubmitting: boolean;
 
   /**
@@ -140,6 +142,7 @@ export const createUseFormHandlerStateless = <Values>() => {
     validateOnBlur = true,
     validateOnFocus = false,
     validateOnSubmit = true,
+    validateOnMount = false,
     values,
     onValues,
     errors,
@@ -249,6 +252,12 @@ export const createUseFormHandlerStateless = <Values>() => {
       }
     );
 
+    useEffect(() => {
+      if (validateOnMount) {
+        runValidation({});
+      }
+    }, [validateOnMount]);
+
     return {
       values,
       setValues,
@@ -267,6 +276,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       validateOnBlur,
       validateOnChange,
       validateOnFocus,
+      validateOnMount,
       runValidation,
       validateOnSubmit,
       isSubmitting,

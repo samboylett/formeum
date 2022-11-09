@@ -5,6 +5,7 @@ import "./NativeInputs.css";
 
 interface StoryValues {
   stringField: string;
+  erroredField: string;
 
   subForm: {
     stringField: string,
@@ -24,12 +25,17 @@ export default {
       <storyForm.FormHandler
         initialValues={{
           stringField: "",
+          erroredField: "",
 
           subForm: {
             stringField: "",
           },
         }}
+        validateOnMount
         onSubmit={() => Promise.resolve()}
+        validate={() => Promise.resolve({
+          erroredField: "Error",
+        })}
       >
         <Story />
       </storyForm.FormHandler>
@@ -45,6 +51,12 @@ export const Default = () => (
 
 export const SubForm = () => (
   <storyForm.FormHTMLInput name="subForm.stringField">
+    {(props) => <input {...props} />}
+  </storyForm.FormHTMLInput>
+);
+
+export const Errored = () => (
+  <storyForm.FormHTMLInput name="erroredField">
     {(props) => <input {...props} />}
   </storyForm.FormHTMLInput>
 );

@@ -4,3 +4,13 @@ form {
     row-gap: 1rem;
     align-items: flex-start;
 }
+
+input {
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+    border: 0.1rem solid #111;
+}
+
+input:invalid {
+    border-color: red;
+}
