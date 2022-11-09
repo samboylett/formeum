@@ -3,7 +3,7 @@ import { FormErrors } from "../types/FormErrors";
 import { FormTouched } from "../types/FormTouched";
 import { UseFormHandlerStatelessArg, UseFormHandlerStatelessReturn } from "./useFormHandlerStateless";
 
-export type UseFormHandlerArg<Values> = Omit<UseFormHandlerStatelessArg<Values>, 'values' | 'onValues' | 'errors' | 'onErrors' | 'touched' | 'onTouched' | 'isSubmitting' | 'onIsSubmitting'>;
+export interface UseFormHandlerArg<Values> extends Omit<UseFormHandlerStatelessArg<Values>, 'values' | 'onValues' | 'errors' | 'onErrors' | 'touched' | 'onTouched' | 'isSubmitting' | 'onIsSubmitting'> {}
 
 export interface UseFormHandlerReturn<Values> extends UseFormHandlerStatelessReturn<Values> {}
 

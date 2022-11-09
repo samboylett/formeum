@@ -9,7 +9,7 @@ export interface CreateUseCurrentContextDependencies<Values> {
   ContextMain: FastContext<ContextMainInterface<Values>>;
 }
 
-export type UseCurrentContextReturn<Values> = Readonly<MutableRefObject<ContextMainInterface<Values>>>;
+export interface UseCurrentContextReturn<Values> extends Readonly<MutableRefObject<ContextMainInterface<Values>>> {}
 
 /**
  * @private

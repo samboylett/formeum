@@ -9,7 +9,7 @@ import { UseCurrentContextReturn } from './useCurrentContext';
 import { UseFieldChangeValueArg, UseFieldChangeValueReturn } from './useFieldChangeValue';
 import { UseFormHandlerReturn } from './useFormHandler';
 
-export type UseFormCallbacksReturn<Values> = Pick<
+export interface UseFormCallbacksReturn<Values> extends Pick<
   UseFormHandlerReturn<Values>,
   | 'submitForm'
   | 'setValues'
@@ -19,7 +19,7 @@ export type UseFormCallbacksReturn<Values> = Pick<
   | 'setFieldError'
   | 'setFieldTouched'
   | 'runValidation'
->;
+> {}
 
 /**
  * @private

@@ -8,7 +8,7 @@ export interface CreateUseMainContextDependencies<Values> {
   ContextMain: FastContext<ContextMainInterface<Values>>;
 }
 
-export type UseMainContextReturn<Values> = ContextMainInterface<Values>;
+export interface UseMainContextReturn<Values> extends ContextMainInterface<Values> {}
 
 export interface UseMainContextArg<Values> {
   shouldUpdate: FastContextShouldUpdate<ContextMainInterface<Values>>;
