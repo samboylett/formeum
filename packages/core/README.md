@@ -1,5 +1,8 @@
 [![npm version](https://badge.fury.io/js/@formeum%2Fcore.svg)](https://badge.fury.io/js/@formeum%2Fcore)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Node.js CI](https://github.com/samboylett/formeum/actions/workflows/node.js.yml/badge.svg)](https://github.com/samboylett/formeum/actions/workflows/node.js.yml)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a5ddb138-1a5d-452d-aa94-a9e016849269/deploy-status)](https://app.netlify.com/sites/formeum/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/536a67ac-2e5e-444c-8e2b-ca19197d8e4f/deploy-status)](https://app.netlify.com/sites/formeum-storybook/deploys)
 
 # @formeum/core
 
