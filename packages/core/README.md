@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/@formeum%2Fcore.svg)](https://badge.fury.io/js/@formeum%2Fcore)
+
 # @formeum/core
 
 The core Formeum core package. This package handles the context, error state, touched state and validation. All other packages are optional.
