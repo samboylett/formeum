@@ -1,14 +1,14 @@
-import { useMemo } from "react";
-import { ValuesFields } from "../types/ValuesFields";
-import { UseFieldBlurArg, UseFieldBlurReturn } from "./useFieldBlur";
-import { UseFieldFocusArg, UseFieldFocusReturn } from "./useFieldFocus";
+import { useMemo } from 'react'
+import { ValuesFields } from '../types/ValuesFields'
+import { UseFieldBlurArg, UseFieldBlurReturn } from './useFieldBlur'
+import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus'
 import {
   UseChangeHandlerArg,
-  UseChangeHandlerReturn,
-} from "./useChangeHandler";
-import { UseFieldValueArg, UseFieldValueReturn } from "./useFieldValue";
-import { DeepIndex } from "../types/DeepIndex";
-import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
+  UseChangeHandlerReturn
+} from './useChangeHandler'
+import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue'
+import { DeepIndex } from '../types/DeepIndex'
+import { UseFieldRefArg, UseFieldRefReturn } from './useFieldRef'
 
 export interface UseHTMLInputArg<Values, Name extends ValuesFields<Values>> {
   name: DeepIndex<Values, Name> extends string ? Name : never;
@@ -20,7 +20,7 @@ export interface UseHTMLInputReturn<Values, Name extends ValuesFields<Values>>
     UseFieldRefReturn {
   name: Name;
   value: string;
-  onChange: UseChangeHandlerReturn<Values, Name>["handleChangeEvent"];
+  onChange: UseChangeHandlerReturn<Values, Name>['handleChangeEvent'];
 }
 
 /**
@@ -52,7 +52,7 @@ export const createUseHTMLInput = <Values>({
   useFieldFocus,
   useFieldBlur,
   useChangeHandler,
-  useFieldRef,
+  useFieldRef
 }: CreateUseHTMLInputDependencies<Values>) => {
   /**
    * Get the props to be used on a native HTML input, textarea or select element.
@@ -61,15 +61,15 @@ export const createUseHTMLInput = <Values>({
    * @returns {UseHTMLInputReturn<Values, Name>}
    */
   const useHTMLInput = <Name extends ValuesFields<Values>>({
-    name,
+    name
   }: UseHTMLInputArg<Values, Name>): UseHTMLInputReturn<Values, Name> => {
-    const { value: baseValue } = useFieldValue<Name>({ name });
-    const { onFocus } = useFieldFocus<Name>({ name });
-    const { onBlur } = useFieldBlur<Name>({ name });
-    const { handleChangeEvent } = useChangeHandler<Name>({ name });
-    const { ref } = useFieldRef<Name>({ name });
+    const { value: baseValue } = useFieldValue<Name>({ name })
+    const { onFocus } = useFieldFocus<Name>({ name })
+    const { onBlur } = useFieldBlur<Name>({ name })
+    const { handleChangeEvent } = useChangeHandler<Name>({ name })
+    const { ref } = useFieldRef<Name>({ name })
 
-    const value = `${baseValue}`;
+    const value = `${baseValue}`
 
     return useMemo(
       () => ({
@@ -78,11 +78,11 @@ export const createUseHTMLInput = <Values>({
         onBlur,
         onFocus,
         onChange: handleChangeEvent,
-        ref,
+        ref
       }),
       [name, value, onBlur, onFocus, handleChangeEvent, ref]
-    );
-  };
+    )
+  }
 
-  return useHTMLInput;
-};
+  return useHTMLInput
+}

@@ -1,12 +1,12 @@
-import { UseFormHandlerReturn } from "../hooks/useFormHandler";
-import { createFastContext } from "react-fast-context";
-import { NoContextError } from "../errors/NoContextError";
+import { UseFormHandlerReturn } from '../hooks/useFormHandler'
+import { createFastContext } from 'react-fast-context'
+import { NoContextError } from '../errors/NoContextError'
 
 export type ContextMainInterface<Values> = UseFormHandlerReturn<Values>;
 
 const noContextCallback = () => {
-  throw new NoContextError("No context detected");
-};
+  throw new NoContextError('No context detected')
+}
 
 /**
  * @private
@@ -15,11 +15,11 @@ export const createContextMain = <Values>() =>
   createFastContext<ContextMainInterface<Values>>({
     errors: {},
     setErrors: noContextCallback,
-    get values() {
-      return noContextCallback();
+    get values () {
+      return noContextCallback()
     },
-    get initialValues() {
-      return noContextCallback();
+    get initialValues () {
+      return noContextCallback()
     },
     setValues: noContextCallback,
     touched: new Set(),
@@ -36,5 +36,5 @@ export const createContextMain = <Values>() =>
     validateOnSubmit: true,
     submitForm: noContextCallback,
     runValidation: noContextCallback,
-    isSubmitting: false,
-  });
+    isSubmitting: false
+  })

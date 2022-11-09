@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { FormErrors } from "../types/FormErrors";
-import { FormTouched } from "../types/FormTouched";
+import { useState } from 'react'
+import { FormErrors } from '../types/FormErrors'
+import { FormTouched } from '../types/FormTouched'
 import {
   UseFormHandlerStatelessArg,
-  UseFormHandlerStatelessReturn,
-} from "./useFormHandlerStateless";
+  UseFormHandlerStatelessReturn
+} from './useFormHandlerStateless'
 
 export type UseFormHandlerArg<Values> = Omit<
   UseFormHandlerStatelessArg<Values>,
-  | "values"
-  | "onValues"
-  | "errors"
-  | "onErrors"
-  | "touched"
-  | "onTouched"
-  | "isSubmitting"
-  | "onIsSubmitting"
+  | 'values'
+  | 'onValues'
+  | 'errors'
+  | 'onErrors'
+  | 'touched'
+  | 'onTouched'
+  | 'isSubmitting'
+  | 'onIsSubmitting'
 >;
 
 export type UseFormHandlerReturn<Values> =
@@ -34,7 +34,7 @@ export interface CreateUseFormHandlerDependencies<Values> {
  * @private
  */
 export const createUseFormHandler = <Values>({
-  useFormHandlerStateless,
+  useFormHandlerStateless
 }: CreateUseFormHandlerDependencies<Values>) => {
   /**
    * The base form handler logic as an uncontrolled component, i.e. all state is handled.
@@ -45,10 +45,10 @@ export const createUseFormHandler = <Values>({
   const useFormHandler = (
     arg: UseFormHandlerArg<Values>
   ): UseFormHandlerReturn<Values> => {
-    const [values, onValues] = useState<Values>(arg.initialValues);
-    const [errors, onErrors] = useState<FormErrors<Values>>({});
-    const [touched, onTouched] = useState<FormTouched<Values>>(new Set());
-    const [isSubmitting, onIsSubmitting] = useState<boolean>(false);
+    const [values, onValues] = useState<Values>(arg.initialValues)
+    const [errors, onErrors] = useState<FormErrors<Values>>({})
+    const [touched, onTouched] = useState<FormTouched<Values>>(new Set())
+    const [isSubmitting, onIsSubmitting] = useState<boolean>(false)
 
     return useFormHandlerStateless({
       ...arg,
@@ -59,9 +59,9 @@ export const createUseFormHandler = <Values>({
       touched,
       onTouched,
       isSubmitting,
-      onIsSubmitting,
-    });
-  };
+      onIsSubmitting
+    })
+  }
 
-  return useFormHandler;
-};
+  return useFormHandler
+}

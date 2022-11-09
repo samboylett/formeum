@@ -1,14 +1,14 @@
-import { useMemo } from "react";
-import { ValuesFields } from "../types/ValuesFields";
-import { UseFieldValueArg, UseFieldValueReturn } from "./useFieldValue";
-import { UseFieldErrorArg, UseFieldErrorReturn } from "./useFieldError";
+import { useMemo } from 'react'
+import { ValuesFields } from '../types/ValuesFields'
+import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue'
+import { UseFieldErrorArg, UseFieldErrorReturn } from './useFieldError'
 import {
   UseChangeHandlerArg,
-  UseChangeHandlerReturn,
-} from "./useChangeHandler";
-import { UseFieldTouchedArg, UseFieldTouchedReturn } from "./useFieldTouched";
-import { UseFieldBlurArg, UseFieldBlurReturn } from "./useFieldBlur";
-import { UseFieldFocusArg, UseFieldFocusReturn } from "./useFieldFocus";
+  UseChangeHandlerReturn
+} from './useChangeHandler'
+import { UseFieldTouchedArg, UseFieldTouchedReturn } from './useFieldTouched'
+import { UseFieldBlurArg, UseFieldBlurReturn } from './useFieldBlur'
+import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus'
 
 export interface UseFieldArg<Name> {
   name: Name;
@@ -56,7 +56,7 @@ export const createUseField = <Values>({
   useChangeHandler,
   useFieldTouched,
   useFieldBlur,
-  useFieldFocus,
+  useFieldFocus
 }: CreateUseFieldDependencies<Values>) => {
   /**
    * Get every single logic handler for a field.
@@ -65,14 +65,14 @@ export const createUseField = <Values>({
    * @returns {UseFieldReturn<Values, Name>}
    */
   const useField = <Name extends ValuesFields<Values>>({
-    name,
+    name
   }: UseFieldArg<Name>): UseFieldReturn<Values, Name> => {
-    const fieldError = useFieldError<Name>({ name });
-    const fieldValue = useFieldValue<Name>({ name });
-    const fieldTouched = useFieldTouched<Name>({ name });
-    const changeHandlers = useChangeHandler<Name>({ name });
-    const blurHandlers = useFieldBlur<Name>({ name });
-    const focusHandlers = useFieldFocus<Name>({ name });
+    const fieldError = useFieldError<Name>({ name })
+    const fieldValue = useFieldValue<Name>({ name })
+    const fieldTouched = useFieldTouched<Name>({ name })
+    const changeHandlers = useChangeHandler<Name>({ name })
+    const blurHandlers = useFieldBlur<Name>({ name })
+    const focusHandlers = useFieldFocus<Name>({ name })
 
     return useMemo(
       () => ({
@@ -82,7 +82,7 @@ export const createUseField = <Values>({
         ...fieldTouched,
         ...changeHandlers,
         ...blurHandlers,
-        ...focusHandlers,
+        ...focusHandlers
       }),
       [
         name,
@@ -91,10 +91,10 @@ export const createUseField = <Values>({
         fieldTouched,
         changeHandlers,
         blurHandlers,
-        focusHandlers,
+        focusHandlers
       ]
-    );
-  };
+    )
+  }
 
-  return useField;
-};
+  return useField
+}

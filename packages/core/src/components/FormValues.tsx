@@ -1,9 +1,9 @@
-import { isEqual } from "lodash";
-import { memo, ReactElement, ReactNode, useMemo } from "react";
+import { isEqual } from 'lodash'
+import { memo, ReactElement, ReactNode, useMemo } from 'react'
 import {
   UseMainContextArg,
-  UseMainContextReturn,
-} from "../hooks/useMainContext";
+  UseMainContextReturn
+} from '../hooks/useMainContext'
 
 export interface FormValuesProps<Values> {
   children: (arg: Values) => ReactNode;
@@ -22,7 +22,7 @@ export interface CreateFormValuesDependencies<Values> {
  * @private
  */
 export const createFormValues = <Values extends unknown>({
-  useMainContext,
+  useMainContext
 }: CreateFormValuesDependencies<Values>) => {
   /**
    * Get all the form values.
@@ -33,11 +33,11 @@ export const createFormValues = <Values extends unknown>({
   const FormValues = ({ children }: FormValuesProps<Values>): ReactElement => {
     const { values } = useMainContext({
       shouldUpdate: (oldValue, newValue) =>
-        !isEqual(oldValue.values, newValue.values),
-    });
+        !isEqual(oldValue.values, newValue.values)
+    })
 
-    return useMemo(() => <>{children(values)}</>, [children, values]);
-  };
+    return useMemo(() => <>{children(values)}</>, [children, values])
+  }
 
-  return memo(FormValues) as typeof FormValues;
-};
+  return memo(FormValues) as typeof FormValues
+}

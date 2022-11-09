@@ -1,10 +1,10 @@
-import { ReactElement, ReactNode, useMemo } from "react";
-import { FastContext } from "react-fast-context";
-import { ContextMainInterface } from "../contexts/ContextMain";
+import { ReactElement, ReactNode, useMemo } from 'react'
+import { FastContext } from 'react-fast-context'
+import { ContextMainInterface } from '../contexts/ContextMain'
 import {
   UseFormHandlerArg,
-  UseFormHandlerReturn,
-} from "../hooks/useFormHandler";
+  UseFormHandlerReturn
+} from '../hooks/useFormHandler'
 
 export interface FormHandlerProps<Values> extends UseFormHandlerArg<Values> {
   children: ReactNode;
@@ -25,7 +25,7 @@ export interface CreateFormHandlerDependencies<Values> {
  */
 export const createFormHandler = <Values extends unknown>({
   ContextMain,
-  useFormHandler,
+  useFormHandler
 }: CreateFormHandlerDependencies<Values>) => {
   /**
    * Get the form handler using the hook `useFormHandler` and render the context provider.
@@ -37,14 +37,14 @@ export const createFormHandler = <Values extends unknown>({
     children,
     ...rest
   }: FormHandlerProps<Values>): ReactElement => {
-    const handler = useFormHandler(rest);
+    const handler = useFormHandler(rest)
 
     return (
       <ContextMain.Provider value={handler}>
         {useMemo(() => children, [children])}
       </ContextMain.Provider>
-    );
-  };
+    )
+  }
 
-  return FormHandler;
-};
+  return FormHandler
+}

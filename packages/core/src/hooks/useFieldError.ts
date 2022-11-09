@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
-import { UseMainContextArg, UseMainContextReturn } from "./useMainContext";
-import { get, isEqual } from "lodash";
-import { FormErrors } from "../types/FormErrors";
-import { ValuesFields } from "../types/ValuesFields";
-import useEventCallback from "use-event-callback";
+import { useMemo } from 'react'
+import { UseMainContextArg, UseMainContextReturn } from './useMainContext'
+import { get, isEqual } from 'lodash'
+import { ValuesFields } from '../types/ValuesFields'
+import useEventCallback from 'use-event-callback'
 
 export interface UseFieldErrorArg<Name> {
   name: Name;
@@ -33,7 +32,7 @@ export interface CreateUseFieldErrorDependencies<Values> {
  * @private
  */
 export const createUseFieldError = <Values>({
-  useMainContext,
+  useMainContext
 }: CreateUseFieldErrorDependencies<Values>) => {
   /**
    * Get or change the fields error.
@@ -42,28 +41,28 @@ export const createUseFieldError = <Values>({
    * @returns {UseFieldErrorReturn}
    */
   const useFieldError = <Name extends ValuesFields<Values>>({
-    name,
+    name
   }: UseFieldErrorArg<Name>): UseFieldErrorReturn => {
     const { errors, setFieldError } = useMainContext({
       shouldUpdate: (oldValue, newValue) => {
-        return !isEqual(get(oldValue.errors, name), get(newValue.errors, name));
-      },
-    });
+        return !isEqual(get(oldValue.errors, name), get(newValue.errors, name))
+      }
+    })
 
-    const error = useMemo(() => errors[name], [errors, name]);
+    const error = useMemo(() => errors[name], [errors, name])
 
     const changeError = useEventCallback((newError: string | undefined) => {
-      setFieldError(name, newError);
-    });
+      setFieldError(name, newError)
+    })
 
     return useMemo(
       () => ({
         error,
-        changeError,
+        changeError
       }),
       [error, changeError]
-    );
-  };
+    )
+  }
 
-  return useFieldError;
-};
+  return useFieldError
+}

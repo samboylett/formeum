@@ -1,6 +1,6 @@
-import { memo, ReactElement, ReactNode, useMemo } from "react";
-import { UseReactInputArg, UseReactInputReturn } from "../hooks/useReactInput";
-import { ValuesFields } from "../types/ValuesFields";
+import { memo, ReactElement, ReactNode, useMemo } from 'react'
+import { UseReactInputArg, UseReactInputReturn } from '../hooks/useReactInput'
+import { ValuesFields } from '../types/ValuesFields'
 
 export interface FormReactInputProps<Values, Name extends ValuesFields<Values>>
   extends UseReactInputArg<Name> {
@@ -20,7 +20,7 @@ export interface CreateFormReactInputDependencies<Values> {
  * @private
  */
 export const createFormReactInput = <Values extends unknown>({
-  useReactInput,
+  useReactInput
 }: CreateFormReactInputDependencies<Values>) => {
   /**
    * Get the props for a React input.
@@ -31,10 +31,10 @@ export const createFormReactInput = <Values extends unknown>({
     children,
     ...rest
   }: FormReactInputProps<Values, Name>): ReactElement => {
-    const arg = useReactInput<Name>(rest);
+    const arg = useReactInput<Name>(rest)
 
-    return useMemo(() => <>{children(arg)}</>, [children, arg]);
-  };
+    return useMemo(() => <>{children(arg)}</>, [children, arg])
+  }
 
-  return memo(FormReactInput) as typeof FormReactInput;
-};
+  return memo(FormReactInput) as typeof FormReactInput
+}

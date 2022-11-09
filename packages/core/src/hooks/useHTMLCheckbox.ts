@@ -1,14 +1,14 @@
-import { useMemo } from "react";
-import { ValuesFields } from "../types/ValuesFields";
-import { UseFieldBlurArg, UseFieldBlurReturn } from "./useFieldBlur";
-import { UseFieldFocusArg, UseFieldFocusReturn } from "./useFieldFocus";
+import { useMemo } from 'react'
+import { ValuesFields } from '../types/ValuesFields'
+import { UseFieldBlurArg, UseFieldBlurReturn } from './useFieldBlur'
+import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus'
 import {
   UseChangeHandlerArg,
-  UseChangeHandlerReturn,
-} from "./useChangeHandler";
-import { UseFieldValueArg, UseFieldValueReturn } from "./useFieldValue";
-import { DeepIndex } from "../types/DeepIndex";
-import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
+  UseChangeHandlerReturn
+} from './useChangeHandler'
+import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue'
+import { DeepIndex } from '../types/DeepIndex'
+import { UseFieldRefArg, UseFieldRefReturn } from './useFieldRef'
 
 export interface UseHTMLCheckboxArg<Values, Name extends ValuesFields<Values>> {
   name: DeepIndex<Values, Name> extends boolean ? Name : never;
@@ -22,8 +22,8 @@ export interface UseHTMLCheckboxReturn<
     UseFieldRefReturn {
   name: Name;
   value: string;
-  onChange: UseChangeHandlerReturn<Values, Name>["handleCheckboxEvent"];
-  type: "checkbox";
+  onChange: UseChangeHandlerReturn<Values, Name>['handleCheckboxEvent'];
+  type: 'checkbox';
 }
 
 /**
@@ -55,7 +55,7 @@ export const createUseHTMLCheckbox = <Values>({
   useFieldFocus,
   useFieldBlur,
   useChangeHandler,
-  useFieldRef,
+  useFieldRef
 }: CreateUseHTMLCheckboxDependencies<Values>) => {
   /**
    * Get the props to use for a native HTML checkbox input as a boolean value.
@@ -64,15 +64,15 @@ export const createUseHTMLCheckbox = <Values>({
    * @returns {UseHTMLCheckboxReturn<Values, Name>}
    */
   const useHTMLCheckbox = <Name extends ValuesFields<Values>>({
-    name,
+    name
   }: UseHTMLCheckboxArg<Values, Name>): UseHTMLCheckboxReturn<Values, Name> => {
-    const { value: baseValue } = useFieldValue<Name>({ name });
-    const { onFocus } = useFieldFocus<Name>({ name });
-    const { onBlur } = useFieldBlur<Name>({ name });
-    const { handleCheckboxEvent } = useChangeHandler<Name>({ name });
-    const { ref } = useFieldRef<Name>({ name });
+    const { value: baseValue } = useFieldValue<Name>({ name })
+    const { onFocus } = useFieldFocus<Name>({ name })
+    const { onBlur } = useFieldBlur<Name>({ name })
+    const { handleCheckboxEvent } = useChangeHandler<Name>({ name })
+    const { ref } = useFieldRef<Name>({ name })
 
-    const value = `${baseValue}`;
+    const value = `${baseValue}`
 
     return useMemo(
       () => ({
@@ -81,12 +81,12 @@ export const createUseHTMLCheckbox = <Values>({
         onBlur,
         onFocus,
         onChange: handleCheckboxEvent,
-        type: "checkbox",
-        ref,
+        type: 'checkbox',
+        ref
       }),
       [name, value, onBlur, onFocus, handleCheckboxEvent, ref]
-    );
-  };
+    )
+  }
 
-  return useHTMLCheckbox;
-};
+  return useHTMLCheckbox
+}
