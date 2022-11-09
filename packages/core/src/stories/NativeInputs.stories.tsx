@@ -1,10 +1,15 @@
 import { Meta } from "@storybook/react";
-import { createForm } from "../lib";
+import { L, O, S } from "ts-toolbelt";
+import { createForm, ValuesFields } from "../lib";
 import "./NativeInputs.css";
 
 interface NativeInputsValues {
   stringField: string;
   booleanField: boolean;
+
+  subForm: {
+    stringField: string,
+  },
 }
 
 const nativeInputsForm = createForm<NativeInputsValues>();
@@ -20,6 +25,10 @@ export default {
         initialValues={{
           stringField: "",
           booleanField: false,
+
+          subForm: {
+            stringField: "",
+          },
         }}
         onSubmit={() => Promise.resolve()}
       >
@@ -39,4 +48,10 @@ export const Checkbox = () => (
   <nativeInputsForm.FormHTMLCheckbox name="booleanField">
     {(props) => <input {...props} />}
   </nativeInputsForm.FormHTMLCheckbox>
+);
+
+export const SubFormTextBox = () => (
+  <nativeInputsForm.FormHTMLInput name="subForm.stringField">
+    {(props) => <input {...props} />}
+  </nativeInputsForm.FormHTMLInput>
 );
