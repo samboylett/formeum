@@ -54,6 +54,12 @@ export const MyComponent = () => (
                 {props => <input {...props} />}
             </myForm.FormHTMLCheckbox>
         </label>
+
+        <myForm.FormCallback>
+            {({ submitForm }) => (
+                <button onClick={() => submitForm()}>Submit</button>
+            )}
+        </myForm.FormCallback>
     </myForm.FormHandler>
 );
 ```

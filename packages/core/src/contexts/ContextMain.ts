@@ -1,19 +1,28 @@
 import { UseFormHandlerReturn } from "../hooks/useFormHandler";
 import { createFastContext } from "react-fast-context";
+import { NoContextError } from "../errors/NoContextError";
 
 export type ContextMainInterface<Values> = UseFormHandlerReturn<Values>
 
+const noContextCallback = () => {
+  throw new NoContextError("No context detected");
+}
+
 export const createContextMain = <Values>() => createFastContext<ContextMainInterface<Values>>({
   errors: {},
-  setErrors: () => null,
-  values: null as any,
-  initialValues: null as any,
-  setValues: () => null,
+  setErrors: noContextCallback,
+  get values() {
+    return noContextCallback();
+  },
+  get initialValues() {
+    return noContextCallback();
+  },
+  setValues: noContextCallback,
   touched: new Set(),
-  setTouched: () => null,
-  setFieldValue: () => null,
-  setFieldError: () => null,
-  setFieldTouched: () => null,
+  setTouched: noContextCallback,
+  setFieldValue: noContextCallback,
+  setFieldError: noContextCallback,
+  setFieldTouched: noContextCallback,
   touchOnChange: true,
   touchOnBlur: true,
   touchOnFocus: false,
@@ -21,6 +30,7 @@ export const createContextMain = <Values>() => createFastContext<ContextMainInte
   validateOnChange: false,
   validateOnFocus: false,
   validateOnSubmit: true,
-  submitForm: () => Promise.reject(),
-  runValidation: () => Promise.reject(),
+  submitForm: noContextCallback,
+  runValidation: noContextCallback,
+  isSubmitting: false,
 });

@@ -1,3 +1,4 @@
+import { createFormCallbacks } from "./components/FormCallbacks";
 import { createFormField } from "./components/FormField";
 import { createFormHandler } from "./components/FormHandler";
 import { createFormHTMLCheckbox } from "./components/FormHTMLCheckbox";
@@ -55,6 +56,7 @@ export function createForm<Values extends unknown>() {
   const FormHTMLInput = createFormHTMLInput<Values>({ useHTMLInput });
   const FormHTMLCheckbox = createFormHTMLCheckbox<Values>({ useHTMLCheckbox });
   const FormReactInput = createFormReactInput<Values>({ useReactInput });
+  const FormCallbacks = createFormCallbacks<Values>({ useFormCallbacks });
 
   return {
     useMainContext,
@@ -80,5 +82,6 @@ export function createForm<Values extends unknown>() {
     FormHTMLInput,
     FormHTMLCheckbox,
     FormReactInput,
+    FormCallbacks,
   } as const;
 }
