@@ -6,10 +6,16 @@ export interface FormValuesProps<Values> {
   children: (arg: Values) => ReactNode;
 }
 
+/**
+ * @private
+ */
 export interface CreateFormValuesDependencies<Values> {
   useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createFormValues = <Values extends unknown>({
   useMainContext,
 }: CreateFormValuesDependencies<Values>) => {

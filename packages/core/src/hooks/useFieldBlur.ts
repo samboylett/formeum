@@ -12,11 +12,17 @@ export interface UseFieldBlurReturn {
     onBlur: () => void;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseFieldBlurDependencies<Values> {
     useFieldTouched: <Name extends ValuesFields<Values>>(arg: UseFieldTouchedArg<Name>) => UseFieldTouchedReturn;
     useCurrentContext: () => UseCurrentContextReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createUseFieldBlur = <Values>({ useFieldTouched, useCurrentContext }: CreateUseFieldBlurDependencies<Values>) => {
     /**
      * Handle the blur logic. Handles touch on blur and validate on blur.

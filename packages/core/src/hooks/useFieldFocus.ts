@@ -12,11 +12,17 @@ export interface UseFieldFocusReturn {
     onFocus: () => void;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseFieldFocusDependencies<Values> {
     useFieldTouched: <Name extends ValuesFields<Values>>(arg: UseFieldTouchedArg<Name>) => UseFieldTouchedReturn;
     useCurrentContext: () => UseCurrentContextReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createUseFieldFocus = <Values>({ useFieldTouched, useCurrentContext }: CreateUseFieldFocusDependencies<Values>) => {
     /**
      * Handle the focus logic. Handles touch on focus and validate on focus logic.

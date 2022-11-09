@@ -105,6 +105,9 @@ export interface UseFormHandlerStatelessReturn<Values> {
   submitForm: (shouldValidate?: boolean) => Promise<void>;
 }
 
+/**
+ * @private
+ */
 export const createUseFormHandlerStateless = <Values>() => {
   /**
    * The base form handler logic as a controlled component, i.e. stateless.

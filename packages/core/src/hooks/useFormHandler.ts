@@ -7,10 +7,16 @@ export type UseFormHandlerArg<Values> = Omit<UseFormHandlerStatelessArg<Values>,
 
 export interface UseFormHandlerReturn<Values> extends UseFormHandlerStatelessReturn<Values> {}
 
+/**
+ * @private
+ */
 export interface CreateUseFormHandlerDependencies<Values> {
   useFormHandlerStateless: (arg: UseFormHandlerStatelessArg<Values>) => UseFormHandlerStatelessReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createUseFormHandler = <Values>({ useFormHandlerStateless }: CreateUseFormHandlerDependencies<Values>) => {
   /**
    * The base form handler logic as an uncontrolled component, i.e. all state is handled.

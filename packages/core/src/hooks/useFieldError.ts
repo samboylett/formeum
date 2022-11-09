@@ -21,10 +21,16 @@ export interface UseFieldErrorReturn {
   changeError: (error: string | undefined) => void;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseFieldErrorDependencies<Values> {
   useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createUseFieldError = <Values>({ useMainContext }: CreateUseFieldErrorDependencies<Values>) => {
   /**
    * Get or change the fields error.

@@ -17,6 +17,9 @@ export interface UseHTMLInputReturn<Values, Name extends ValuesFields<Values>> e
     onChange: UseChangeHandlerReturn<Values, Name>['handleChangeEvent'];
 }
 
+/**
+ * @private
+ */
 export interface CreateUseHTMLInputDependencies<Values> {
     useFieldValue: <Name extends ValuesFields<Values>>(arg: UseFieldValueArg<Name>) => UseFieldValueReturn<Values, Name>;
     useFieldFocus: <Name extends ValuesFields<Values>>(arg: UseFieldFocusArg<Name>) => UseFieldFocusReturn;
@@ -25,6 +28,9 @@ export interface CreateUseHTMLInputDependencies<Values> {
     useFieldRef: <Name extends ValuesFields<Values>>(arg: UseFieldRefArg<Name>) => UseFieldRefReturn;
 }
 
+/**
+ * @private
+ */
 export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef }: CreateUseHTMLInputDependencies<Values>) => {
     /**
      * Get the props to be used on a native HTML input, textarea or select element.

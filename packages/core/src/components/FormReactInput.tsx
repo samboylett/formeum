@@ -6,10 +6,16 @@ export interface FormReactInputProps<Values, Name extends ValuesFields<Values>> 
   children: (arg: UseReactInputReturn<Values, Name>) => ReactNode;
 }
 
+/**
+ * @private
+ */
 export interface CreateFormReactInputDependencies<Values> {
   useReactInput: <Name extends ValuesFields<Values>>(arg: UseReactInputArg<Name>) => UseReactInputReturn<Values, Name>;
 }
 
+/**
+ * @private
+ */
 export const createFormReactInput = <Values extends unknown>({
   useReactInput,
 }: CreateFormReactInputDependencies<Values>) => {

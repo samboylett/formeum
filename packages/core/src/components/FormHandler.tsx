@@ -7,11 +7,17 @@ export interface FormHandlerProps<Values> extends UseFormHandlerArg<Values> {
   children: ReactNode;
 }
 
+/**
+ * @private
+ */
 export interface CreateFormHandlerDependencies<Values> {
   ContextMain: FastContext<ContextMainInterface<Values>>;
   useFormHandler: (arg: UseFormHandlerArg<Values>) => UseFormHandlerReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createFormHandler = <Values extends unknown>({
   ContextMain,
   useFormHandler,

@@ -6,10 +6,16 @@ export interface FormHTMLInputProps<Values, Name extends ValuesFields<Values>> e
   children: (arg: UseHTMLInputReturn<Values, Name>) => ReactNode;
 }
 
+/**
+ * @private
+ */
 export interface CreateFormHTMLInputDependencies<Values> {
   useHTMLInput: <Name extends ValuesFields<Values>>(arg: UseHTMLInputArg<Values, Name>) => UseHTMLInputReturn<Values, Name>;
 }
 
+/**
+ * @private
+ */
 export const createFormHTMLInput = <Values extends unknown>({
   useHTMLInput,
 }: CreateFormHTMLInputDependencies<Values>) => {

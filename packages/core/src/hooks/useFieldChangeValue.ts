@@ -21,11 +21,17 @@ export interface UseFieldChangeValueReturn<Values, Name extends ValuesFields<Val
   changeValue: (newValue: DeepIndex<Values, Name>) => void;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseFieldChangeValueDependencies<Values> {
   useCurrentContext: () => UseCurrentContextReturn<Values>;
   useFieldTouched: <Name extends ValuesFields<Values>>(arg: UseFieldTouchedArg<Name>) => UseFieldTouchedReturn;
 }
 
+/**
+ * @private
+ */
 export const createUseFieldChangeValue = <Values>({ useFieldTouched, useCurrentContext }: CreateUseFieldChangeValueDependencies<Values>) => {
   /**
    * Logic around changing fields value.

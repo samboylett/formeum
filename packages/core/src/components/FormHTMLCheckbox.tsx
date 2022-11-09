@@ -6,10 +6,16 @@ export interface FormHTMLCheckboxProps<Values, Name extends ValuesFields<Values>
   children: (arg: UseHTMLCheckboxReturn<Values, Name>) => ReactNode;
 }
 
+/**
+ * @private
+ */
 export interface CreateFormHTMLCheckboxDependencies<Values> {
   useHTMLCheckbox: <Name extends ValuesFields<Values>>(arg: UseHTMLCheckboxArg<Values, Name>) => UseHTMLCheckboxReturn<Values, Name>;
 }
 
+/**
+ * @private
+ */
 export const createFormHTMLCheckbox = <Values extends unknown>({
   useHTMLCheckbox,
 }: CreateFormHTMLCheckboxDependencies<Values>) => {

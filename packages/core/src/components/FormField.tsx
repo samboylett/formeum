@@ -6,10 +6,16 @@ export interface FormFieldProps<Values, Name extends ValuesFields<Values>> exten
   children: (arg: UseFieldReturn<Values, Name>) => ReactNode;
 }
 
+/**
+ * @private
+ */
 export interface CreateFormFieldDependencies<Values> {
   useField: <Name extends ValuesFields<Values>>(arg: UseFieldArg<Name>) => UseFieldReturn<Values, Name>;
 }
 
+/**
+ * @private
+ */
 export const createFormField = <Values extends unknown>({
   useField,
 }: CreateFormFieldDependencies<Values>) => {

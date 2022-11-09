@@ -29,10 +29,16 @@ export interface UseChangeHandlerReturn<Values, Name extends ValuesFields<Values
     : never;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseChangeHandlerDependencies<Values> {
   useFieldChangeValue: <Name extends ValuesFields<Values>>(arg: UseFieldChangeValueArg<Name>) => UseFieldChangeValueReturn<Values, Name>;
 }
 
+/**
+ * @private
+ */
 export const createUseChangeHandler = <Values>({ useFieldChangeValue }: CreateUseChangeHandlerDependencies<Values>) => {
   /**
    * Get native change handlers for a field.

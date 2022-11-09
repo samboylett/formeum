@@ -6,10 +6,16 @@ export interface FormCallbacksProps<Values> {
   children: (arg: UseFormCallbacksReturn<Values>) => ReactNode;
 }
 
+/**
+ * @private
+ */
 export interface CreateFormCallbacksDependencies<Values> {
   useFormCallbacks: () => UseFormCallbacksReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createFormCallbacks = <Values extends unknown>({
     useFormCallbacks,
 }: CreateFormCallbacksDependencies<Values>) => {

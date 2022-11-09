@@ -18,6 +18,9 @@ export interface UseHTMLCheckboxReturn<Values, Name extends ValuesFields<Values>
     type: "checkbox",
 }
 
+/**
+ * @private
+ */
 export interface CreateUseHTMLCheckboxDependencies<Values> {
     useFieldValue: <Name extends ValuesFields<Values>>(arg: UseFieldValueArg<Name>) => UseFieldValueReturn<Values, Name>;
     useFieldFocus: <Name extends ValuesFields<Values>>(arg: UseFieldFocusArg<Name>) => UseFieldFocusReturn;
@@ -26,6 +29,9 @@ export interface CreateUseHTMLCheckboxDependencies<Values> {
     useFieldRef: <Name extends ValuesFields<Values>>(arg: UseFieldRefArg<Name>) => UseFieldRefReturn;
 }
 
+/**
+ * @private
+ */
 export const createUseHTMLCheckbox = <Values>({ useFieldValue, useFieldFocus, useFieldBlur, useChangeHandler, useFieldRef }: CreateUseHTMLCheckboxDependencies<Values>) => {
     /**
      * Get the props to use for a native HTML checkbox input as a boolean value.

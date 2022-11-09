@@ -20,10 +20,16 @@ export interface UseFieldTouchedReturn {
   setIsTouched: (nextIsTouched: boolean) => void;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseFieldTouchedDependencies<Values> {
   useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createUseFieldTouched = <Values>({ useMainContext }: CreateUseFieldTouchedDependencies<Values>) => {
   /**
    * Check and change if the field has been touched or not.

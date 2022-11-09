@@ -11,14 +11,23 @@ export interface UseFieldRefReturn {
     ref: MutableRefObject<any | null>;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseFieldRefDependencies<Values> {
     useFieldError: <Name extends ValuesFields<Values>>(arg: UseFieldErrorArg<Name>) => UseFieldErrorReturn;
 }
 
+/**
+ * @private
+ */
 const hasSetCustomValidity = <T>(obj: T): obj is T & { setCustomValidity: unknown } => {
     return Boolean(obj && typeof obj === 'object' && 'setCustomValidity' in obj);
 }
 
+/**
+ * @private
+ */
 export const createUseFieldRef = <Values>({ useFieldError }: CreateUseFieldRefDependencies<Values>) => {
     /**
      * Handle field logic which requires the native element.

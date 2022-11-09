@@ -19,11 +19,17 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>> 
   hasChanged: boolean;
 }
 
+/**
+ * @private
+ */
 export interface CreateUseFieldValueDependencies<Values> {
   useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
   useFieldChangeValue: <Name extends ValuesFields<Values>>(arg: UseFieldChangeValueArg<Name>) => UseFieldChangeValueReturn<Values, Name>;
 }
 
+/**
+ * @private
+ */
 export const createUseFieldValue = <Values>({ useMainContext, useFieldChangeValue }: CreateUseFieldValueDependencies<Values>) => {
   /**
    * Logic around a fields value. Handles getting the field value out of the main context, the initial value, changing the value and if the value has changed.

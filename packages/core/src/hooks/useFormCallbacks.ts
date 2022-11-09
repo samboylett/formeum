@@ -21,10 +21,16 @@ export type UseFormCallbacksReturn<Values> = Pick<
   | 'runValidation'
 >;
 
+/**
+ * @private
+ */
 export interface CreateUseFormCallbacksDependencies<Values> {
   useCurrentContext: () => UseCurrentContextReturn<Values>;
 }
 
+/**
+ * @private
+ */
 export const createUseFormCallbacks = <Values>({ useCurrentContext }: CreateUseFormCallbacksDependencies<Values>) => {
   /**
    * Get all functions from the form handler. Will never trigger a re-render.
