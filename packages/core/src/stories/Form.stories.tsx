@@ -18,7 +18,7 @@ interface FormDataType {
 const form = createForm<FormDataType>();
 
 export const Form = () => {
-  const { FormHandler, FormField, FormHTMLInput, FormHTMLCheckbox, FormValues } = form;
+  const { FormHandler, FormField, FormHTMLInput, FormHTMLCheckbox, FormValues, ContextMain, FormCallbacks } = form;
 
   return (
     <FormHandler initialValues={{
@@ -28,7 +28,7 @@ export const Form = () => {
       subForm: {
         foo: '',
       }
-    }} onSubmit={() => null}>
+    }} onSubmit={() => new Promise(r => setTimeout(r, 500))}>
       <label>
         Foo
         <FormHTMLInput name="foo">
@@ -59,10 +59,32 @@ export const Form = () => {
         </FormHTMLInput>
       </label>
 
+      <FormCallbacks>
+        {({ current }) => (
+          <button onClick={() => current.submitForm()}>
+            Submit
+          </button>
+        )}
+      </FormCallbacks>
+
       <pre>
         <FormValues>
           {values => JSON.stringify(values, null, 2)}
         </FormValues>
+      </pre>
+
+      <pre>
+        <ContextMain.Consumer shouldUpdate={() => true}>
+            {context => (
+              <>
+                {JSON.stringify({
+                  touched: [...context.touched],
+                  errors: context.errors,
+                  isSubmitting: context.isSubmitting,
+                }, null, 2)}
+              </>
+            )}
+        </ContextMain.Consumer>
       </pre>
     </FormHandler>
   );
