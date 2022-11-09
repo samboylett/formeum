@@ -1,5 +1,5 @@
 import { isEqual } from "lodash";
-import { memo, ReactNode, useMemo } from "react";
+import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { UseMainContextArg, UseMainContextReturn } from "../hooks/useMainContext";
 
 export interface FormValuesProps<Values> {
@@ -13,7 +13,13 @@ export interface CreateFormValuesDependencies<Values> {
 export const createFormValues = <Values extends unknown>({
   useMainContext,
 }: CreateFormValuesDependencies<Values>) => {
-  const FormValues = ({ children }: FormValuesProps<Values>) => {
+  /**
+   * Get all the form values.
+   * 
+   * @param {FormValuesProps<Values>} props
+   * @returns {ReactElement}
+   */
+  const FormValues = ({ children }: FormValuesProps<Values>): ReactElement => {
     const { values } = useMainContext({
       shouldUpdate: (oldValue, newValue) => !isEqual(oldValue.values, newValue.values),
     });

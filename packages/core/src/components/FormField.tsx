@@ -1,4 +1,4 @@
-import { memo, ReactNode, useMemo } from "react";
+import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { UseFieldArg, UseFieldReturn } from "../hooks/useField";
 import { ValuesFields } from "../types/ValuesFields";
 
@@ -13,7 +13,13 @@ export interface CreateFormFieldDependencies<Values> {
 export const createFormField = <Values extends unknown>({
   useField,
 }: CreateFormFieldDependencies<Values>) => {
-  const FormField = <Name extends ValuesFields<Values>>({ children, ...rest }: FormFieldProps<Values, Name>) => {
+  /**
+   * Get all logic handlers for a field.
+   * 
+   * @param {FormFieldProps<Values, Name>} props
+   * @returns {ReactElement}
+   */
+  const FormField = <Name extends ValuesFields<Values>>({ children, ...rest }: FormFieldProps<Values, Name>): ReactElement => {
     const arg = useField<Name>(rest);
 
     return useMemo(() => (
