@@ -2,12 +2,12 @@ import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { UseHTMLInputArg, UseHTMLInputReturn } from "../hooks/useHTMLInput";
 import { ValuesFields } from "../types/ValuesFields";
 
-export interface FormHTMLInputProps<Values, Name extends ValuesFields<Values>> extends UseHTMLInputArg<Name> {
+export interface FormHTMLInputProps<Values, Name extends ValuesFields<Values>> extends UseHTMLInputArg<Values, Name> {
   children: (arg: UseHTMLInputReturn<Values, Name>) => ReactNode;
 }
 
 export interface CreateFormHTMLInputDependencies<Values> {
-  useHTMLInput: <Name extends ValuesFields<Values>>(arg: UseHTMLInputArg<Name>) => UseHTMLInputReturn<Values, Name>;
+  useHTMLInput: <Name extends ValuesFields<Values>>(arg: UseHTMLInputArg<Values, Name>) => UseHTMLInputReturn<Values, Name>;
 }
 
 export const createFormHTMLInput = <Values extends unknown>({

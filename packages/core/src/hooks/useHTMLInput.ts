@@ -4,9 +4,10 @@ import { UseFieldBlurArg, UseFieldBlurReturn } from './useFieldBlur';
 import { UseFieldFocusArg, UseFieldFocusReturn } from './useFieldFocus';
 import { UseChangeHandlerArg, UseChangeHandlerReturn } from './useChangeHandler';
 import { UseFieldValueArg, UseFieldValueReturn } from './useFieldValue';
+import { DeepIndex } from '../types/DeepIndex';
 
-export interface UseHTMLInputArg<Name> {
-    name: Name;
+export interface UseHTMLInputArg<Values, Name extends ValuesFields<Values>> {
+    name: DeepIndex<Values, Name> extends string ? Name : never;
 }
 
 export interface UseHTMLInputReturn<Values, Name extends ValuesFields<Values>> extends UseFieldBlurReturn, UseFieldFocusReturn {
@@ -26,10 +27,10 @@ export const createUseHTMLInput = <Values>({ useFieldValue, useFieldFocus, useFi
     /**
      * Get the props to be used on a native HTML input, textarea or select element.
      * 
-     * @param {UseHTMLInputArg<Name>} 
+     * @param {UseHTMLInputArg<Values, Name>} 
      * @returns {UseHTMLInputReturn<Values, Name>}
      */
-    const useHTMLInput = <Name extends ValuesFields<Values>>({ name }: UseHTMLInputArg<Name>): UseHTMLInputReturn<Values, Name> => {
+    const useHTMLInput = <Name extends ValuesFields<Values>>({ name }: UseHTMLInputArg<Values, Name>): UseHTMLInputReturn<Values, Name> => {
         const { value: baseValue } = useFieldValue<Name>({ name });
         const { onFocus } = useFieldFocus<Name>({ name });
         const { onBlur } = useFieldBlur<Name>({ name });
