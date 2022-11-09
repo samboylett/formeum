@@ -16,12 +16,9 @@ const storyForm = createForm<StoryValues>();
 
 export default {
   title: "FormHTMLCheckbox",
-  parameters: {
-    viewMode: 'docs',
-  },
   component: storyForm.FormHTMLCheckbox,
   decorators: [
-    Story => (   
+    story => (   
       <storyForm.FormHandler
         initialValues={{
           booleanField: false,
@@ -38,7 +35,7 @@ export default {
           erroredField: "Error",
         })}
       >
-        <Story />
+        {story()}
       </storyForm.FormHandler>
     )
   ]

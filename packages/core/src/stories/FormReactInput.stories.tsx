@@ -30,12 +30,9 @@ const UpperCaseInput = forwardRef<HTMLInputElement, UpperCaseInputProps>(({ onCh
 
 export default {
   title: "FormReactInput",
-  parameters: {
-    viewMode: 'docs',
-  },
   component: storyForm.FormReactInput,
   decorators: [
-    Story => (   
+    story => (   
       <storyForm.FormHandler
         initialValues={{
           stringField: "",
@@ -52,10 +49,10 @@ export default {
           erroredField: "Error",
         })}
       >
-        <Story />
+        {story()}
       </storyForm.FormHandler>
     )
-  ]
+  ],
 } as Meta<FormReactInputProps<StoryValues, ValuesFields<StoryValues>>>;
 
 export const Default = () => (

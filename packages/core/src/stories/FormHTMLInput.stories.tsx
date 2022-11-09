@@ -16,12 +16,9 @@ const storyForm = createForm<StoryValues>();
 
 export default {
   title: "FormHTMLInput",
-  parameters: {
-    viewMode: 'docs',
-  },
   component: storyForm.FormHTMLInput,
   decorators: [
-    Story => (   
+    story => (   
       <storyForm.FormHandler
         initialValues={{
           stringField: "",
@@ -38,7 +35,7 @@ export default {
           erroredField: "Error",
         })}
       >
-        <Story />
+        {story()}
       </storyForm.FormHandler>
     )
   ]
