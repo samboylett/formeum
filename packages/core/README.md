@@ -27,9 +27,8 @@ Each form must be generated using the `createForm` function. This generates the 
 import { createForm } from '@formeum/core';
 
 interface MyFormValues {
-    firstName: string;
-    lastName: string;
-    agree: boolean;
+    myField: string;
+    // more fields here
 }
 
 export const myForm = createForm<MyFormValues>();
@@ -41,11 +40,11 @@ The return value now contains all the typed form hooks and components. These can
 import { myForm } from './myForm.ts';
 
 export const MyComponent = () => (
-    <myForm.FormHandler initialValues={{ firstName: "" }} onSubmit={() => Promise.resolve()}>
+    <myForm.FormHandler initialValues={{ myField: "" }} onSubmit={() => Promise.resolve()}>
         <label>
             First name
 
-            <myForm.FormHTMLInput name="firstName">
+            <myForm.FormHTMLInput name="myField">
                 {props => <input {...props} />}
             </myForm.FormHTMLInput>
         </label>
