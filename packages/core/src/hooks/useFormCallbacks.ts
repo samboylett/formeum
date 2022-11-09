@@ -9,7 +9,7 @@ import { UseCurrentContextReturn } from './useCurrentContext';
 import { UseFieldChangeValueArg, UseFieldChangeValueReturn } from './useFieldChangeValue';
 import { UseFormHandlerReturn } from './useFormHandler';
 
-export type UseFormCallbacksReturn<Values> = Readonly<MutableRefObject<Pick<
+export type UseFormCallbacksReturn<Values> = Pick<
   UseFormHandlerReturn<Values>,
   | 'submitForm'
   | 'setValues'
@@ -19,7 +19,7 @@ export type UseFormCallbacksReturn<Values> = Readonly<MutableRefObject<Pick<
   | 'setFieldError'
   | 'setFieldTouched'
   | 'runValidation'
->>>;
+>;
 
 export interface CreateUseFormCallbacksDependencies<Values> {
   useCurrentContext: () => UseCurrentContextReturn<Values>;
@@ -34,21 +34,17 @@ export const createUseFormCallbacks = <Values>({ useCurrentContext }: CreateUseF
   const useFormCallbacks = (): UseFormCallbacksReturn<Values> => {
     const contextRef = useCurrentContext();
 
-    return useMemo<UseFormCallbacksReturn<Values>>(() => ({
-      get current() {
-        return pick(
-          contextRef.current,
-          'submitForm',
-          'setValues',
-          'setErrors',
-          'setTouched',
-          'setFieldValue',
-          'setFieldError',
-          'setFieldTouched',
-          'runValidation',
-        );
-      }
-    }), [contextRef])
+    return useMemo<UseFormCallbacksReturn<Values>>(() => pick(
+      contextRef.current,
+      'submitForm',
+      'setValues',
+      'setErrors',
+      'setTouched',
+      'setFieldValue',
+      'setFieldError',
+      'setFieldTouched',
+      'runValidation',
+    ), [contextRef]);
   };
 
   return useFormCallbacks;

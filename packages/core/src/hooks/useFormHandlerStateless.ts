@@ -160,7 +160,7 @@ export const createUseFormHandlerStateless = <Values>() => {
         if (shouldValidate) {
           const nextErrors = await runValidation({ newValues: values });
 
-          if (Object.keys(nextErrors).length) return;
+          if (Object.values(nextErrors).some(Boolean)) return;
         }
 
         await onSubmit(values);

@@ -21,14 +21,21 @@ export const Form = () => {
   const { FormHandler, FormField, FormHTMLInput, FormHTMLCheckbox, FormValues, ContextMain, FormCallbacks } = form;
 
   return (
-    <FormHandler initialValues={{
-      foo: '',
-      bar: 0,
-      yes: false,
-      subForm: {
+    <FormHandler
+      initialValues={{
         foo: '',
-      }
-    }} onSubmit={() => new Promise(r => setTimeout(r, 500))}>
+        bar: 0,
+        yes: false,
+        subForm: {
+          foo: '',
+        }
+      }}
+      onSubmit={() => new Promise(r => setTimeout(r, 500))}
+      validate={values => Promise.resolve({
+        bar: values.bar === 5 ? undefined : 'Must be 5',
+        "subForm.foo": values.subForm.foo === "" ? "Required" : undefined,
+      })}
+    >
       <label>
         Foo
         <FormHTMLInput name="foo">
@@ -39,8 +46,8 @@ export const Form = () => {
       <label>
         Bar
         <FormField name="bar">
-          {({ name, value, changeValue }) => (
-            <input type="number" name={name} value={value} onChange={e => changeValue(parseInt(e.target.value))} />
+          {({ name, value, changeValue, onFocus, onBlur }) => (
+            <input type="number" name={name} value={value} onFocus={onFocus} onBlur={onBlur} onChange={e => changeValue(parseInt(e.target.value))} />
           )}
         </FormField>
       </label>
@@ -60,8 +67,8 @@ export const Form = () => {
       </label>
 
       <FormCallbacks>
-        {({ current }) => (
-          <button onClick={() => current.submitForm()}>
+        {({ submitForm }) => (
+          <button onClick={() => submitForm()}>
             Submit
           </button>
         )}
