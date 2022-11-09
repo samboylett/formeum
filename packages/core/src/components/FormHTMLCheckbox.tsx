@@ -2,12 +2,12 @@ import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { UseHTMLCheckboxArg, UseHTMLCheckboxReturn } from "../hooks/useHTMLCheckbox";
 import { ValuesFields } from "../types/ValuesFields";
 
-export interface FormHTMLCheckboxProps<Values, Name extends ValuesFields<Values>> extends UseHTMLCheckboxArg<Name> {
+export interface FormHTMLCheckboxProps<Values, Name extends ValuesFields<Values>> extends UseHTMLCheckboxArg<Values, Name> {
   children: (arg: UseHTMLCheckboxReturn<Values, Name>) => ReactNode;
 }
 
 export interface CreateFormHTMLCheckboxDependencies<Values> {
-  useHTMLCheckbox: <Name extends ValuesFields<Values>>(arg: UseHTMLCheckboxArg<Name>) => UseHTMLCheckboxReturn<Values, Name>;
+  useHTMLCheckbox: <Name extends ValuesFields<Values>>(arg: UseHTMLCheckboxArg<Values, Name>) => UseHTMLCheckboxReturn<Values, Name>;
 }
 
 export const createFormHTMLCheckbox = <Values extends unknown>({

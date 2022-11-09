@@ -8,54 +8,56 @@ export default {
 interface FormDataType {
   foo: string;
   bar: number;
+  yes: boolean;
 
   subForm: {
-    yup: string;
+    foo: string;
   };
 }
 
 const form = createForm<FormDataType>();
 
 export const Form = () => {
-  const { FormHandler, FormField, FormValues } = form;
+  const { FormHandler, FormField, FormHTMLInput, FormHTMLCheckbox, FormValues } = form;
 
   return (
     <FormHandler initialValues={{
       foo: '',
       bar: 0,
+      yes: false,
       subForm: {
-        yup: '',
+        foo: '',
       }
     }} onSubmit={() => null}>
-      <FormField name="foo">
-        {({ name, value, handleChangeEvent }) => (
-          <label>
-            Foo
+      <label>
+        Foo
+        <FormHTMLInput name="foo">
+          {props => <input {...props} />}
+        </FormHTMLInput>
+      </label>
 
-            <input name={name} value={value} onChange={handleChangeEvent} />
-          </label>
-        )}
-      </FormField>
-
-      <FormField name="bar">
-        {({ name, value, changeValue }) => (
-          <label>
-            Bar
-
+      <label>
+        Bar
+        <FormField name="bar">
+          {({ name, value, changeValue }) => (
             <input type="number" name={name} value={value} onChange={e => changeValue(parseInt(e.target.value))} />
-          </label>
-        )}
-      </FormField>
+          )}
+        </FormField>
+      </label>
 
-      <FormField name="subForm.yup">
-        {({ name, value, handleChangeEvent }) => (
-          <label>
-            Sub Form Yup
+      <label>
+        Yes
+        <FormHTMLCheckbox name="yes">
+          {props => <input {...props} />}
+        </FormHTMLCheckbox>
+      </label>
 
-            <input name={name} value={value} onChange={handleChangeEvent} />
-          </label>
-        )}
-      </FormField>
+      <label>
+        Sub Form Foo
+        <FormHTMLInput name="subForm.foo">
+          {props => <input {...props} />}
+        </FormHTMLInput>
+      </label>
 
       <pre>
         <FormValues>
