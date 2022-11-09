@@ -7,7 +7,7 @@ module.exports = {
       jsx: true
     }
   },
-  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "plugin:storybook/recommended"],
+  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/recommended", "plugin:storybook/recommended", "prettier"],
   rules: {
     "@typescript-eslint/no-unnecessary-type-constraint": "off",
     "@typescript-eslint/no-explicit-any": "off",
