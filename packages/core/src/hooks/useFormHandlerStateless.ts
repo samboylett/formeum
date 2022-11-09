@@ -5,6 +5,7 @@ import { merge, set, isEqual } from 'lodash';
 import { ValuesFields } from "../types/ValuesFields";
 import useEventCallback from 'use-event-callback';
 import { FormTouched } from "../types/FormTouched";
+import { AlreadySubmittingError } from "../errors/AlreadySubmittingError";
 const latest = require('promise-latest');
 
 export interface UseFormHandlerStatelessArg<Values> {
@@ -24,6 +25,8 @@ export interface UseFormHandlerStatelessArg<Values> {
   touchOnBlur?: boolean;
   touchOnFocus?: boolean;
   onSubmit: (values: Values) => void;
+  isSubmitting: boolean;
+  onIsSubmitting: (nextIsSubmitting: boolean) => void;
 }
 
 export interface UseFormHandlerStatelessReturn<Values> {
@@ -38,6 +41,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
   validateOnBlur: boolean;
   validateOnFocus: boolean;
   validateOnSubmit: boolean;
+  isSubmitting: boolean;
 
   /**
    * Update the form data in its entirity.
@@ -95,6 +99,8 @@ export interface UseFormHandlerStatelessReturn<Values> {
    * Submit the form.
    * 
    * @param {boolean?} shouldValidate
+   * @throws {AlreadySubmittingError}
+   * @returns {Promise<void>}
    */
   submitForm: (shouldValidate?: boolean) => Promise<void>;
 }
@@ -123,6 +129,8 @@ export const createUseFormHandlerStateless = <Values>() => {
     touchOnChange = true,
     touchOnBlur = true,
     touchOnFocus = false,
+    isSubmitting,
+    onIsSubmitting,
   }: UseFormHandlerStatelessArg<Values>): UseFormHandlerStatelessReturn<Values> => {
     const setErrors = useEventCallback((newErrors: FormErrors<Values>) => {
       if (isEqual(newErrors, errors)) return;
@@ -142,13 +150,23 @@ export const createUseFormHandlerStateless = <Values>() => {
     });
 
     const submitForm = useEventCallback(async (shouldValidate: boolean = validateOnSubmit) => {
-      if (shouldValidate) {
-        const nextErrors = await runValidation({ newValues: values });
-
-        if (Object.keys(nextErrors).length) return;
+      if (isSubmitting) {
+        throw new AlreadySubmittingError("Already submitting form");
       }
 
-      await onSubmit(values);
+      try {
+        onIsSubmitting(true);
+
+        if (shouldValidate) {
+          const nextErrors = await runValidation({ newValues: values });
+
+          if (Object.keys(nextErrors).length) return;
+        }
+
+        await onSubmit(values);
+      } finally {
+        onIsSubmitting(false);
+      }
     });
 
     const setValues = useEventCallback(async (newValues: Values, shouldValidate: boolean = validateOnChange) => {
@@ -205,6 +223,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       validateOnFocus,
       runValidation,
       validateOnSubmit,
+      isSubmitting,
     };
   };
 

@@ -1,0 +1,1 @@
+export class FormeumError extends Error {}
