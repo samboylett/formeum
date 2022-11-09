@@ -10,8 +10,8 @@
   "scripts": {
     "test": "jest",
     "build": "rollup -c",
-    "eslint": "eslint --max-warnings=0 --fix src/**/*",
-    "eslint:ci": "eslint --max-warnings=0 src/**/*",
+    "eslint": "eslint --max-warnings=0 --fix src/**/*.ts{,x}",
+    "eslint:ci": "eslint --max-warnings=0 src/**/*.ts{,x}",
     "prettier": "prettier --write ./src",
     "prettier:ci": "prettier --check ./src",
     "storybook": "start-storybook -p 6006",
