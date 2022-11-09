@@ -34,6 +34,7 @@ export const createContextMain = <Values>() =>
     validateOnChange: false,
     validateOnFocus: false,
     validateOnSubmit: true,
+    validateOnMount: false,
     submitForm: noContextCallback,
     runValidation: noContextCallback,
     isSubmitting: false,

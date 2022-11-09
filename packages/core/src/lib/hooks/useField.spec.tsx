@@ -52,6 +52,7 @@ describe("useField", () => {
                 validateOnChange: false,
                 validateOnFocus: false,
                 validateOnSubmit: true,
+                validateOnMount: false,
                 isSubmitting: false,
                 setValues: jest.fn(),
                 setErrors: jest.fn(),
