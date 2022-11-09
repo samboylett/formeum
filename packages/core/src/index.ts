@@ -23,6 +23,7 @@ export * from './hooks/useHTMLInput';
 export * from './hooks/useMainContext';
 export * from './hooks/useReactInput';
 export * from './hooks/useFormCallbacks';
+export * from './hooks/useFieldRef';
 
 export * from './components/FormField';
 export * from './components/FormHandler';
