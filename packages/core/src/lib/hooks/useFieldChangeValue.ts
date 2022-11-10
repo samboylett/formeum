@@ -48,13 +48,13 @@ export const createUseFieldChangeValue = <Values>({
     name,
   }: UseFieldChangeValueArg<Name>): UseFieldChangeValueReturn<Values, Name> => {
     const contextRef = useCurrentContext();
-    const { isTouched, setIsTouched } = useFieldTouched<Name>({ name });
+    const { setIsTouched } = useFieldTouched<Name>({ name });
 
     const changeValue = useEventCallback(
       (newValue: DeepIndex<Values, Name>) => {
         contextRef.current.setFieldValue(name, newValue);
 
-        if (!isTouched && contextRef.current.touchOnChange) setIsTouched(true);
+        if (contextRef.current.touchOnChange) setIsTouched(true);
       }
     );
 
