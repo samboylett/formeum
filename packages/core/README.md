@@ -1,5 +1,6 @@
 [![npm version](https://badge.fury.io/js/@formeum%2Fcore.svg)](https://badge.fury.io/js/@formeum%2Fcore)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![codecov](https://codecov.io/gh/samboylett/formeum/branch/master/graph/badge.svg?token=MWFC08G9UW)](https://codecov.io/gh/samboylett/formeum)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d70dc86c641140eda5ea1a04963bfe6c)](https://www.codacy.com/gh/samboylett/formeum/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=samboylett/formeum&amp;utm_campaign=Badge_Grade)
 [![Node.js CI](https://github.com/samboylett/formeum/actions/workflows/node.js.yml/badge.svg)](https://github.com/samboylett/formeum/actions/workflows/node.js.yml)
