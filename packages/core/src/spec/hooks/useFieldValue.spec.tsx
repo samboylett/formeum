@@ -1,6 +1,11 @@
 import { renderHook, RenderHookResult } from "@testing-library/react";
 import { UseFieldValueArg, UseFieldValueReturn } from "../../lib";
-import { TestForm, TestFormValues, createTestProvider, TestProviderHandler } from "../TestForm";
+import {
+  TestForm,
+  TestFormValues,
+  createTestProvider,
+  TestProviderHandler,
+} from "../TestForm";
 
 describe("useFieldValue", () => {
   test("is a function", () => {
@@ -20,19 +25,14 @@ describe("useFieldValue", () => {
       hook = renderHook<
         UseFieldValueReturn<TestFormValues, "stringField">,
         UseFieldValueArg<"stringField">
-      >(
-        TestForm.useFieldValue,
-        {
-          initialProps: {
-            name: "stringField",
-          },
-          wrapper: ({ children }) => (
-            <provider.TestProvider>
-              {children}
-            </provider.TestProvider>
-          ),
-        }
-      );
+      >(TestForm.useFieldValue, {
+        initialProps: {
+          name: "stringField",
+        },
+        wrapper: ({ children }) => (
+          <provider.TestProvider>{children}</provider.TestProvider>
+        ),
+      });
     });
 
     test.each([
@@ -53,7 +53,10 @@ describe("useFieldValue", () => {
       });
 
       test("calls setFieldValue with field name and new value", () => {
-        expect(provider.mocks.setFieldValue).toHaveBeenCalledWith("stringField", "test");
+        expect(provider.mocks.setFieldValue).toHaveBeenCalledWith(
+          "stringField",
+          "test"
+        );
       });
     });
 
@@ -63,9 +66,9 @@ describe("useFieldValue", () => {
           values: {
             stringField: "new-val",
           },
-        })
+        });
       });
-      
+
       test.each([
         ["value", "new-val"],
         ["initialValue", ""],
