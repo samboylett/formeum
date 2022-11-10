@@ -1,10 +1,6 @@
 import { renderHook, RenderHookResult } from "@testing-library/react";
 import { UseFieldBlurArg, UseFieldBlurReturn } from "../../lib";
-import {
-  TestForm,
-  createTestProvider,
-  TestProviderHandler,
-} from "../TestForm";
+import { TestForm, createTestProvider, TestProviderHandler } from "../TestForm";
 
 describe("useFieldBlur", () => {
   test("is a function", () => {
