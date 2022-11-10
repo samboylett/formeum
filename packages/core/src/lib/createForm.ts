@@ -125,6 +125,7 @@ export function createForm<Values extends unknown>() {
     useFormCallbacks,
     useFieldRef,
     useFieldDisabled,
+    useFieldChangeValue,
 
     ContextMain,
 
