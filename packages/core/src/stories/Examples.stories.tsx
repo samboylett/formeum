@@ -104,3 +104,9 @@ PreFilled.args = {
     },
   },
 };
+
+export const DisabledWhileSubmitting = Template.bind({});
+DisabledWhileSubmitting.args = {
+  disabledWhileSubmitting: true,
+  onSubmit: () => new Promise((r) => setTimeout(r, 2000)),
+};

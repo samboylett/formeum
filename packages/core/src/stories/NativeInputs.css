@@ -21,6 +21,10 @@ input {
   border: 0.1rem solid #111;
 }
 
+input:disabled {
+  opacity: 0.5;
+}
+
 input:invalid {
   border-color: red;
 }
