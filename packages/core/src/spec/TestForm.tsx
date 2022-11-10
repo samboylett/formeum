@@ -1,4 +1,7 @@
-import { ReactNode } from "react";
+import { merge } from "lodash";
+import { ReactNode, useState } from "react";
+import { act } from "react-dom/test-utils";
+import useEventCallback from "use-event-callback";
 import { ContextMainInterface, createForm } from "../lib";
 
 export interface TestFormValues {
@@ -15,12 +18,30 @@ export interface TestFormValues {
   
 export const TestForm = createForm<TestFormValues>();
 
-export const TestProvider = ({ children, overrides = {} }: {
-    children: ReactNode;
-    overrides?: Partial<ContextMainInterface<TestFormValues>>;
-}) => (
-    <TestForm.ContextMain.Provider
-        value={{
+export const createTestProvider = () => {
+    const mocks = {
+        setValues: jest.fn(),
+        setErrors: jest.fn(),
+        setTouched: jest.fn(),
+        setFieldError: jest.fn(),
+        setFieldValue: jest.fn(),
+        setFieldTouched: jest.fn(),
+        runValidation: jest.fn(),
+        submitForm: jest.fn(),
+        onSubmit: jest.fn(),
+    } as const;
+
+    let innerMergeValue: (value: Partial<ContextMainInterface<TestFormValues>>) => void;
+    const mergeValue = (value: Partial<ContextMainInterface<TestFormValues>>) => {
+        act(() => {
+            innerMergeValue(value)
+        });
+    };
+
+    const TestProvider = ({ children }: {
+        children: ReactNode;
+    }) => {
+        const [value, setValue] = useState<ContextMainInterface<TestFormValues>>({
             initialValues: {
                 stringField: "",
                 numberField: 0,
@@ -55,18 +76,21 @@ export const TestProvider = ({ children, overrides = {} }: {
             validateOnMount: false,
             isSubmitting: false,
             disabledWhileSubmitting: false,
-            setValues: jest.fn(),
-            setErrors: jest.fn(),
-            setTouched: jest.fn(),
-            setFieldError: jest.fn(),
-            setFieldValue: jest.fn(),
-            setFieldTouched: jest.fn(),
-            runValidation: jest.fn(),
-            submitForm: jest.fn(),
-            onSubmit: jest.fn(),
-            ...overrides
-        }}
-    >
-        {children}
-    </TestForm.ContextMain.Provider>
-)
+            ...mocks,
+        });
+
+        innerMergeValue = useEventCallback(newValue => {
+            setValue(merge({}, value, newValue));
+        });
+        
+        return (
+            <TestForm.ContextMain.Provider value={value}>
+                {children}
+            </TestForm.ContextMain.Provider>
+        );
+    };
+
+    return { TestProvider, mocks, mergeValue } as const;
+}
+
+export type TestProviderHandler = ReturnType<typeof createTestProvider>;
