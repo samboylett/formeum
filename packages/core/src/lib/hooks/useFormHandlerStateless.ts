@@ -21,6 +21,7 @@ export interface UseFormHandlerStatelessArg<Values> {
   validateOnFocus?: boolean;
   validateOnSubmit?: boolean;
   validateOnMount?: boolean;
+  disabledWhileSubmitting?: boolean;
   values: Values;
   onValues: (newValue: Values) => void;
   errors: FormErrors<Values>;
@@ -48,6 +49,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
   validateOnFocus: boolean;
   validateOnSubmit: boolean;
   validateOnMount: boolean;
+  disabledWhileSubmitting: boolean;
   isSubmitting: boolean;
 
   /**
@@ -150,6 +152,7 @@ export const createUseFormHandlerStateless = <Values>() => {
     validateOnFocus = false,
     validateOnSubmit = true,
     validateOnMount = false,
+    disabledWhileSubmitting = false,
     values,
     onValues,
     errors,
@@ -296,6 +299,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       validateOnSubmit,
       isSubmitting,
       onSubmit,
+      disabledWhileSubmitting,
     };
   };
 

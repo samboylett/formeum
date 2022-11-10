@@ -11,6 +11,7 @@ import { createUseCurrentContext } from "./hooks/useCurrentContext";
 import { createUseField } from "./hooks/useField";
 import { createUseFieldBlur } from "./hooks/useFieldBlur";
 import { createUseFieldChangeValue } from "./hooks/useFieldChangeValue";
+import { createUseFieldDisabled } from "./hooks/useFieldDisabled";
 import { createUseFieldError } from "./hooks/useFieldError";
 import { createUseFieldFocus } from "./hooks/useFieldFocus";
 import { createUseFieldRef } from "./hooks/useFieldRef";
@@ -53,6 +54,7 @@ export function createForm<Values extends unknown>() {
     useCurrentContext,
     useFieldTouched,
   });
+  const useFieldDisabled = createUseFieldDisabled<Values>({ useMainContext });
   const useFieldFocus = createUseFieldFocus<Values>({
     useCurrentContext,
     useFieldTouched,
@@ -65,6 +67,7 @@ export function createForm<Values extends unknown>() {
     useFieldTouched,
     useFieldBlur,
     useFieldFocus,
+    useFieldDisabled,
   });
   const useHTMLInput = createUseHTMLInput<Values>({
     useFieldValue,
@@ -72,6 +75,7 @@ export function createForm<Values extends unknown>() {
     useFieldBlur,
     useChangeHandler,
     useFieldRef,
+    useFieldDisabled,
   });
   const useHTMLCheckbox = createUseHTMLCheckbox<Values>({
     useFieldValue,
@@ -79,12 +83,14 @@ export function createForm<Values extends unknown>() {
     useFieldBlur,
     useChangeHandler,
     useFieldRef,
+    useFieldDisabled,
   });
   const useReactInput = createUseReactInput<Values>({
     useFieldBlur,
     useFieldFocus,
     useFieldValue,
     useFieldRef,
+    useFieldDisabled,
   });
   const useFormCallbacks = createUseFormCallbacks<Values>({
     useCurrentContext,
@@ -118,6 +124,7 @@ export function createForm<Values extends unknown>() {
     useReactInput,
     useFormCallbacks,
     useFieldRef,
+    useFieldDisabled,
 
     ContextMain,
 

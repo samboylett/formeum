@@ -39,4 +39,5 @@ export const createContextMain = <Values>() =>
     runValidation: noContextCallback,
     onSubmit: noContextCallback,
     isSubmitting: false,
+    disabledWhileSubmitting: false,
   });

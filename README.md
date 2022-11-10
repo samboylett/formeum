@@ -2,6 +2,9 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/d70dc86c641140eda5ea1a04963bfe6c)](https://www.codacy.com/gh/samboylett/formeum/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=samboylett/formeum&amp;utm_campaign=Badge_Grade)
 
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+
 # Formeum
 
 A different type of form library - built from the ground up for performance, usability, and to put power in the developers hands. Unlike other context based form libraries, it is also strictly typed using Typescript.

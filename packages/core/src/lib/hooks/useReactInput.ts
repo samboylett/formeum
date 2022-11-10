@@ -6,6 +6,7 @@ import { UseChangeHandlerReturn } from "./useChangeHandler";
 import { UseFieldValueArg, UseFieldValueReturn } from "./useFieldValue";
 import { DeepIndex } from "../types/DeepIndex";
 import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
+import { UseFieldDisabledReturn } from "./useFieldDisabled";
 
 export interface UseReactInputArg<Name> {
   name: Name;
@@ -14,7 +15,8 @@ export interface UseReactInputArg<Name> {
 export interface UseReactInputReturn<Values, Name extends ValuesFields<Values>>
   extends UseFieldBlurReturn,
     UseFieldFocusReturn,
-    UseFieldRefReturn {
+    UseFieldRefReturn,
+    UseFieldDisabledReturn {
   name: Name;
   value: DeepIndex<Values, Name>;
   onChange: UseChangeHandlerReturn<Values, Name>["changeValue"];
@@ -36,6 +38,7 @@ export interface CreateUseReactInputDependencies<Values> {
   useFieldRef: <Name extends ValuesFields<Values>>(
     arg: UseFieldRefArg<Name>
   ) => UseFieldRefReturn;
+  useFieldDisabled: () => UseFieldDisabledReturn;
 }
 
 /**
@@ -46,6 +49,7 @@ export const createUseReactInput = <Values>({
   useFieldFocus,
   useFieldBlur,
   useFieldRef,
+  useFieldDisabled,
 }: CreateUseReactInputDependencies<Values>) => {
   /**
    * Get the props to be used on a React style input, i.e. the change event should contain just the field value in the first argument rather than a change event.
@@ -60,6 +64,7 @@ export const createUseReactInput = <Values>({
     const { onFocus } = useFieldFocus<Name>({ name });
     const { onBlur } = useFieldBlur<Name>({ name });
     const { ref } = useFieldRef<Name>({ name });
+    const { disabled } = useFieldDisabled();
 
     return useMemo(
       () => ({
@@ -69,8 +74,9 @@ export const createUseReactInput = <Values>({
         onFocus,
         onChange: changeValue,
         ref,
+        disabled,
       }),
-      [name, value, onBlur, onFocus, changeValue, ref]
+      [name, value, onBlur, onFocus, changeValue, ref, disabled]
     );
   };
 

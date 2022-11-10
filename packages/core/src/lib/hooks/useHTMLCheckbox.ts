@@ -9,6 +9,7 @@ import {
 import { UseFieldValueArg, UseFieldValueReturn } from "./useFieldValue";
 import { DeepIndex } from "../types/DeepIndex";
 import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
+import { UseFieldDisabledReturn } from "./useFieldDisabled";
 
 export interface UseHTMLCheckboxArg<Values, Name extends ValuesFields<Values>> {
   name: DeepIndex<Values, Name> extends boolean ? Name : never;
@@ -19,7 +20,8 @@ export interface UseHTMLCheckboxReturn<
   Name extends ValuesFields<Values>
 > extends UseFieldBlurReturn,
     UseFieldFocusReturn,
-    UseFieldRefReturn {
+    UseFieldRefReturn,
+    UseFieldDisabledReturn {
   name: Name;
   checked: boolean;
   value: Name;
@@ -46,6 +48,7 @@ export interface CreateUseHTMLCheckboxDependencies<Values> {
   useFieldRef: <Name extends ValuesFields<Values>>(
     arg: UseFieldRefArg<Name>
   ) => UseFieldRefReturn;
+  useFieldDisabled: () => UseFieldDisabledReturn;
 }
 
 /**
@@ -57,6 +60,7 @@ export const createUseHTMLCheckbox = <Values>({
   useFieldBlur,
   useChangeHandler,
   useFieldRef,
+  useFieldDisabled,
 }: CreateUseHTMLCheckboxDependencies<Values>) => {
   /**
    * Get the props to use for a native HTML checkbox input as a boolean value.
@@ -72,6 +76,7 @@ export const createUseHTMLCheckbox = <Values>({
     const { onBlur } = useFieldBlur<Name>({ name });
     const { handleCheckboxEvent } = useChangeHandler<Name>({ name });
     const { ref } = useFieldRef<Name>({ name });
+    const { disabled } = useFieldDisabled();
 
     const checked = Boolean(value);
 
@@ -85,8 +90,9 @@ export const createUseHTMLCheckbox = <Values>({
         onChange: handleCheckboxEvent,
         type: "checkbox",
         ref,
+        disabled,
       }),
-      [name, checked, onBlur, onFocus, handleCheckboxEvent, ref]
+      [name, checked, onBlur, onFocus, handleCheckboxEvent, ref, disabled]
     );
   };
 

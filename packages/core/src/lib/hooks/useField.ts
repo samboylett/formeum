@@ -9,6 +9,7 @@ import {
 import { UseFieldTouchedArg, UseFieldTouchedReturn } from "./useFieldTouched";
 import { UseFieldBlurArg, UseFieldBlurReturn } from "./useFieldBlur";
 import { UseFieldFocusArg, UseFieldFocusReturn } from "./useFieldFocus";
+import { UseFieldDisabledReturn } from "./useFieldDisabled";
 
 export interface UseFieldArg<Name> {
   name: Name;
@@ -19,7 +20,8 @@ export interface UseFieldReturn<Values, Name extends ValuesFields<Values>>
     UseFieldErrorReturn,
     UseChangeHandlerReturn<Values, Name>,
     UseFieldBlurReturn,
-    UseFieldFocusReturn {
+    UseFieldFocusReturn,
+    UseFieldDisabledReturn {
   name: Name;
 }
 
@@ -45,6 +47,7 @@ export interface CreateUseFieldDependencies<Values> {
   useFieldFocus: <Name extends ValuesFields<Values>>(
     arg: UseFieldFocusArg<Name>
   ) => UseFieldFocusReturn;
+  useFieldDisabled: () => UseFieldDisabledReturn;
 }
 
 /**
@@ -57,6 +60,7 @@ export const createUseField = <Values>({
   useFieldTouched,
   useFieldBlur,
   useFieldFocus,
+  useFieldDisabled,
 }: CreateUseFieldDependencies<Values>) => {
   /**
    * Get every single logic handler for a field.
@@ -73,6 +77,7 @@ export const createUseField = <Values>({
     const changeHandlers = useChangeHandler<Name>({ name });
     const blurHandlers = useFieldBlur<Name>({ name });
     const focusHandlers = useFieldFocus<Name>({ name });
+    const disabledHandlers = useFieldDisabled();
 
     return useMemo(
       () => ({
@@ -83,6 +88,7 @@ export const createUseField = <Values>({
         ...changeHandlers,
         ...blurHandlers,
         ...focusHandlers,
+        ...disabledHandlers,
       }),
       [
         name,
@@ -92,6 +98,7 @@ export const createUseField = <Values>({
         changeHandlers,
         blurHandlers,
         focusHandlers,
+        disabledHandlers,
       ]
     );
   };
