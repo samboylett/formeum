@@ -56,23 +56,26 @@ describe("useFieldChangeValue", () => {
       beforeEach(() => {
         provider.mergeValue({
           touchOnChange: true,
-        })
+        });
       });
 
       describe("when changeValue called", () => {
         beforeEach(() => {
           hook.result.current.changeValue("test");
         });
-  
+
         test("calls setFieldChangeValue with field name and new value", () => {
           expect(provider.mocks.setFieldValue).toHaveBeenCalledWith(
             "stringField",
             "test"
           );
         });
-  
+
         test("calls setFieldTouched with field name and true", () => {
-          expect(provider.mocks.setFieldTouched).toHaveBeenCalledWith("stringField", true);
+          expect(provider.mocks.setFieldTouched).toHaveBeenCalledWith(
+            "stringField",
+            true
+          );
         });
       });
     });

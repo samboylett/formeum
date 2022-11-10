@@ -2,7 +2,6 @@ import { renderHook, RenderHookResult } from "@testing-library/react";
 import { UseFieldBlurArg, UseFieldBlurReturn } from "../../lib";
 import {
   TestForm,
-  TestFormValues,
   createTestProvider,
   TestProviderHandler,
 } from "../TestForm";
@@ -22,17 +21,17 @@ describe("useFieldBlur", () => {
     beforeEach(() => {
       provider = createTestProvider();
 
-      hook = renderHook<
-        UseFieldBlurReturn,
-        UseFieldBlurArg<"stringField">
-      >(TestForm.useFieldBlur, {
-        initialProps: {
-          name: "stringField",
-        },
-        wrapper: ({ children }) => (
-          <provider.TestProvider>{children}</provider.TestProvider>
-        ),
-      });
+      hook = renderHook<UseFieldBlurReturn, UseFieldBlurArg<"stringField">>(
+        TestForm.useFieldBlur,
+        {
+          initialProps: {
+            name: "stringField",
+          },
+          wrapper: ({ children }) => (
+            <provider.TestProvider>{children}</provider.TestProvider>
+          ),
+        }
+      );
     });
 
     describe("when onBlur called", () => {
@@ -53,16 +52,19 @@ describe("useFieldBlur", () => {
       beforeEach(() => {
         provider.mergeValue({
           touchOnBlur: true,
-        })
+        });
       });
 
       describe("when onBlur called", () => {
         beforeEach(() => {
           hook.result.current.onBlur();
         });
-  
+
         test("calls setFieldTouched with field name and true", () => {
-          expect(provider.mocks.setFieldTouched).toHaveBeenCalledWith("stringField", true);
+          expect(provider.mocks.setFieldTouched).toHaveBeenCalledWith(
+            "stringField",
+            true
+          );
         });
       });
     });
@@ -71,16 +73,18 @@ describe("useFieldBlur", () => {
       beforeEach(() => {
         provider.mergeValue({
           validateOnBlur: true,
-        })
+        });
       });
 
       describe("when onBlur called", () => {
         beforeEach(() => {
           hook.result.current.onBlur();
         });
-  
+
         test("calls runValidation with field name", () => {
-          expect(provider.mocks.runValidation).toHaveBeenCalledWith({ fieldName: "stringField" });
+          expect(provider.mocks.runValidation).toHaveBeenCalledWith({
+            fieldName: "stringField",
+          });
         });
       });
     });

@@ -2,7 +2,6 @@ import { renderHook, RenderHookResult } from "@testing-library/react";
 import { UseFieldTouchedArg, UseFieldTouchedReturn } from "../../lib";
 import {
   TestForm,
-  TestFormValues,
   createTestProvider,
   TestProviderHandler,
 } from "../TestForm";
@@ -35,15 +34,16 @@ describe("useFieldTouched", () => {
       });
     });
 
-    test.each([
-      ["isTouched", false],
-    ] as const)("returns %s as %j", (prop, value) => {
-      expect(hook.result.current).toEqual(
-        expect.objectContaining({
-          [prop]: value,
-        })
-      );
-    });
+    test.each([["isTouched", false]] as const)(
+      "returns %s as %j",
+      (prop, value) => {
+        expect(hook.result.current).toEqual(
+          expect.objectContaining({
+            [prop]: value,
+          })
+        );
+      }
+    );
 
     describe("when setIsTouched called", () => {
       beforeEach(() => {
@@ -62,24 +62,25 @@ describe("useFieldTouched", () => {
       beforeEach(() => {
         provider.mergeValue({
           touched: new Set(["stringField"]),
-        })
+        });
       });
 
-      test.each([
-        ["isTouched", true],
-      ] as const)("returns %s as %j", (prop, value) => {
-        expect(hook.result.current).toEqual(
-          expect.objectContaining({
-            [prop]: value,
-          })
-        );
-      });
+      test.each([["isTouched", true]] as const)(
+        "returns %s as %j",
+        (prop, value) => {
+          expect(hook.result.current).toEqual(
+            expect.objectContaining({
+              [prop]: value,
+            })
+          );
+        }
+      );
 
       describe("when setIsTouched called", () => {
         beforeEach(() => {
           hook.result.current.setIsTouched(true);
         });
-  
+
         test("does not call setFieldTouched", () => {
           expect(provider.mocks.setFieldTouched).not.toHaveBeenCalled();
         });
