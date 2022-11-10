@@ -9,7 +9,9 @@ export interface UseFieldDisabledReturn {
  * @private
  */
 export interface CreateUseFieldDisabledDependencies<Values> {
-  useMainContext: (arg: UseMainContextArg<Values>) => UseMainContextReturn<Values>;
+  useMainContext: (
+    arg: UseMainContextArg<Values>
+  ) => UseMainContextReturn<Values>;
 }
 
 /**
@@ -26,7 +28,10 @@ export const createUseFieldDisabled = <Values>({
    */
   const useFieldDisabled = (): UseFieldDisabledReturn => {
     const { isSubmitting, disabledWhileSubmitting } = useMainContext({
-      shouldUpdate: (oldValue, newValue) => (['isSubmitting', 'disabledWhileSubmitting'] as const).some(a => oldValue[a] !== newValue[a]),
+      shouldUpdate: (oldValue, newValue) =>
+        (["isSubmitting", "disabledWhileSubmitting"] as const).some(
+          (a) => oldValue[a] !== newValue[a]
+        ),
     });
 
     const disabled = isSubmitting && disabledWhileSubmitting;
