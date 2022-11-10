@@ -24,9 +24,10 @@ jobs:
         cache: 'npm'
         cache-dependency-path: packages/core/package-lock.json
     - run: npm ci
-    - run: npm run prettier:ci
-    - run: npm run eslint:ci
-    - run: npm run build-storybook
-    - run: npm run docs
+    # - run: npm run prettier:ci
+    # - run: npm run eslint:ci
+    # - run: npm run build-storybook
+    # - run: npm run docs
     - run: npm run test:ci
-    - run: npm run build
+    - run: npm run codecov
+    # - run: npm run build

@@ -17,6 +17,7 @@
     "prettier:ci": "prettier --check ./src",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "codecov": "codecov",
     "docs": "typedoc --out docs src/lib/index.ts"
   },
   "author": "Sam Boylett",
@@ -45,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "babel-loader": "^8.2.5",
+    "codecov": "^3.8.3",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.10",
