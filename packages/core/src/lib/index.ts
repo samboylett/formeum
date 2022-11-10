@@ -24,6 +24,7 @@ export * from "./hooks/useMainContext";
 export * from "./hooks/useReactInput";
 export * from "./hooks/useFormCallbacks";
 export * from "./hooks/useFieldRef";
+export * from "./hooks/useFieldDisabled";
 
 export * from "./components/FormField";
 export * from "./components/FormHandler";
