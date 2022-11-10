@@ -1,6 +1,7 @@
 import { merge } from "lodash";
 import { ReactNode, useState } from "react";
 import { act } from "react-dom/test-utils";
+import { O } from "ts-toolbelt";
 import useEventCallback from "use-event-callback";
 import { ContextMainInterface, createForm } from "../lib";
 
@@ -31,8 +32,8 @@ export const createTestProvider = () => {
         onSubmit: jest.fn(),
     } as const;
 
-    let innerMergeValue: (value: Partial<ContextMainInterface<TestFormValues>>) => void;
-    const mergeValue = (value: Partial<ContextMainInterface<TestFormValues>>) => {
+    let innerMergeValue: (value: O.Partial<ContextMainInterface<TestFormValues>, "deep">) => void;
+    const mergeValue = (value: O.Partial<ContextMainInterface<TestFormValues>, "deep">) => {
         act(() => {
             innerMergeValue(value)
         });

@@ -62,14 +62,6 @@ describe("useFieldValue", () => {
         provider.mergeValue({
           values: {
             stringField: "new-val",
-            numberField: 0,
-            booleanField: false,
-
-            childForm: {
-              stringField: "",
-              numberField: 0,
-              booleanField: false,
-            },
           },
         })
       });
