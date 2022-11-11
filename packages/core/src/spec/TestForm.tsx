@@ -31,6 +31,18 @@ export const getInitialValues = () => ({
   },
 });
 
+export const getFilledValues = () => ({
+  stringField: "foo",
+  numberField: 5,
+  booleanField: true,
+
+  childForm: {
+    stringField: "bar",
+    numberField: 456,
+    booleanField: true,
+  },
+});
+
 export const createTestProvider = () => {
   const mocks = {
     setValues: jest.fn(),

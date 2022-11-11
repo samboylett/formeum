@@ -6,6 +6,7 @@ import {
   createTestProvider,
   TestProviderHandler,
   getInitialValues,
+  getFilledValues,
 } from "../TestForm";
 
 describe("useFormHandlerStateless", () => {
@@ -71,6 +72,29 @@ describe("useFormHandlerStateless", () => {
     });
 
     describe.each([
+      ["initialValues", getFilledValues()],
+      ["values", getFilledValues()],
+      ["touched", new Set(["stringField"])],
+      ["errors", { stringField: "foo" }],
+      ["isSubmitting", true],
+    ] as const)("when %s changed", (attribute, newValue) => {
+      beforeEach(() => {
+        hook.rerender({
+          ...initialProps,
+          [attribute]: newValue,
+        })
+      });
+
+      test(`returns ${attribute} as new value`, () => {
+        expect(hook.result.current).toEqual(
+          expect.objectContaining({
+            [attribute]: newValue,
+          })
+        );
+      });
+    });
+
+    describe.each([
       "touchOnChange",
       "touchOnBlur",
       "touchOnFocus",
@@ -79,7 +103,6 @@ describe("useFormHandlerStateless", () => {
       "validateOnFocus",
       "validateOnMount",
       "validateOnSubmit",
-      "isSubmitting",
       "disabledWhileSubmitting",
     ] as const)("when %s config set", (configName) => {
       describe.each([true, false] as const)("to %j", (configValue) => {
