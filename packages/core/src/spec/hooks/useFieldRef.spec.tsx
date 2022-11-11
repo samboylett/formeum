@@ -13,7 +13,7 @@ describe("useFieldRef", () => {
       UseFieldRefArg<"stringField">
     >;
     let provider: TestProviderHandler;
-    let input: Pick<HTMLObjectElement, 'setCustomValidity'>;
+    let input: Pick<HTMLObjectElement, "setCustomValidity">;
 
     beforeEach(() => {
       provider = createTestProvider();
@@ -21,29 +21,31 @@ describe("useFieldRef", () => {
         setCustomValidity: jest.fn(),
       };
 
-      hook = renderHook<
-        UseFieldRefReturn,
-        UseFieldRefArg<"stringField">
-      >(props => {
-        const retVal = TestForm.useFieldRef(props);
+      hook = renderHook<UseFieldRefReturn, UseFieldRefArg<"stringField">>(
+        (props) => {
+          const retVal = TestForm.useFieldRef(props);
 
-        retVal.ref.current = input;
+          retVal.ref.current = input;
 
-        return retVal;
-      }, {
-        initialProps: {
-          name: "stringField",
+          return retVal;
         },
-        wrapper: ({ children }) => (
-          <provider.TestProvider>{children}</provider.TestProvider>
-        ),
-      });
+        {
+          initialProps: {
+            name: "stringField",
+          },
+          wrapper: ({ children }) => (
+            <provider.TestProvider>{children}</provider.TestProvider>
+          ),
+        }
+      );
     });
 
     test("returns ref", () => {
-      expect(hook.result.current.ref).toEqual(expect.objectContaining({
-        current: expect.anything(),
-      }));
+      expect(hook.result.current.ref).toEqual(
+        expect.objectContaining({
+          current: expect.anything(),
+        })
+      );
     });
 
     test("calls setCustomValidity with empty string", () => {
