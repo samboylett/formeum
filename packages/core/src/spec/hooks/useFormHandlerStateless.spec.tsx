@@ -19,26 +19,28 @@ describe("useFormHandlerStateless", () => {
       UseFormHandlerStatelessArg<TestFormValues>
     >;
     let provider: TestProviderHandler;
+    let initialProps: UseFormHandlerStatelessArg<TestFormValues>;
 
     beforeEach(() => {
       provider = createTestProvider();
+      initialProps = {
+        onValues: jest.fn(),
+        onErrors: jest.fn(),
+        onIsSubmitting: jest.fn(),
+        onSubmit: jest.fn(),
+        onTouched: jest.fn(),
+        initialValues: getInitialValues(),
+        values: getInitialValues(),
+        errors: {},
+        touched: new Set([]),
+        isSubmitting: false,
+      };
 
       hook = renderHook<
       UseFormHandlerStatelessReturn<TestFormValues>,
       UseFormHandlerStatelessArg<TestFormValues>
       >(TestForm.useFormHandlerStateless, {
-        initialProps: {
-          onValues: jest.fn(),
-          onErrors: jest.fn(),
-          onIsSubmitting: jest.fn(),
-          onSubmit: jest.fn(),
-          onTouched: jest.fn(),
-          initialValues: getInitialValues(),
-          values: getInitialValues(),
-          errors: {},
-          touched: new Set([]),
-          isSubmitting: false,
-        },
+        initialProps,
         wrapper: ({ children }) => (
           <provider.TestProvider>{children}</provider.TestProvider>
         ),
@@ -66,6 +68,36 @@ describe("useFormHandlerStateless", () => {
           [prop]: value,
         })
       );
+    });
+
+    describe.each([
+      "touchOnChange",
+      "touchOnBlur",
+      "touchOnFocus",
+      "validateOnBlur",
+      "validateOnChange",
+      "validateOnFocus",
+      "validateOnMount",
+      "validateOnSubmit",
+      "isSubmitting",
+      "disabledWhileSubmitting",
+    ] as const)("when %s config set", (configName) => {
+      describe.each([true, false] as const)("to %j", (configValue) => {
+        beforeEach(() => {
+          hook.rerender({
+            ...initialProps,
+            [configName]: configValue,
+          })
+        });
+
+        test.each([[configName, configValue]] as const)("returns %s as %j", () => {
+          expect(hook.result.current).toEqual(
+            expect.objectContaining({
+              [configName]: configValue,
+            })
+          );
+        });
+      });
     });
   });
 });
