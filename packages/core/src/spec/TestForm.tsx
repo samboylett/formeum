@@ -19,6 +19,18 @@ export interface TestFormValues {
 
 export const TestForm = createForm<TestFormValues>();
 
+export const getInitialValues = () => ({
+  stringField: "",
+  numberField: 0,
+  booleanField: false,
+
+  childForm: {
+    stringField: "",
+    numberField: 0,
+    booleanField: false,
+  },
+});
+
 export const createTestProvider = () => {
   const mocks = {
     setValues: jest.fn(),
@@ -45,28 +57,8 @@ export const createTestProvider = () => {
 
   const TestProvider = ({ children }: { children: ReactNode }) => {
     const [value, setValue] = useState<ContextMainInterface<TestFormValues>>({
-      initialValues: {
-        stringField: "",
-        numberField: 0,
-        booleanField: false,
-
-        childForm: {
-          stringField: "",
-          numberField: 0,
-          booleanField: false,
-        },
-      },
-      values: {
-        stringField: "",
-        numberField: 0,
-        booleanField: false,
-
-        childForm: {
-          stringField: "",
-          numberField: 0,
-          booleanField: false,
-        },
-      },
+      initialValues: getInitialValues(),
+      values: getInitialValues(),
       errors: {},
       touched: new Set(),
       touchOnChange: false,
