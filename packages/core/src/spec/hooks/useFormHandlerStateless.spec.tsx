@@ -1,5 +1,8 @@
 import { renderHook, RenderHookResult } from "@testing-library/react";
-import { UseFormHandlerStatelessArg, UseFormHandlerStatelessReturn } from "../../lib";
+import {
+  UseFormHandlerStatelessArg,
+  UseFormHandlerStatelessReturn,
+} from "../../lib";
 import {
   TestForm,
   TestFormValues,
@@ -38,8 +41,8 @@ describe("useFormHandlerStateless", () => {
       };
 
       hook = renderHook<
-      UseFormHandlerStatelessReturn<TestFormValues>,
-      UseFormHandlerStatelessArg<TestFormValues>
+        UseFormHandlerStatelessReturn<TestFormValues>,
+        UseFormHandlerStatelessArg<TestFormValues>
       >(TestForm.useFormHandlerStateless, {
         initialProps,
         wrapper: ({ children }) => (
@@ -82,7 +85,7 @@ describe("useFormHandlerStateless", () => {
         hook.rerender({
           ...initialProps,
           [attribute]: newValue,
-        })
+        });
       });
 
       test(`returns ${attribute} as new value`, () => {
@@ -110,16 +113,19 @@ describe("useFormHandlerStateless", () => {
           hook.rerender({
             ...initialProps,
             [configName]: configValue,
-          })
+          });
         });
 
-        test.each([[configName, configValue]] as const)("returns %s as %j", () => {
-          expect(hook.result.current).toEqual(
-            expect.objectContaining({
-              [configName]: configValue,
-            })
-          );
-        });
+        test.each([[configName, configValue]] as const)(
+          "returns %s as %j",
+          () => {
+            expect(hook.result.current).toEqual(
+              expect.objectContaining({
+                [configName]: configValue,
+              })
+            );
+          }
+        );
       });
     });
   });
