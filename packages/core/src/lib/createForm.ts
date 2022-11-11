@@ -111,6 +111,7 @@ export function createForm<Values extends unknown>() {
   return {
     useMainContext,
     useFormHandler,
+    useFormHandlerStateless,
     useField,
     useFieldError,
     useFieldValue,
