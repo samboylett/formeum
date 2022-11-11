@@ -20,7 +20,7 @@ The core Formeum core package. This package handles the context, error state, to
 ## Installation
 
 ```sh
-npm i --save @formeum/formeum
+npm i --save @formeum/core
 ```
 
 ## Usage
