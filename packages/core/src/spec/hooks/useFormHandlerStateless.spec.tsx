@@ -186,10 +186,13 @@ describe("useFormHandlerStateless", () => {
 
     describe("when setValues called with new value and validate true", () => {
       beforeEach(() => {
-        hook.result.current.setValues({
-          ...initialProps.values,
-          stringField: "new",
-        }, true);
+        hook.result.current.setValues(
+          {
+            ...initialProps.values,
+            stringField: "new",
+          },
+          true
+        );
       });
 
       test("calls onValues with new values", () => {
@@ -200,10 +203,13 @@ describe("useFormHandlerStateless", () => {
       });
 
       test("calls validate with new values", () => {
-        expect(initialProps.validate).toHaveBeenCalledWith({
-          ...initialProps.values,
-          stringField: "new",
-        }, undefined);
+        expect(initialProps.validate).toHaveBeenCalledWith(
+          {
+            ...initialProps.values,
+            stringField: "new",
+          },
+          undefined
+        );
       });
     });
   });
