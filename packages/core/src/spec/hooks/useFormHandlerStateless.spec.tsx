@@ -33,6 +33,7 @@ describe("useFormHandlerStateless", () => {
         onIsSubmitting: jest.fn(),
         onSubmit: jest.fn(),
         onTouched: jest.fn(),
+        validate: jest.fn().mockResolvedValue({}),
         initialValues: getInitialValues(),
         values: getInitialValues(),
         errors: {},
@@ -150,6 +151,59 @@ describe("useFormHandlerStateless", () => {
         expect(initialProps.onErrors).toHaveBeenCalledWith({
           stringField: "Foobar",
         });
+      });
+    });
+
+    describe("when setValues called with same value", () => {
+      beforeEach(() => {
+        hook.result.current.setValues({ ...initialProps.values });
+      });
+
+      test("does not call onValues", () => {
+        expect(initialProps.onValues).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("when setValues called with new value", () => {
+      beforeEach(() => {
+        hook.result.current.setValues({
+          ...initialProps.values,
+          stringField: "new",
+        });
+      });
+
+      test("calls onValues with new values", () => {
+        expect(initialProps.onValues).toHaveBeenCalledWith({
+          ...initialProps.values,
+          stringField: "new",
+        });
+      });
+
+      test("does not call validate", () => {
+        expect(initialProps.validate).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("when setValues called with new value and validate true", () => {
+      beforeEach(() => {
+        hook.result.current.setValues({
+          ...initialProps.values,
+          stringField: "new",
+        }, true);
+      });
+
+      test("calls onValues with new values", () => {
+        expect(initialProps.onValues).toHaveBeenCalledWith({
+          ...initialProps.values,
+          stringField: "new",
+        });
+      });
+
+      test("calls validate with new values", () => {
+        expect(initialProps.validate).toHaveBeenCalledWith({
+          ...initialProps.values,
+          stringField: "new",
+        }, undefined);
       });
     });
   });
