@@ -13,29 +13,28 @@ describe("useFormCallbacks", () => {
   });
 
   describe("when rendered", () => {
-    let hook: RenderHookResult<
-      UseFormCallbacksReturn<TestFormValues>,
-      void
-    >;
+    let hook: RenderHookResult<UseFormCallbacksReturn<TestFormValues>, void>;
     let provider: TestProviderHandler;
 
     beforeEach(() => {
       provider = createTestProvider();
 
-      hook = renderHook<
-        UseFormCallbacksReturn<TestFormValues>,
-        void
-      >(TestForm.useFormCallbacks, {
-        wrapper: ({ children }) => (
-          <provider.TestProvider>{children}</provider.TestProvider>
-        ),
-      });
+      hook = renderHook<UseFormCallbacksReturn<TestFormValues>, void>(
+        TestForm.useFormCallbacks,
+        {
+          wrapper: ({ children }) => (
+            <provider.TestProvider>{children}</provider.TestProvider>
+          ),
+        }
+      );
     });
 
     test.each(FORM_CALLBACK_NAMES)("returns the %s function", (fnName) => {
-      expect(hook.result.current).toEqual(expect.objectContaining({
-        [fnName]: expect.any(Function),
-      }));
+      expect(hook.result.current).toEqual(
+        expect.objectContaining({
+          [fnName]: expect.any(Function),
+        })
+      );
     });
   });
 });
