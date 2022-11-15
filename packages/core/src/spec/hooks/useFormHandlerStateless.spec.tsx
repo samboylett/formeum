@@ -223,12 +223,10 @@ describe("useFormHandlerStateless", () => {
 
       describe("when setValues called with new value", () => {
         beforeEach(() => {
-          hook.result.current.setValues(
-            {
-              ...initialProps.values,
-              stringField: "new",
-            }
-          );
+          hook.result.current.setValues({
+            ...initialProps.values,
+            stringField: "new",
+          });
         });
 
         test("calls onValues with new values", () => {
