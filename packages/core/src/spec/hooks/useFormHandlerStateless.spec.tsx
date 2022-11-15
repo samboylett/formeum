@@ -128,5 +128,29 @@ describe("useFormHandlerStateless", () => {
         );
       });
     });
+
+    describe("when setErrors called with same value", () => {
+      beforeEach(() => {
+        hook.result.current.setErrors({});
+      });
+
+      test("does not call onErrors", () => {
+        expect(initialProps.onErrors).not.toHaveBeenCalled();
+      });
+    });
+
+    describe("when setErrors called with new value", () => {
+      beforeEach(() => {
+        hook.result.current.setErrors({
+          stringField: "Foobar",
+        });
+      });
+
+      test("calls onErrors with new errors", () => {
+        expect(initialProps.onErrors).toHaveBeenCalledWith({
+          stringField: "Foobar",
+        });
+      });
+    });
   });
 });
