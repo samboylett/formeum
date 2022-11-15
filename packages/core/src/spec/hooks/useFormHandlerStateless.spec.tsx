@@ -212,5 +212,65 @@ describe("useFormHandlerStateless", () => {
         );
       });
     });
+
+    describe("when validateOnChange true", () => {
+      beforeEach(() => {
+        hook.rerender({
+          ...initialProps,
+          validateOnChange: true,
+        });
+      });
+
+      describe("when setValues called with new value", () => {
+        beforeEach(() => {
+          hook.result.current.setValues(
+            {
+              ...initialProps.values,
+              stringField: "new",
+            }
+          );
+        });
+
+        test("calls onValues with new values", () => {
+          expect(initialProps.onValues).toHaveBeenCalledWith({
+            ...initialProps.values,
+            stringField: "new",
+          });
+        });
+
+        test("calls validate with new values", () => {
+          expect(initialProps.validate).toHaveBeenCalledWith(
+            {
+              ...initialProps.values,
+              stringField: "new",
+            },
+            undefined
+          );
+        });
+      });
+
+      describe("when setValues called with new value and validate false", () => {
+        beforeEach(() => {
+          hook.result.current.setValues(
+            {
+              ...initialProps.values,
+              stringField: "new",
+            },
+            false
+          );
+        });
+
+        test("calls onValues with new values", () => {
+          expect(initialProps.onValues).toHaveBeenCalledWith({
+            ...initialProps.values,
+            stringField: "new",
+          });
+        });
+
+        test("does not call validate", () => {
+          expect(initialProps.validate).not.toHaveBeenCalled();
+        });
+      });
+    });
   });
 });
