@@ -23,7 +23,6 @@ export const createUseFieldDisabled = <Values>({
   /**
    * Handle the disabled logic. Handles disabled while submitting.
    *
-   * @param {UseFieldDisabledArg<Name>} arg
    * @returns {UseFieldDisabledReturn}
    */
   const useFieldDisabled = (): UseFieldDisabledReturn => {
