@@ -13,16 +13,20 @@ describe("useChangeHandler", () => {
   });
 
   describe("when rendered", () => {
-    let hook: RenderHookResult<
+    let stringHook: RenderHookResult<
       UseChangeHandlerReturn<TestFormValues, "stringField">,
       UseChangeHandlerArg<"stringField">
+    >;
+    let booleanHook: RenderHookResult<
+      UseChangeHandlerReturn<TestFormValues, "booleanField">,
+      UseChangeHandlerArg<"booleanField">
     >;
     let provider: TestProviderHandler;
 
     beforeEach(() => {
       provider = createTestProvider();
 
-      hook = renderHook<
+      stringHook = renderHook<
         UseChangeHandlerReturn<TestFormValues, "stringField">,
         UseChangeHandlerArg<"stringField">
       >(TestForm.useChangeHandler, {
@@ -37,7 +41,7 @@ describe("useChangeHandler", () => {
 
     describe("when changeValue called", () => {
       beforeEach(() => {
-        hook.result.current.changeValue("test");
+        stringHook.result.current.changeValue("test");
       });
 
       test("calls setFieldValue with field name and new value", () => {
@@ -53,7 +57,7 @@ describe("useChangeHandler", () => {
       (targetName) => {
         describe("when handleChangeEvent called", () => {
           beforeEach(() => {
-            hook.result.current.handleChangeEvent({
+            stringHook.result.current.handleChangeEvent({
               [targetName]: {
                 value: "foo",
               },
@@ -72,7 +76,18 @@ describe("useChangeHandler", () => {
           "when handleCheckboxEvent called with checked as %j",
           (checked) => {
             beforeEach(() => {
-              (hook.result.current.handleCheckboxEvent as any)({
+              booleanHook = renderHook<
+                UseChangeHandlerReturn<TestFormValues, "booleanField">,
+                UseChangeHandlerArg<"booleanField">
+              >(TestForm.useChangeHandler, {
+                initialProps: {
+                  name: "booleanField",
+                },
+                wrapper: ({ children }) => (
+                  <provider.TestProvider>{children}</provider.TestProvider>
+                ),
+              });
+              booleanHook.result.current.handleCheckboxEvent({
                 [targetName]: {
                   checked,
                 },
@@ -81,7 +96,7 @@ describe("useChangeHandler", () => {
 
             test("calls setFieldValue with field name and new value", () => {
               expect(provider.mocks.setFieldValue).toHaveBeenCalledWith(
-                "stringField",
+                "booleanField",
                 checked
               );
             });

@@ -50,16 +50,15 @@ describe("useHTMLCheckbox", () => {
       );
     });
 
-    test.each([
-      "onFocus",
-      "onBlur",
-      "onChange",
-    ] as const)("returns the %s function", (prop) => {
-      expect(hook.result.current).toEqual(
-        expect.objectContaining({
-          [prop]: expect.any(Function),
-        })
-      );
-    });
+    test.each(["onFocus", "onBlur", "onChange"] as const)(
+      "returns the %s function",
+      (prop) => {
+        expect(hook.result.current).toEqual(
+          expect.objectContaining({
+            [prop]: expect.any(Function),
+          })
+        );
+      }
+    );
   });
 });
