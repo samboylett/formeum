@@ -367,6 +367,27 @@ describe("useFormHandlerStateless", () => {
       });
     });
 
+    describe("when validate is undefined", () => {
+      beforeEach(() => {
+        hook.rerender({
+          ...initialProps,
+          validate: undefined,
+        });
+      });
+
+      describe("when runValidation called", () => {
+        let result: Promise<unknown>;
+
+        beforeEach(() => {
+          result = hook.result.current.runValidation({});
+        });
+
+        test("resolves to empty object", async () => {
+          await expect(result).resolves.toEqual({});
+        });
+      });
+    });
+
     describe("when validateOnChange true", () => {
       beforeEach(() => {
         hook.rerender({
