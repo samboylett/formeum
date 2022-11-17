@@ -240,7 +240,7 @@ export const createUseFormHandlerStateless = <Values>() => {
         shouldValidate: boolean = validateOnChange
       ) => {
         const newValues = merge({}, values, set({}, name, value));
-        setValues(newValues);
+        setValues(newValues, false);
 
         if (shouldValidate) {
           await runValidation({ newValues, fieldName: name });

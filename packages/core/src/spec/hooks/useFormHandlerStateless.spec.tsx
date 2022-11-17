@@ -271,6 +271,33 @@ describe("useFormHandlerStateless", () => {
         });
       });
 
+      describe("when setFieldValue called with new value", () => {
+        beforeEach(() => {
+          hook.result.current.setFieldValue("stringField", "foo");
+        });
+
+        test("calls onValues with new values", () => {
+          expect(initialProps.onValues).toHaveBeenCalledWith({
+            ...initialProps.values,
+            stringField: "foo",
+          });
+        });
+
+        test("calls validate once", () => {
+          expect(initialProps.validate).toHaveBeenCalledTimes(1);
+        });
+
+        test("calls validate with new values and field name", () => {
+          expect(initialProps.validate).toHaveBeenCalledWith(
+            {
+              ...initialProps.values,
+              stringField: "foo",
+            },
+            "stringField"
+          );
+        });
+      });
+
       describe("when setValues called with new value", () => {
         beforeEach(() => {
           hook.result.current.setValues({
