@@ -158,9 +158,9 @@ describe("useFormHandlerStateless", () => {
       });
 
       test("calls onTouched with new touched set", () => {
-        expect(initialProps.onTouched).toHaveBeenCalledWith(new Set([
-          "childForm.numberField",
-        ]));
+        expect(initialProps.onTouched).toHaveBeenCalledWith(
+          new Set(["childForm.numberField"])
+        );
       });
     });
 
@@ -176,7 +176,10 @@ describe("useFormHandlerStateless", () => {
 
     describe("when setFieldValue called with same field value", () => {
       beforeEach(() => {
-        hook.result.current.setFieldValue("stringField", initialProps.values.stringField);
+        hook.result.current.setFieldValue(
+          "stringField",
+          initialProps.values.stringField
+        );
       });
 
       test("does not call onValues", () => {
@@ -334,10 +337,9 @@ describe("useFormHandlerStateless", () => {
       });
 
       test("returns touched with same fields", () => {
-        expect(hook.result.current.touched).toEqual(new Set([
-          "stringField",
-          "numberField",
-        ]));
+        expect(hook.result.current.touched).toEqual(
+          new Set(["stringField", "numberField"])
+        );
       });
 
       describe("when setFieldTouched called to add field", () => {
@@ -346,11 +348,9 @@ describe("useFormHandlerStateless", () => {
         });
 
         test("calls onTouched with new touched set merged", () => {
-          expect(initialProps.onTouched).toHaveBeenCalledWith(new Set([
-            "stringField",
-            "numberField",
-            "childForm.numberField",
-          ]));
+          expect(initialProps.onTouched).toHaveBeenCalledWith(
+            new Set(["stringField", "numberField", "childForm.numberField"])
+          );
         });
       });
 
@@ -360,9 +360,9 @@ describe("useFormHandlerStateless", () => {
         });
 
         test("calls onTouched with field removed", () => {
-          expect(initialProps.onTouched).toHaveBeenCalledWith(new Set([
-            "stringField",
-          ]));
+          expect(initialProps.onTouched).toHaveBeenCalledWith(
+            new Set(["stringField"])
+          );
         });
       });
     });
