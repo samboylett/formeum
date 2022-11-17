@@ -263,6 +263,58 @@ describe("useFormHandlerStateless", () => {
       });
     });
 
+    describe("when setFieldValue called with deep field new value and validate true", () => {
+      beforeEach(() => {
+        hook.result.current.setFieldValue("childForm.stringField", "bar", true);
+      });
+
+      test("calls onValues with new values", () => {
+        expect(initialProps.onValues).toHaveBeenCalledWith({
+          ...initialProps.values,
+          childForm: {
+            ...initialProps.values.childForm,
+            stringField: "bar",
+          },
+        });
+      });
+
+      test("calls validate with new values and field name", () => {
+        expect(initialProps.validate).toHaveBeenCalledWith(
+          {
+            ...initialProps.values,
+            childForm: {
+              ...initialProps.values.childForm,
+              stringField: "bar",
+            },
+          },
+          "childForm.stringField"
+        );
+      });
+    });
+
+    describe("when setFieldValue called with new value and validate true", () => {
+      beforeEach(() => {
+        hook.result.current.setFieldValue("stringField", "foo", true);
+      });
+
+      test("calls onValues with new values", () => {
+        expect(initialProps.onValues).toHaveBeenCalledWith({
+          ...initialProps.values,
+          stringField: "foo",
+        });
+      });
+
+      test("calls validate with new values and field name", () => {
+        expect(initialProps.validate).toHaveBeenCalledWith(
+          {
+            ...initialProps.values,
+            stringField: "foo",
+          },
+          "stringField"
+        );
+      });
+    });
+
     describe("when validateOnChange true", () => {
       beforeEach(() => {
         hook.rerender({
