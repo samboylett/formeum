@@ -217,6 +217,23 @@ describe("useFormHandlerStateless", () => {
           });
         });
       });
+
+      describe("when validate resolves to object with errors", () => {
+        beforeEach(() => {
+          resolveValidate({
+            "stringField": "Required!",
+          });
+        });
+
+        test("calls onIsSubmitting once more with false", () => {
+          expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2)
+          expect(initialProps.onIsSubmitting).toHaveBeenCalledWith(false);
+        });
+
+        test("does not call outer onSubmit", () => {
+          expect(onSubmit).not.toHaveBeenCalled();
+        });
+      });
     });
 
     describe("when setErrors called with same value", () => {
