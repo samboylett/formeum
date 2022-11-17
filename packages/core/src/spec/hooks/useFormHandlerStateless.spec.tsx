@@ -164,6 +164,16 @@ describe("useFormHandlerStateless", () => {
       });
     });
 
+    describe("when setFieldValue called with same field value", () => {
+      beforeEach(() => {
+        hook.result.current.setFieldValue("stringField", initialProps.values.stringField);
+      });
+
+      test("does not call onValues", () => {
+        expect(initialProps.onValues).not.toHaveBeenCalled();
+      });
+    });
+
     describe("when setValues called with new value", () => {
       beforeEach(() => {
         hook.result.current.setValues({
@@ -210,6 +220,23 @@ describe("useFormHandlerStateless", () => {
           },
           undefined
         );
+      });
+    });
+
+    describe("when setFieldValue called with new value", () => {
+      beforeEach(() => {
+        hook.result.current.setFieldValue("stringField", "foo");
+      });
+
+      test("calls onValues with new values", () => {
+        expect(initialProps.onValues).toHaveBeenCalledWith({
+          ...initialProps.values,
+          stringField: "foo",
+        });
+      });
+
+      test("does not call validate", () => {
+        expect(initialProps.validate).not.toHaveBeenCalled();
       });
     });
 

@@ -237,7 +237,7 @@ export const createUseFormHandlerStateless = <Values>() => {
       async <Name extends ValuesFields<Values>>(
         name: Name,
         value: DeepIndex<Values, Name>,
-        shouldValidate?: boolean
+        shouldValidate: boolean = validateOnChange
       ) => {
         const newValues = merge({}, values, set({}, name, value));
         setValues(newValues);
