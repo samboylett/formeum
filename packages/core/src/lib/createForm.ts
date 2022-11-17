@@ -1,5 +1,4 @@
 import { createFormCallbacks } from "./components/FormCallbacks";
-import { createFormField } from "./components/FormField";
 import { createFormHandler } from "./components/FormHandler";
 import { createFormHTMLCheckbox } from "./components/FormHTMLCheckbox";
 import { createFormHTMLInput } from "./components/FormHTMLInput";
@@ -8,7 +7,6 @@ import { createFormValues } from "./components/FormValues";
 import { createContextMain } from "./contexts/ContextMain";
 import { createUseChangeHandler } from "./hooks/useChangeHandler";
 import { createUseCurrentContext } from "./hooks/useCurrentContext";
-import { createUseField } from "./hooks/useField";
 import { createUseFieldBlur } from "./hooks/useFieldBlur";
 import { createUseFieldChangeValue } from "./hooks/useFieldChangeValue";
 import { createUseFieldDisabled } from "./hooks/useFieldDisabled";
@@ -60,15 +58,6 @@ export function createForm<Values extends unknown>() {
     useFieldTouched,
   });
   const useFieldRef = createUseFieldRef<Values>({ useFieldError });
-  const useField = createUseField<Values>({
-    useFieldValue,
-    useFieldError,
-    useChangeHandler,
-    useFieldTouched,
-    useFieldBlur,
-    useFieldFocus,
-    useFieldDisabled,
-  });
   const useHTMLInput = createUseHTMLInput<Values>({
     useFieldValue,
     useFieldFocus,
@@ -101,7 +90,6 @@ export function createForm<Values extends unknown>() {
     ContextMain,
   });
 
-  const FormField = createFormField<Values>({ useField });
   const FormValues = createFormValues<Values>({ useMainContext });
   const FormHTMLInput = createFormHTMLInput<Values>({ useHTMLInput });
   const FormHTMLCheckbox = createFormHTMLCheckbox<Values>({ useHTMLCheckbox });
@@ -112,7 +100,6 @@ export function createForm<Values extends unknown>() {
     useMainContext,
     useFormHandler,
     useFormHandlerStateless,
-    useField,
     useFieldError,
     useFieldValue,
     useFieldTouched,
@@ -131,7 +118,6 @@ export function createForm<Values extends unknown>() {
     ContextMain,
 
     FormHandler,
-    FormField,
     FormValues,
     FormHTMLInput,
     FormHTMLCheckbox,

@@ -9,7 +9,6 @@ export * from "./contexts/ContextMain";
 
 export * from "./hooks/useChangeHandler";
 export * from "./hooks/useCurrentContext";
-export * from "./hooks/useField";
 export * from "./hooks/useFieldBlur";
 export * from "./hooks/useFieldChangeValue";
 export * from "./hooks/useFieldError";
@@ -26,7 +25,6 @@ export * from "./hooks/useFormCallbacks";
 export * from "./hooks/useFieldRef";
 export * from "./hooks/useFieldDisabled";
 
-export * from "./components/FormField";
 export * from "./components/FormHandler";
 export * from "./components/FormHTMLCheckbox";
 export * from "./components/FormHTMLInput";
