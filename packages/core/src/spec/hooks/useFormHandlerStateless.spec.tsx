@@ -166,13 +166,17 @@ describe("useFormHandlerStateless", () => {
       let submitReturn: Promise<unknown>;
 
       beforeEach(() => {
-        validate = jest.fn().mockReturnValue(new Promise((r) => {
-          resolveValidate = r;
-        }));
-        onSubmit = jest.fn().mockReturnValue(new Promise<void>((r, c) => {
-          resolveOnSubmit = r;
-          rejectOnSubmit = c;
-        }));
+        validate = jest.fn().mockReturnValue(
+          new Promise((r) => {
+            resolveValidate = r;
+          })
+        );
+        onSubmit = jest.fn().mockReturnValue(
+          new Promise<void>((r, c) => {
+            resolveOnSubmit = r;
+            rejectOnSubmit = c;
+          })
+        );
 
         hook.rerender({
           ...initialProps,
@@ -188,7 +192,7 @@ describe("useFormHandlerStateless", () => {
       });
 
       test("calls onIsSubmitting once with true", () => {
-        expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(1)
+        expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(1);
         expect(initialProps.onIsSubmitting).toHaveBeenCalledWith(true);
       });
 
@@ -215,7 +219,7 @@ describe("useFormHandlerStateless", () => {
           });
 
           test("calls onIsSubmitting once more with false", () => {
-            expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2)
+            expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2);
             expect(initialProps.onIsSubmitting).toHaveBeenCalledWith(false);
           });
         });
@@ -226,11 +230,11 @@ describe("useFormHandlerStateless", () => {
           });
 
           test("promise rejects", async () => {
-            await expect(submitReturn).rejects.toEqual(undefined)
+            await expect(submitReturn).rejects.toEqual(undefined);
           });
 
           test("calls onIsSubmitting once more with false", () => {
-            expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2)
+            expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2);
             expect(initialProps.onIsSubmitting).toHaveBeenCalledWith(false);
           });
 
@@ -247,12 +251,12 @@ describe("useFormHandlerStateless", () => {
       describe("when validate resolves to object with errors", () => {
         beforeEach(() => {
           resolveValidate({
-            "stringField": "Required!",
+            stringField: "Required!",
           });
         });
 
         test("calls onIsSubmitting once more with false", () => {
-          expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2)
+          expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2);
           expect(initialProps.onIsSubmitting).toHaveBeenCalledWith(false);
         });
 
