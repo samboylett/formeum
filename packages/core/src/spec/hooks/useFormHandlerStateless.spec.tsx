@@ -162,13 +162,16 @@ describe("useFormHandlerStateless", () => {
       let resolveValidate: (errors: unknown) => void;
       let onSubmit: jest.Mock;
       let resolveOnSubmit: () => void;
+      let rejectOnSubmit: () => void;
+      let submitReturn: Promise<unknown>;
 
       beforeEach(() => {
         validate = jest.fn().mockReturnValue(new Promise((r) => {
           resolveValidate = r;
         }));
-        onSubmit = jest.fn().mockReturnValue(new Promise<void>((r) => {
+        onSubmit = jest.fn().mockReturnValue(new Promise<void>((r, c) => {
           resolveOnSubmit = r;
+          rejectOnSubmit = c;
         }));
 
         hook.rerender({
@@ -177,7 +180,7 @@ describe("useFormHandlerStateless", () => {
           onSubmit,
         });
 
-        hook.result.current.onSubmit(submitEvent);
+        submitReturn = hook.result.current.onSubmit(submitEvent);
       });
 
       test("calls preventDefault", () => {
@@ -214,6 +217,29 @@ describe("useFormHandlerStateless", () => {
           test("calls onIsSubmitting once more with false", () => {
             expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2)
             expect(initialProps.onIsSubmitting).toHaveBeenCalledWith(false);
+          });
+        });
+
+        describe("when outer onSubmit rejects", () => {
+          beforeEach(() => {
+            rejectOnSubmit();
+          });
+
+          test("promise rejects", async () => {
+            await expect(submitReturn).rejects.toEqual(undefined)
+          });
+
+          test("calls onIsSubmitting once more with false", () => {
+            expect(initialProps.onIsSubmitting).toHaveBeenCalledTimes(2)
+            expect(initialProps.onIsSubmitting).toHaveBeenCalledWith(false);
+          });
+
+          afterEach(async () => {
+            try {
+              await submitReturn;
+            } catch {
+              // Catch
+            }
           });
         });
       });
