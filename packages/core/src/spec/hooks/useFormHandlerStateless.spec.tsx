@@ -1,8 +1,10 @@
 import { renderHook, RenderHookResult } from "@testing-library/react";
+import { FormEvent } from "react";
 import {
   UseFormHandlerStatelessArg,
   UseFormHandlerStatelessReturn,
 } from "../../lib";
+import { AlreadySubmittingError } from "../../lib/errors/AlreadySubmittingError";
 import {
   TestForm,
   TestFormValues,
@@ -24,8 +26,12 @@ describe("useFormHandlerStateless", () => {
     >;
     let provider: TestProviderHandler;
     let initialProps: UseFormHandlerStatelessArg<TestFormValues>;
+    let submitEvent: Pick<FormEvent, 'preventDefault'>;
 
     beforeEach(() => {
+      submitEvent = {
+        preventDefault: jest.fn(),
+      };
       provider = createTestProvider();
       initialProps = {
         onValues: jest.fn(),
@@ -127,6 +133,33 @@ describe("useFormHandlerStateless", () => {
             );
           }
         );
+      });
+    });
+
+    describe("when isSubmitting is true", () => {
+      beforeEach(() => {
+        hook.rerender({
+          ...initialProps,
+          isSubmitting: true,
+        });
+      });
+
+      test("calling submitForm rejects to AlreadySubmittingError error", async () => {
+        await expect(hook.result.current.submitForm()).rejects.toEqual(expect.any(AlreadySubmittingError));
+      });
+
+      test("calling onSubmit rejects to AlreadySubmittingError error", async () => {
+        await expect(hook.result.current.onSubmit(submitEvent)).rejects.toEqual(expect.any(AlreadySubmittingError));
+      });
+    });
+
+    describe("when calling onSubmit", () => {
+      beforeEach(() => {
+        hook.result.current.onSubmit(submitEvent);
+      });
+
+      test("calls preventDefault", () => {
+        expect(submitEvent.preventDefault).toHaveBeenCalledTimes(1);
       });
     });
 
