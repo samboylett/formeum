@@ -1,4 +1,4 @@
-import { FormeumError, AlreadySubmittingError, NoContextError } from '../lib';
+import { FormeumError, AlreadySubmittingError, NoContextError } from "../lib";
 
 describe("errors", () => {
   test("FormeumError extends Error", () => {

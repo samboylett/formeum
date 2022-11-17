@@ -32,6 +32,6 @@ export * from "./components/FormReactInput";
 export * from "./components/FormValues";
 export * from "./components/FormCallbacks";
 
-export * from './errors/FormeumError';
-export * from './errors/AlreadySubmittingError';
-export * from './errors/NoContextError';
+export * from "./errors/FormeumError";
+export * from "./errors/AlreadySubmittingError";
+export * from "./errors/NoContextError";
