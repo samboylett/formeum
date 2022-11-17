@@ -325,6 +325,48 @@ describe("useFormHandlerStateless", () => {
       });
     });
 
+    describe("when some fields are touched", () => {
+      beforeEach(() => {
+        hook.rerender({
+          ...initialProps,
+          touched: new Set(["stringField", "numberField"]),
+        });
+      });
+
+      test("returns touched with same fields", () => {
+        expect(hook.result.current.touched).toEqual(new Set([
+          "stringField",
+          "numberField",
+        ]));
+      });
+
+      describe("when setFieldTouched called to add field", () => {
+        beforeEach(() => {
+          hook.result.current.setFieldTouched("childForm.numberField", true);
+        });
+
+        test("calls onTouched with new touched set merged", () => {
+          expect(initialProps.onTouched).toHaveBeenCalledWith(new Set([
+            "stringField",
+            "numberField",
+            "childForm.numberField",
+          ]));
+        });
+      });
+
+      describe("when setFieldTouched called to remove field", () => {
+        beforeEach(() => {
+          hook.result.current.setFieldTouched("numberField", false);
+        });
+
+        test("calls onTouched with field removed", () => {
+          expect(initialProps.onTouched).toHaveBeenCalledWith(new Set([
+            "stringField",
+          ]));
+        });
+      });
+    });
+
     describe("when validateOnChange true", () => {
       beforeEach(() => {
         hook.rerender({
