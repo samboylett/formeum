@@ -152,6 +152,18 @@ describe("useFormHandlerStateless", () => {
       });
     });
 
+    describe("when setFieldTouched called to add field", () => {
+      beforeEach(() => {
+        hook.result.current.setFieldTouched("childForm.numberField", true);
+      });
+
+      test("calls onTouched with new touched set", () => {
+        expect(initialProps.onTouched).toHaveBeenCalledWith(new Set([
+          "childForm.numberField",
+        ]));
+      });
+    });
+
     describe("when setValues called with same value", () => {
       beforeEach(() => {
         hook.result.current.setValues({ ...initialProps.values });
