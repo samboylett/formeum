@@ -140,16 +140,14 @@ describe("useFormHandlerStateless", () => {
       });
     });
 
-    describe("when setErrors called with new value", () => {
+    describe("when setFieldError called with new value", () => {
       beforeEach(() => {
-        hook.result.current.setErrors({
-          stringField: "Foobar",
-        });
+        hook.result.current.setFieldError("childForm.stringField", "Required!");
       });
 
       test("calls onErrors with new errors", () => {
         expect(initialProps.onErrors).toHaveBeenCalledWith({
-          stringField: "Foobar",
+          "childForm.stringField": "Required!",
         });
       });
     });
