@@ -26,7 +26,7 @@ describe("useFormHandlerStateless", () => {
     >;
     let provider: TestProviderHandler;
     let initialProps: UseFormHandlerStatelessArg<TestFormValues>;
-    let submitEvent: Pick<FormEvent, 'preventDefault'>;
+    let submitEvent: Pick<FormEvent, "preventDefault">;
 
     beforeEach(() => {
       submitEvent = {
@@ -145,11 +145,15 @@ describe("useFormHandlerStateless", () => {
       });
 
       test("calling submitForm rejects to AlreadySubmittingError error", async () => {
-        await expect(hook.result.current.submitForm()).rejects.toEqual(expect.any(AlreadySubmittingError));
+        await expect(hook.result.current.submitForm()).rejects.toEqual(
+          expect.any(AlreadySubmittingError)
+        );
       });
 
       test("calling onSubmit rejects to AlreadySubmittingError error", async () => {
-        await expect(hook.result.current.onSubmit(submitEvent)).rejects.toEqual(expect.any(AlreadySubmittingError));
+        await expect(hook.result.current.onSubmit(submitEvent)).rejects.toEqual(
+          expect.any(AlreadySubmittingError)
+        );
       });
     });
 

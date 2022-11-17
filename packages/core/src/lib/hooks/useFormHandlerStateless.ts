@@ -1,4 +1,4 @@
-import { FormEvent, FormEventHandler, useEffect, useMemo } from "react";
+import { FormEvent, useEffect, useMemo } from "react";
 import { FormErrors } from "../types/FormErrors";
 import { DeepIndex } from "../types/DeepIndex";
 import { merge, set, isEqual } from "lodash";
@@ -131,7 +131,7 @@ export interface UseFormHandlerStatelessReturn<Values> {
    *
    * @throws {AlreadySubmittingError}
    */
-  onSubmit: (event: Pick<FormEvent, 'preventDefault'>) => Promise<void>;
+  onSubmit: (event: Pick<FormEvent, "preventDefault">) => Promise<void>;
 }
 
 /**
@@ -194,7 +194,9 @@ export const createUseFormHandlerStateless = <Values>() => {
     const submitForm = useEventCallback(
       async (shouldValidate: boolean = validateOnSubmit) => {
         if (isSubmitting) {
-          return Promise.reject(new AlreadySubmittingError("Already submitting form"));
+          return Promise.reject(
+            new AlreadySubmittingError("Already submitting form")
+          );
         }
 
         try {
@@ -214,7 +216,7 @@ export const createUseFormHandlerStateless = <Values>() => {
     );
 
     const onSubmit = useEventCallback(
-      (event: Pick<FormEvent, 'preventDefault'>) => {
+      (event: Pick<FormEvent, "preventDefault">) => {
         event.preventDefault();
 
         return submitForm();
