@@ -1,6 +1,6 @@
 {
   "name": "@formeum/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "files": [
@@ -18,7 +18,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "codecov": "codecov",
-    "docs": "typedoc --out docs src/lib/index.ts"
+    "docs": "typedoc --out docs src/lib/index.ts",
+    "prepublishOnly": "npm run build"
   },
   "author": "Sam Boylett",
   "license": "GPL-3.0-or-later",
