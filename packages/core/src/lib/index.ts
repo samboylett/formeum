@@ -31,6 +31,7 @@ export * from "./components/FormHTMLInput";
 export * from "./components/FormReactInput";
 export * from "./components/FormValues";
 export * from "./components/FormCallbacks";
+export * from "./components/FormHandlerStateless";
 
 export * from "./errors/FormeumError";
 export * from "./errors/AlreadySubmittingError";
