@@ -1,7 +1,10 @@
 import { CreateBaseFormReturn } from "./CreateBaseFormReturn";
 import { FormeumPlugin } from "./FormeumPlugin";
 
-export interface WrapPlugin<Values extends unknown, BaseReturn extends CreateBaseFormReturn<Values>> {
+export interface WrapPlugin<
+  Values extends unknown,
+  BaseReturn extends CreateBaseFormReturn<Values>
+> {
   /**
    * Load a plugin to this form instance. Returns the new form instance and is chainable.
    */
