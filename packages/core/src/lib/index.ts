@@ -1,9 +1,13 @@
 export * from "./createForm";
+export * from "./createBaseForm";
 
 export * from "./types/DeepIndex";
 export * from "./types/FormErrors";
 export * from "./types/FormTouched";
 export * from "./types/ValuesFields";
+export * from "./types/CreateBaseFormReturn";
+export * from "./types/FormeumPlugin";
+export * from "./types/WrapPlugin";
 
 export * from "./contexts/ContextMain";
 
