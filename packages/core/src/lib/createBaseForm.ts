@@ -25,7 +25,7 @@ import { createUseMainContext } from "./hooks/useMainContext";
 import { createUseReactInput } from "./hooks/useReactInput";
 
 /**
- * @private
+ * Returns a form which plugins can not be added to.
  */
 export function createBaseForm<Values extends unknown>() {
   const ContextMain = createContextMain<Values>();
