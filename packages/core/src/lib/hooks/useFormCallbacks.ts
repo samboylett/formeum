@@ -18,35 +18,35 @@ export const FORM_CALLBACK_NAMES = [
 
 export type FormCallbackNames = typeof FORM_CALLBACK_NAMES[number];
 
-export type UseFormCallbacksReturn<Values> = Pick<
-  UseFormHandlerReturn<Values>,
+export type UseFormCallbacksReturn<Values, ExtraContext extends Record<string, unknown>> = Pick<
+  UseFormHandlerReturn<Values, ExtraContext>,
   FormCallbackNames
 >;
 
 /**
  * @private
  */
-export interface CreateUseFormCallbacksDependencies<Values> {
-  useCurrentContext: () => UseCurrentContextReturn<Values>;
+export interface CreateUseFormCallbacksDependencies<Values, ExtraContext extends Record<string, unknown>> {
+  useCurrentContext: () => UseCurrentContextReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createUseFormCallbacks = <Values>({
+export const createUseFormCallbacks = <Values, ExtraContext extends Record<string, unknown>>({
   useCurrentContext,
-}: CreateUseFormCallbacksDependencies<Values>) => {
+}: CreateUseFormCallbacksDependencies<Values, ExtraContext>) => {
   /**
    * Get all functions from the form handler. Will never trigger a re-render.
    *
    * @returns {UseFormCallbacksReturn<Values>}
    */
-  const useFormCallbacks = (): UseFormCallbacksReturn<Values> => {
+  const useFormCallbacks = (): UseFormCallbacksReturn<Values, ExtraContext> => {
     const contextRef = useCurrentContext();
 
-    return useMemo<UseFormCallbacksReturn<Values>>(
+    return useMemo<UseFormCallbacksReturn<Values, ExtraContext>>(
       () =>
-        pick<ContextMainInterface<Values>, FormCallbackNames>(
+        pick<ContextMainInterface<Values, ExtraContext>, FormCallbackNames>(
           contextRef.current,
           ...FORM_CALLBACK_NAMES
         ),

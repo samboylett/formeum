@@ -22,10 +22,10 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>>
 /**
  * @private
  */
-export interface CreateUseFieldValueDependencies<Values> {
+export interface CreateUseFieldValueDependencies<Values, ExtraContext extends Record<string, unknown>> {
   useMainContext: (
-    arg: UseMainContextArg<Values>
-  ) => UseMainContextReturn<Values>;
+    arg: UseMainContextArg<Values, ExtraContext>
+  ) => UseMainContextReturn<Values, ExtraContext>;
   useFieldChangeValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldChangeValueArg<Name>
   ) => UseFieldChangeValueReturn<Values, Name>;
@@ -34,10 +34,10 @@ export interface CreateUseFieldValueDependencies<Values> {
 /**
  * @private
  */
-export const createUseFieldValue = <Values>({
+export const createUseFieldValue = <Values, ExtraContext extends Record<string, unknown>>({
   useMainContext,
   useFieldChangeValue,
-}: CreateUseFieldValueDependencies<Values>) => {
+}: CreateUseFieldValueDependencies<Values, ExtraContext>) => {
   /**
    * Logic around a fields value. Handles getting the field value out of the main context, the initial value, changing the value and if the value has changed.
    *

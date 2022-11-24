@@ -13,20 +13,20 @@ export interface FormHandlerProps<Values> extends UseFormHandlerArg<Values> {
 /**
  * @private
  */
-export interface CreateFormHandlerDependencies<Values> {
-  ContextMain: FastContext<ContextMainInterface<Values>>;
+export interface CreateFormHandlerDependencies<Values, ExtraContext extends Record<string, unknown>> {
+  ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
   useFormHandler: (
     arg: UseFormHandlerArg<Values>
-  ) => UseFormHandlerReturn<Values>;
+  ) => UseFormHandlerReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createFormHandler = <Values extends unknown>({
+export const createFormHandler = <Values extends unknown, ExtraContext extends Record<string, unknown>>({
   ContextMain,
   useFormHandler,
-}: CreateFormHandlerDependencies<Values>) => {
+}: CreateFormHandlerDependencies<Values, ExtraContext>) => {
   /**
    * Get the form handler using the hook `useFormHandler` and render the context provider.
    *

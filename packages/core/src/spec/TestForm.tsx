@@ -57,10 +57,10 @@ export const createTestProvider = () => {
   } as const;
 
   let innerMergeValue: (
-    value: O.Partial<ContextMainInterface<TestFormValues>, "deep">
+    value: O.Partial<ContextMainInterface<TestFormValues, Record<never, never>>, "deep">
   ) => void;
   const mergeValue = (
-    value: O.Partial<ContextMainInterface<TestFormValues>, "deep">
+    value: O.Partial<ContextMainInterface<TestFormValues, Record<never, never>>, "deep">
   ) => {
     act(() => {
       innerMergeValue(value);
@@ -68,7 +68,7 @@ export const createTestProvider = () => {
   };
 
   const TestProvider = ({ children }: { children: ReactNode }) => {
-    const [value, setValue] = useState<ContextMainInterface<TestFormValues>>({
+    const [value, setValue] = useState<ContextMainInterface<TestFormValues, Record<never, never>>>({
       initialValues: getInitialValues(),
       values: getInitialValues(),
       errors: {},
@@ -83,6 +83,7 @@ export const createTestProvider = () => {
       validateOnMount: false,
       isSubmitting: false,
       disabledWhileSubmitting: false,
+      extraContext: {},
       ...mocks,
     });
 

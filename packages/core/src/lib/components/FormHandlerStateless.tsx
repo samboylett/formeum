@@ -14,20 +14,20 @@ export interface FormHandlerStatelessProps<Values>
 /**
  * @private
  */
-export interface CreateFormHandlerStatelessDependencies<Values> {
-  ContextMain: FastContext<ContextMainInterface<Values>>;
+export interface CreateFormHandlerStatelessDependencies<Values, ExtraContext extends Record<string, unknown>> {
+  ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
   useFormHandlerStateless: (
     arg: UseFormHandlerStatelessArg<Values>
-  ) => UseFormHandlerStatelessReturn<Values>;
+  ) => UseFormHandlerStatelessReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createFormHandlerStateless = <Values extends unknown>({
+export const createFormHandlerStateless = <Values extends unknown, ExtraContext extends Record<string, unknown>>({
   ContextMain,
   useFormHandlerStateless,
-}: CreateFormHandlerStatelessDependencies<Values>) => {
+}: CreateFormHandlerStatelessDependencies<Values, ExtraContext>) => {
   /**
    * Get the form handler using the hook `useFormHandlerStateless` and render the context provider.
    *

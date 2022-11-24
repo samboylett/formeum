@@ -1,23 +1,23 @@
 import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { UseFormCallbacksReturn } from "../hooks/useFormCallbacks";
 
-export interface FormCallbacksProps<Values> {
-  children: (arg: UseFormCallbacksReturn<Values>) => ReactNode;
+export interface FormCallbacksProps<Values, ExtraContext extends Record<string, unknown>> {
+  children: (arg: UseFormCallbacksReturn<Values, ExtraContext>) => ReactNode;
 }
 
 /**
  * @private
  */
-export interface CreateFormCallbacksDependencies<Values> {
-  useFormCallbacks: () => UseFormCallbacksReturn<Values>;
+export interface CreateFormCallbacksDependencies<Values, ExtraContext extends Record<string, unknown>> {
+  useFormCallbacks: () => UseFormCallbacksReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createFormCallbacks = <Values extends unknown>({
+export const createFormCallbacks = <Values extends unknown, ExtraContext extends Record<string, unknown>>({
   useFormCallbacks,
-}: CreateFormCallbacksDependencies<Values>) => {
+}: CreateFormCallbacksDependencies<Values, ExtraContext>) => {
   /**
    * Get all form handler functions.
    * @param {FormCallbacksProps<Values>} props
@@ -25,7 +25,7 @@ export const createFormCallbacks = <Values extends unknown>({
    */
   const FormCallbacks = ({
     children,
-  }: FormCallbacksProps<Values>): ReactElement => {
+  }: FormCallbacksProps<Values, ExtraContext>): ReactElement => {
     const arg = useFormCallbacks();
 
     return useMemo(() => <>{children(arg)}</>, [children, arg]);

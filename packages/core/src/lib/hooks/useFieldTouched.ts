@@ -21,18 +21,18 @@ export interface UseFieldTouchedReturn {
 /**
  * @private
  */
-export interface CreateUseFieldTouchedDependencies<Values> {
+export interface CreateUseFieldTouchedDependencies<Values, ExtraContext extends Record<string, unknown>> {
   useMainContext: (
-    arg: UseMainContextArg<Values>
-  ) => UseMainContextReturn<Values>;
+    arg: UseMainContextArg<Values, ExtraContext>
+  ) => UseMainContextReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createUseFieldTouched = <Values>({
+export const createUseFieldTouched = <Values, ExtraContext extends Record<string, unknown>>({
   useMainContext,
-}: CreateUseFieldTouchedDependencies<Values>) => {
+}: CreateUseFieldTouchedDependencies<Values, ExtraContext>) => {
   /**
    * Check and change if the field has been touched or not.
    *

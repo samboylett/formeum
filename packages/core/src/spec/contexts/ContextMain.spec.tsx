@@ -5,7 +5,7 @@ import { NoContextError } from "../../lib/errors/NoContextError";
 import { TestForm, TestFormValues } from "../TestForm";
 
 describe("ContextMain defaults", () => {
-  let hook: RenderHookResult<ContextMainInterface<TestFormValues>, void>;
+  let hook: RenderHookResult<ContextMainInterface<TestFormValues, Record<never, never>>, void>;
 
   beforeEach(() => {
     hook = renderHook(() => useFastContext(TestForm.ContextMain, () => true));

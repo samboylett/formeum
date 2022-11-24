@@ -8,26 +8,26 @@ import { ContextMainInterface } from "../contexts/ContextMain";
 /**
  * @private
  */
-export interface CreateUseCurrentContextDependencies<Values> {
-  ContextMain: FastContext<ContextMainInterface<Values>>;
+export interface CreateUseCurrentContextDependencies<Values, ExtraContext extends Record<string, unknown>> {
+  ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
 }
 
-export type UseCurrentContextReturn<Values> = Readonly<
-  MutableRefObject<ContextMainInterface<Values>>
+export type UseCurrentContextReturn<Values, ExtraContext extends Record<string, unknown>> = Readonly<
+  MutableRefObject<ContextMainInterface<Values, ExtraContext>>
 >;
 
 /**
  * @private
  */
-export const createUseCurrentContext = <Values>({
+export const createUseCurrentContext = <Values, ExtraContext extends Record<string, unknown>>({
   ContextMain,
-}: CreateUseCurrentContextDependencies<Values>) => {
+}: CreateUseCurrentContextDependencies<Values, ExtraContext>) => {
   /**
    * Use the context as a ref object, and never trigger a re-render.
    *
    * @returns {UseCurrentContextReturn<Values>}
    */
-  const useCurrentContext = (): UseCurrentContextReturn<Values> =>
+  const useCurrentContext = (): UseCurrentContextReturn<Values, ExtraContext> =>
     useCurrentContextBase(ContextMain);
 
   return useCurrentContext;

@@ -8,18 +8,18 @@ export interface UseFieldDisabledReturn {
 /**
  * @private
  */
-export interface CreateUseFieldDisabledDependencies<Values> {
+export interface CreateUseFieldDisabledDependencies<Values, ExtraContext extends Record<string, unknown>> {
   useMainContext: (
-    arg: UseMainContextArg<Values>
-  ) => UseMainContextReturn<Values>;
+    arg: UseMainContextArg<Values, ExtraContext>
+  ) => UseMainContextReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createUseFieldDisabled = <Values>({
+export const createUseFieldDisabled = <Values, ExtraContext extends Record<string, unknown>>({
   useMainContext,
-}: CreateUseFieldDisabledDependencies<Values>) => {
+}: CreateUseFieldDisabledDependencies<Values, ExtraContext>) => {
   /**
    * Handle the disabled logic. Handles disabled while submitting.
    *

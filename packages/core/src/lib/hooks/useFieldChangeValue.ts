@@ -24,8 +24,8 @@ export interface UseFieldChangeValueReturn<
 /**
  * @private
  */
-export interface CreateUseFieldChangeValueDependencies<Values> {
-  useCurrentContext: () => UseCurrentContextReturn<Values>;
+export interface CreateUseFieldChangeValueDependencies<Values, ExtraContext extends Record<string, unknown>> {
+  useCurrentContext: () => UseCurrentContextReturn<Values, ExtraContext>;
   useFieldTouched: <Name extends ValuesFields<Values>>(
     arg: UseFieldTouchedArg<Name>
   ) => UseFieldTouchedReturn;
@@ -34,10 +34,10 @@ export interface CreateUseFieldChangeValueDependencies<Values> {
 /**
  * @private
  */
-export const createUseFieldChangeValue = <Values>({
+export const createUseFieldChangeValue = <Values, ExtraContext extends Record<string, unknown>>({
   useFieldTouched,
   useCurrentContext,
-}: CreateUseFieldChangeValueDependencies<Values>) => {
+}: CreateUseFieldChangeValueDependencies<Values, ExtraContext>) => {
   /**
    * Logic around changing fields value.
    *

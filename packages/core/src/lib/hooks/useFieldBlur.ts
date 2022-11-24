@@ -15,20 +15,20 @@ export interface UseFieldBlurReturn {
 /**
  * @private
  */
-export interface CreateUseFieldBlurDependencies<Values> {
+export interface CreateUseFieldBlurDependencies<Values, ExtraContext extends Record<string, unknown>> {
   useFieldTouched: <Name extends ValuesFields<Values>>(
     arg: UseFieldTouchedArg<Name>
   ) => UseFieldTouchedReturn;
-  useCurrentContext: () => UseCurrentContextReturn<Values>;
+  useCurrentContext: () => UseCurrentContextReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createUseFieldBlur = <Values>({
+export const createUseFieldBlur = <Values, ExtraContext extends Record<string, unknown>>({
   useFieldTouched,
   useCurrentContext,
-}: CreateUseFieldBlurDependencies<Values>) => {
+}: CreateUseFieldBlurDependencies<Values, ExtraContext>) => {
   /**
    * Handle the blur logic. Handles touch on blur and validate on blur.
    *

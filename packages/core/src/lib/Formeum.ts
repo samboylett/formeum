@@ -27,8 +27,13 @@ import { createUseReactInput } from "./hooks/useReactInput";
 /**
  * Generate a typed formeum object context, hooks and components
  */
-export class Formeum<Values> {
+export class Formeum<Values, ExtraContext extends Record<string, unknown> = Record<never, never>> {
   readonly #cache: Partial<Record<keyof Formeum<Values>, any>> = {};
+  readonly #extraContextDefault: ExtraContext;
+
+  constructor(extraContextDefault: ExtraContext) {
+    this.#extraContextDefault = extraContextDefault;
+  }
 
   #getItemFromCache<Key extends keyof Formeum<Values>, T>(
     name: Key,
@@ -38,56 +43,52 @@ export class Formeum<Values> {
   }
 
   get ContextMain() {
-    return this.#getItemFromCache("ContextMain", () =>
-      createContextMain<Values>()
-    );
+    return this.#getItemFromCache('ContextMain', () => createContextMain<Values, ExtraContext>(this.#extraContextDefault));
   }
 
   get useMainContext() {
-    return this.#getItemFromCache("useMainContext", () =>
-      createUseMainContext<Values>(this)
-    );
+    return this.#getItemFromCache('useMainContext', () => createUseMainContext<Values, ExtraContext>(this));
   }
 
   get useCurrentContext() {
-    return this.#getItemFromCache("useCurrentContext", () =>
-      createUseCurrentContext<Values>(this)
-    );
+    return this.#getItemFromCache('useCurrentContext', () => createUseCurrentContext<Values, ExtraContext>(this));
   }
 
   get useFormHandlerStateless() {
     return this.#getItemFromCache("useFormHandlerStateless", () =>
-      createUseFormHandlerStateless<Values>()
+      createUseFormHandlerStateless<Values, ExtraContext>({
+        defaultContext: this.#extraContextDefault,
+      })
     );
   }
 
   get useFormHandler() {
     return this.#getItemFromCache("useFormHandler", () =>
-      createUseFormHandler<Values>(this)
+      createUseFormHandler<Values, ExtraContext>(this)
     );
   }
 
   get useFieldTouched() {
     return this.#getItemFromCache("useFieldTouched", () =>
-      createUseFieldTouched<Values>(this)
+      createUseFieldTouched<Values, ExtraContext>(this)
     );
   }
 
   get useFieldChangeValue() {
     return this.#getItemFromCache("useFieldChangeValue", () =>
-      createUseFieldChangeValue<Values>(this)
+      createUseFieldChangeValue<Values, ExtraContext>(this)
     );
   }
 
   get useFieldValue() {
     return this.#getItemFromCache("useFieldValue", () =>
-      createUseFieldValue<Values>(this)
+      createUseFieldValue<Values, ExtraContext>(this)
     );
   }
 
   get useFieldError() {
     return this.#getItemFromCache("useFieldError", () =>
-      createUseFieldError<Values>(this)
+      createUseFieldError<Values, ExtraContext>(this)
     );
   }
 
@@ -99,19 +100,19 @@ export class Formeum<Values> {
 
   get useFieldBlur() {
     return this.#getItemFromCache("useFieldBlur", () =>
-      createUseFieldBlur<Values>(this)
+      createUseFieldBlur<Values, ExtraContext>(this)
     );
   }
 
   get useFieldDisabled() {
     return this.#getItemFromCache("useFieldDisabled", () =>
-      createUseFieldDisabled<Values>(this)
+      createUseFieldDisabled<Values, ExtraContext>(this)
     );
   }
 
   get useFieldFocus() {
     return this.#getItemFromCache("useFieldFocus", () =>
-      createUseFieldFocus<Values>(this)
+      createUseFieldFocus<Values, ExtraContext>(this)
     );
   }
 
@@ -141,25 +142,25 @@ export class Formeum<Values> {
 
   get useFormCallbacks() {
     return this.#getItemFromCache("useFormCallbacks", () =>
-      createUseFormCallbacks<Values>(this)
+      createUseFormCallbacks<Values, ExtraContext>(this)
     );
   }
 
   get FormHandler() {
     return this.#getItemFromCache("FormHandler", () =>
-      createFormHandler<Values>(this)
+      createFormHandler<Values, ExtraContext>(this)
     );
   }
 
   get FormHandlerStateless() {
     return this.#getItemFromCache("FormHandlerStateless", () =>
-      createFormHandlerStateless<Values>(this)
+      createFormHandlerStateless<Values, ExtraContext>(this)
     );
   }
 
   get FormValues() {
     return this.#getItemFromCache("FormValues", () =>
-      createFormValues<Values>(this)
+      createFormValues<Values, ExtraContext>(this)
     );
   }
 
@@ -183,7 +184,7 @@ export class Formeum<Values> {
 
   get FormCallbacks() {
     return this.#getItemFromCache("FormCallbacks", () =>
-      createFormCallbacks<Values>(this)
+      createFormCallbacks<Values, ExtraContext>(this)
     );
   }
 }

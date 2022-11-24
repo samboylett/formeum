@@ -22,18 +22,18 @@ export interface UseFieldErrorReturn {
 /**
  * @private
  */
-export interface CreateUseFieldErrorDependencies<Values> {
+export interface CreateUseFieldErrorDependencies<Values, ExtraContext extends Record<string, unknown>> {
   useMainContext: (
-    arg: UseMainContextArg<Values>
-  ) => UseMainContextReturn<Values>;
+    arg: UseMainContextArg<Values, ExtraContext>
+  ) => UseMainContextReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createUseFieldError = <Values>({
+export const createUseFieldError = <Values, ExtraContext extends Record<string, unknown>>({
   useMainContext,
-}: CreateUseFieldErrorDependencies<Values>) => {
+}: CreateUseFieldErrorDependencies<Values, ExtraContext>) => {
   /**
    * Get or change the fields error.
    *

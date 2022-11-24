@@ -15,20 +15,20 @@ export interface UseFieldFocusReturn {
 /**
  * @private
  */
-export interface CreateUseFieldFocusDependencies<Values> {
+export interface CreateUseFieldFocusDependencies<Values, ExtraContext extends Record<string, unknown>> {
   useFieldTouched: <Name extends ValuesFields<Values>>(
     arg: UseFieldTouchedArg<Name>
   ) => UseFieldTouchedReturn;
-  useCurrentContext: () => UseCurrentContextReturn<Values>;
+  useCurrentContext: () => UseCurrentContextReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createUseFieldFocus = <Values>({
+export const createUseFieldFocus = <Values, ExtraContext extends Record<string, unknown>>({
   useFieldTouched,
   useCurrentContext,
-}: CreateUseFieldFocusDependencies<Values>) => {
+}: CreateUseFieldFocusDependencies<Values, ExtraContext>) => {
   /**
    * Handle the focus logic. Handles touch on focus and validate on focus logic.
    *

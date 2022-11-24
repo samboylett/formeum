@@ -15,7 +15,7 @@ describe("useFormHandler", () => {
 
   describe("when rendered", () => {
     let hook: RenderHookResult<
-      UseFormHandlerReturn<TestFormValues>,
+      UseFormHandlerReturn<TestFormValues, Record<never, never>>,
       UseFormHandlerArg<TestFormValues>
     >;
     let provider: TestProviderHandler;
@@ -35,7 +35,7 @@ describe("useFormHandler", () => {
       };
 
       hook = renderHook<
-        UseFormHandlerReturn<TestFormValues>,
+        UseFormHandlerReturn<TestFormValues, Record<never, never>>,
         UseFormHandlerArg<TestFormValues>
       >(TestForm.useFormHandler, {
         initialProps,
