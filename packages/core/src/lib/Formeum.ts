@@ -28,9 +28,9 @@ import { createUseReactInput } from "./hooks/useReactInput";
  * Generate a typed formeum object context, hooks and components
  */
 export class Formeum<Values> {
-  readonly #cache: Record<string, any> = {};
+  readonly #cache: Partial<Record<keyof Formeum<Values>, any>> = {};
 
-  #getItemFromCache<T>(name: string, backup: () => T): T {
+  #getItemFromCache<Key extends keyof Formeum<Values>, T>(name: Key, backup: () => T): T {
     return (this.#cache[name] = this.#cache[name] || backup());
   }
 
