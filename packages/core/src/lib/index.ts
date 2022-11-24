@@ -1,5 +1,5 @@
 export * from "./createForm";
-export * from './Formeum';
+export * from "./Formeum";
 
 export * from "./types/DeepIndex";
 export * from "./types/FormErrors";

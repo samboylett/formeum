@@ -28,109 +28,159 @@ import { createUseReactInput } from "./hooks/useReactInput";
  * Generate a typed formeum object context, hooks and components
  */
 export class Formeum<Values> {
-  readonly #cache: Record<string, any> = {}
+  readonly #cache: Record<string, any> = {};
 
   #getItemFromCache<T>(name: string, backup: () => T): T {
-    return this.#cache[name] = this.#cache[name] || backup();
+    return (this.#cache[name] = this.#cache[name] || backup());
   }
 
   get ContextMain() {
-    return this.#getItemFromCache('ContextMain', () => createContextMain<Values>());
+    return this.#getItemFromCache("ContextMain", () =>
+      createContextMain<Values>()
+    );
   }
 
   get useMainContext() {
-    return this.#getItemFromCache('useMainContext', () => createUseMainContext<Values>(this));
+    return this.#getItemFromCache("useMainContext", () =>
+      createUseMainContext<Values>(this)
+    );
   }
 
   get useCurrentContext() {
-    return this.#getItemFromCache('useCurrentContext', () => createUseCurrentContext<Values>(this));
+    return this.#getItemFromCache("useCurrentContext", () =>
+      createUseCurrentContext<Values>(this)
+    );
   }
 
   get useFormHandlerStateless() {
-    return this.#getItemFromCache('useFormHandlerStateless', () => createUseFormHandlerStateless<Values>());
+    return this.#getItemFromCache("useFormHandlerStateless", () =>
+      createUseFormHandlerStateless<Values>()
+    );
   }
 
   get useFormHandler() {
-    return this.#getItemFromCache('useFormHandler', () => createUseFormHandler<Values>(this));
+    return this.#getItemFromCache("useFormHandler", () =>
+      createUseFormHandler<Values>(this)
+    );
   }
 
   get useFieldTouched() {
-    return this.#getItemFromCache('useFieldTouched', () => createUseFieldTouched<Values>(this));
+    return this.#getItemFromCache("useFieldTouched", () =>
+      createUseFieldTouched<Values>(this)
+    );
   }
 
   get useFieldChangeValue() {
-    return this.#getItemFromCache('useFieldChangeValue', () => createUseFieldChangeValue<Values>(this));
+    return this.#getItemFromCache("useFieldChangeValue", () =>
+      createUseFieldChangeValue<Values>(this)
+    );
   }
 
   get useFieldValue() {
-    return this.#getItemFromCache('useFieldValue', () => createUseFieldValue<Values>(this));
+    return this.#getItemFromCache("useFieldValue", () =>
+      createUseFieldValue<Values>(this)
+    );
   }
 
   get useFieldError() {
-    return this.#getItemFromCache('useFieldError', () => createUseFieldError<Values>(this));
+    return this.#getItemFromCache("useFieldError", () =>
+      createUseFieldError<Values>(this)
+    );
   }
 
   get useChangeHandler() {
-    return this.#getItemFromCache('useChangeHandler', () => createUseChangeHandler<Values>(this));
+    return this.#getItemFromCache("useChangeHandler", () =>
+      createUseChangeHandler<Values>(this)
+    );
   }
 
   get useFieldBlur() {
-    return this.#getItemFromCache('useFieldBlur', () => createUseFieldBlur<Values>(this));
+    return this.#getItemFromCache("useFieldBlur", () =>
+      createUseFieldBlur<Values>(this)
+    );
   }
 
   get useFieldDisabled() {
-    return this.#getItemFromCache('useFieldDisabled', () => createUseFieldDisabled<Values>(this));
+    return this.#getItemFromCache("useFieldDisabled", () =>
+      createUseFieldDisabled<Values>(this)
+    );
   }
 
   get useFieldFocus() {
-    return this.#getItemFromCache('useFieldFocus', () => createUseFieldFocus<Values>(this));
+    return this.#getItemFromCache("useFieldFocus", () =>
+      createUseFieldFocus<Values>(this)
+    );
   }
 
   get useFieldRef() {
-    return this.#getItemFromCache('useFieldRef', () => createUseFieldRef<Values>(this));
+    return this.#getItemFromCache("useFieldRef", () =>
+      createUseFieldRef<Values>(this)
+    );
   }
 
   get useHTMLInput() {
-    return this.#getItemFromCache('useHTMLInput', () => createUseHTMLInput<Values>(this));
+    return this.#getItemFromCache("useHTMLInput", () =>
+      createUseHTMLInput<Values>(this)
+    );
   }
 
   get useHTMLCheckbox() {
-    return this.#getItemFromCache('useHTMLCheckbox', () => createUseHTMLCheckbox<Values>(this));
+    return this.#getItemFromCache("useHTMLCheckbox", () =>
+      createUseHTMLCheckbox<Values>(this)
+    );
   }
 
   get useReactInput() {
-    return this.#getItemFromCache('useReactInput', () => createUseReactInput<Values>(this));
+    return this.#getItemFromCache("useReactInput", () =>
+      createUseReactInput<Values>(this)
+    );
   }
 
   get useFormCallbacks() {
-    return this.#getItemFromCache('useFormCallbacks', () => createUseFormCallbacks<Values>(this));
+    return this.#getItemFromCache("useFormCallbacks", () =>
+      createUseFormCallbacks<Values>(this)
+    );
   }
 
   get FormHandler() {
-    return this.#getItemFromCache('FormHandler', () => createFormHandler<Values>(this));
+    return this.#getItemFromCache("FormHandler", () =>
+      createFormHandler<Values>(this)
+    );
   }
 
   get FormHandlerStateless() {
-    return this.#getItemFromCache('FormHandlerStateless', () => createFormHandlerStateless<Values>(this));
+    return this.#getItemFromCache("FormHandlerStateless", () =>
+      createFormHandlerStateless<Values>(this)
+    );
   }
 
   get FormValues() {
-    return this.#getItemFromCache('FormValues', () => createFormValues<Values>(this));
+    return this.#getItemFromCache("FormValues", () =>
+      createFormValues<Values>(this)
+    );
   }
 
   get FormHTMLInput() {
-    return this.#getItemFromCache('FormHTMLInput', () => createFormHTMLInput<Values>(this));
+    return this.#getItemFromCache("FormHTMLInput", () =>
+      createFormHTMLInput<Values>(this)
+    );
   }
 
   get FormHTMLCheckbox() {
-    return this.#getItemFromCache('FormHTMLCheckbox', () => createFormHTMLCheckbox<Values>(this));
+    return this.#getItemFromCache("FormHTMLCheckbox", () =>
+      createFormHTMLCheckbox<Values>(this)
+    );
   }
 
   get FormReactInput() {
-    return this.#getItemFromCache('FormReactInput', () => createFormReactInput<Values>(this));
+    return this.#getItemFromCache("FormReactInput", () =>
+      createFormReactInput<Values>(this)
+    );
   }
 
   get FormCallbacks() {
-    return this.#getItemFromCache('FormCallbacks', () => createFormCallbacks<Values>(this));
+    return this.#getItemFromCache("FormCallbacks", () =>
+      createFormCallbacks<Values>(this)
+    );
   }
 }
