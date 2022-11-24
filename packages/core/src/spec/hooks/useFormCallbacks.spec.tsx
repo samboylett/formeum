@@ -13,20 +13,23 @@ describe("useFormCallbacks", () => {
   });
 
   describe("when rendered", () => {
-    let hook: RenderHookResult<UseFormCallbacksReturn<TestFormValues, Record<never, never>>, void>;
+    let hook: RenderHookResult<
+      UseFormCallbacksReturn<TestFormValues, Record<never, never>>,
+      void
+    >;
     let provider: TestProviderHandler;
 
     beforeEach(() => {
       provider = createTestProvider();
 
-      hook = renderHook<UseFormCallbacksReturn<TestFormValues, Record<never, never>>, void>(
-        TestForm.useFormCallbacks,
-        {
-          wrapper: ({ children }) => (
-            <provider.TestProvider>{children}</provider.TestProvider>
-          ),
-        }
-      );
+      hook = renderHook<
+        UseFormCallbacksReturn<TestFormValues, Record<never, never>>,
+        void
+      >(TestForm.useFormCallbacks, {
+        wrapper: ({ children }) => (
+          <provider.TestProvider>{children}</provider.TestProvider>
+        ),
+      });
     });
 
     test.each(FORM_CALLBACK_NAMES)("returns the %s function", (fnName) => {

@@ -21,7 +21,10 @@ export interface UseFieldTouchedReturn {
 /**
  * @private
  */
-export interface CreateUseFieldTouchedDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateUseFieldTouchedDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   useMainContext: (
     arg: UseMainContextArg<Values, ExtraContext>
   ) => UseMainContextReturn<Values, ExtraContext>;
@@ -30,7 +33,10 @@ export interface CreateUseFieldTouchedDependencies<Values, ExtraContext extends 
 /**
  * @private
  */
-export const createUseFieldTouched = <Values, ExtraContext extends Record<string, unknown>>({
+export const createUseFieldTouched = <
+  Values,
+  ExtraContext extends Record<string, unknown>
+>({
   useMainContext,
 }: CreateUseFieldTouchedDependencies<Values, ExtraContext>) => {
   /**

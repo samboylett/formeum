@@ -12,7 +12,10 @@ export interface FormValuesProps<Values> {
 /**
  * @private
  */
-export interface CreateFormValuesDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateFormValuesDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   useMainContext: (
     arg: UseMainContextArg<Values, ExtraContext>
   ) => UseMainContextReturn<Values, ExtraContext>;
@@ -21,7 +24,10 @@ export interface CreateFormValuesDependencies<Values, ExtraContext extends Recor
 /**
  * @private
  */
-export const createFormValues = <Values extends unknown, ExtraContext extends Record<string, unknown>>({
+export const createFormValues = <
+  Values extends unknown,
+  ExtraContext extends Record<string, unknown>
+>({
   useMainContext,
 }: CreateFormValuesDependencies<Values, ExtraContext>) => {
   /**

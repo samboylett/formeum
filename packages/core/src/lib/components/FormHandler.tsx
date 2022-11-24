@@ -13,7 +13,10 @@ export interface FormHandlerProps<Values> extends UseFormHandlerArg<Values> {
 /**
  * @private
  */
-export interface CreateFormHandlerDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateFormHandlerDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
   useFormHandler: (
     arg: UseFormHandlerArg<Values>
@@ -23,7 +26,10 @@ export interface CreateFormHandlerDependencies<Values, ExtraContext extends Reco
 /**
  * @private
  */
-export const createFormHandler = <Values extends unknown, ExtraContext extends Record<string, unknown>>({
+export const createFormHandler = <
+  Values extends unknown,
+  ExtraContext extends Record<string, unknown>
+>({
   ContextMain,
   useFormHandler,
 }: CreateFormHandlerDependencies<Values, ExtraContext>) => {

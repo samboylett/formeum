@@ -8,18 +8,25 @@ import { ContextMainInterface } from "../contexts/ContextMain";
 /**
  * @private
  */
-export interface CreateUseCurrentContextDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateUseCurrentContextDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
 }
 
-export type UseCurrentContextReturn<Values, ExtraContext extends Record<string, unknown>> = Readonly<
-  MutableRefObject<ContextMainInterface<Values, ExtraContext>>
->;
+export type UseCurrentContextReturn<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> = Readonly<MutableRefObject<ContextMainInterface<Values, ExtraContext>>>;
 
 /**
  * @private
  */
-export const createUseCurrentContext = <Values, ExtraContext extends Record<string, unknown>>({
+export const createUseCurrentContext = <
+  Values,
+  ExtraContext extends Record<string, unknown>
+>({
   ContextMain,
 }: CreateUseCurrentContextDependencies<Values, ExtraContext>) => {
   /**

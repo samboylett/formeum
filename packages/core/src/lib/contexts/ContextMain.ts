@@ -2,7 +2,10 @@ import { UseFormHandlerReturn } from "../hooks/useFormHandler";
 import { createFastContext } from "react-fast-context";
 import { NoContextError } from "../errors/NoContextError";
 
-export type ContextMainInterface<Values, ExtraContext extends Record<string, unknown>> = UseFormHandlerReturn<Values, ExtraContext>;
+export type ContextMainInterface<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> = UseFormHandlerReturn<Values, ExtraContext>;
 
 const noContextCallback = () => {
   throw new NoContextError("No context detected");
@@ -11,7 +14,12 @@ const noContextCallback = () => {
 /**
  * @private
  */
-export const createContextMain = <Values, ExtraContext extends Record<string, unknown> = Record<never, never>>(otherDefaults: ExtraContext) =>
+export const createContextMain = <
+  Values,
+  ExtraContext extends Record<string, unknown> = Record<never, never>
+>(
+  otherDefaults: ExtraContext
+) =>
   createFastContext<ContextMainInterface<Values, ExtraContext>>({
     errors: {},
     setErrors: noContextCallback,

@@ -22,7 +22,10 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>>
 /**
  * @private
  */
-export interface CreateUseFieldValueDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateUseFieldValueDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   useMainContext: (
     arg: UseMainContextArg<Values, ExtraContext>
   ) => UseMainContextReturn<Values, ExtraContext>;
@@ -34,7 +37,10 @@ export interface CreateUseFieldValueDependencies<Values, ExtraContext extends Re
 /**
  * @private
  */
-export const createUseFieldValue = <Values, ExtraContext extends Record<string, unknown>>({
+export const createUseFieldValue = <
+  Values,
+  ExtraContext extends Record<string, unknown>
+>({
   useMainContext,
   useFieldChangeValue,
 }: CreateUseFieldValueDependencies<Values, ExtraContext>) => {

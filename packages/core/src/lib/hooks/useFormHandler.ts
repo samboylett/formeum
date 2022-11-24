@@ -18,13 +18,18 @@ export type UseFormHandlerArg<Values> = Omit<
   | "onIsSubmitting"
 >;
 
-export type UseFormHandlerReturn<Values, ExtraContext extends Record<string, unknown>> =
-  UseFormHandlerStatelessReturn<Values, ExtraContext>;
+export type UseFormHandlerReturn<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> = UseFormHandlerStatelessReturn<Values, ExtraContext>;
 
 /**
  * @private
  */
-export interface CreateUseFormHandlerDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateUseFormHandlerDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   useFormHandlerStateless: (
     arg: UseFormHandlerStatelessArg<Values>
   ) => UseFormHandlerStatelessReturn<Values, ExtraContext>;
@@ -33,7 +38,10 @@ export interface CreateUseFormHandlerDependencies<Values, ExtraContext extends R
 /**
  * @private
  */
-export const createUseFormHandler = <Values, ExtraContext extends Record<string, unknown>>({
+export const createUseFormHandler = <
+  Values,
+  ExtraContext extends Record<string, unknown>
+>({
   useFormHandlerStateless,
 }: CreateUseFormHandlerDependencies<Values, ExtraContext>) => {
   /**

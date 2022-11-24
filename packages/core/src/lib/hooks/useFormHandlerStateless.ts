@@ -36,7 +36,10 @@ export interface UseFormHandlerStatelessArg<Values> {
   onIsSubmitting: (nextIsSubmitting: boolean) => void;
 }
 
-export interface UseFormHandlerStatelessReturn<Values, ExtraContext extends Record<string, unknown>> {
+export interface UseFormHandlerStatelessReturn<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   values: Values;
   initialValues: Values;
   touched: FormTouched<Values>;
@@ -138,14 +141,19 @@ export interface UseFormHandlerStatelessReturn<Values, ExtraContext extends Reco
 /**
  * @private
  */
- export interface CreateUseFormHandlerStatelessDependencies<ExtraContext extends Record<string, unknown>> {
+export interface CreateUseFormHandlerStatelessDependencies<
+  ExtraContext extends Record<string, unknown>
+> {
   defaultContext: ExtraContext;
 }
 
 /**
  * @private
  */
-export const createUseFormHandlerStateless = <Values, ExtraContext extends Record<string, unknown>>({
+export const createUseFormHandlerStateless = <
+  Values,
+  ExtraContext extends Record<string, unknown>
+>({
   defaultContext,
 }: CreateUseFormHandlerStatelessDependencies<ExtraContext>) => {
   /**
@@ -175,7 +183,10 @@ export const createUseFormHandlerStateless = <Values, ExtraContext extends Recor
     touchOnFocus = false,
     isSubmitting,
     onIsSubmitting,
-  }: UseFormHandlerStatelessArg<Values>): UseFormHandlerStatelessReturn<Values, ExtraContext> => {
+  }: UseFormHandlerStatelessArg<Values>): UseFormHandlerStatelessReturn<
+    Values,
+    ExtraContext
+  > => {
     const setErrors = useEventCallback((newErrors: FormErrors<Values>) => {
       if (isEqual(newErrors, errors)) return;
 
@@ -189,8 +200,11 @@ export const createUseFormHandlerStateless = <Values, ExtraContext extends Recor
       [notLatestvalidate]
     );
 
-    const runValidation: UseFormHandlerStatelessReturn<Values, ExtraContext>["runValidation"] =
-      useEventCallback(async ({ newValues = values, fieldName }) => {
+    const runValidation: UseFormHandlerStatelessReturn<
+      Values,
+      ExtraContext
+    >["runValidation"] = useEventCallback(
+      async ({ newValues = values, fieldName }) => {
         const nextErrors: FormErrors<Values> = await validate(
           newValues,
           fieldName
@@ -199,7 +213,8 @@ export const createUseFormHandlerStateless = <Values, ExtraContext extends Recor
         setErrors(nextErrors);
 
         return nextErrors;
-      });
+      }
+    );
 
     const submitForm = useEventCallback(
       async (shouldValidate: boolean = validateOnSubmit) => {

@@ -27,7 +27,10 @@ import { createUseReactInput } from "./hooks/useReactInput";
 /**
  * Generate a typed formeum object context, hooks and components
  */
-export class Formeum<Values, ExtraContext extends Record<string, unknown> = Record<never, never>> {
+export class Formeum<
+  Values,
+  ExtraContext extends Record<string, unknown> = Record<never, never>
+> {
   readonly #cache: Partial<Record<keyof Formeum<Values>, any>> = {};
   readonly #extraContextDefault: ExtraContext;
 
@@ -43,15 +46,21 @@ export class Formeum<Values, ExtraContext extends Record<string, unknown> = Reco
   }
 
   get ContextMain() {
-    return this.#getItemFromCache('ContextMain', () => createContextMain<Values, ExtraContext>(this.#extraContextDefault));
+    return this.#getItemFromCache("ContextMain", () =>
+      createContextMain<Values, ExtraContext>(this.#extraContextDefault)
+    );
   }
 
   get useMainContext() {
-    return this.#getItemFromCache('useMainContext', () => createUseMainContext<Values, ExtraContext>(this));
+    return this.#getItemFromCache("useMainContext", () =>
+      createUseMainContext<Values, ExtraContext>(this)
+    );
   }
 
   get useCurrentContext() {
-    return this.#getItemFromCache('useCurrentContext', () => createUseCurrentContext<Values, ExtraContext>(this));
+    return this.#getItemFromCache("useCurrentContext", () =>
+      createUseCurrentContext<Values, ExtraContext>(this)
+    );
   }
 
   get useFormHandlerStateless() {

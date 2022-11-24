@@ -18,22 +18,28 @@ export const FORM_CALLBACK_NAMES = [
 
 export type FormCallbackNames = typeof FORM_CALLBACK_NAMES[number];
 
-export type UseFormCallbacksReturn<Values, ExtraContext extends Record<string, unknown>> = Pick<
-  UseFormHandlerReturn<Values, ExtraContext>,
-  FormCallbackNames
->;
+export type UseFormCallbacksReturn<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> = Pick<UseFormHandlerReturn<Values, ExtraContext>, FormCallbackNames>;
 
 /**
  * @private
  */
-export interface CreateUseFormCallbacksDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateUseFormCallbacksDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   useCurrentContext: () => UseCurrentContextReturn<Values, ExtraContext>;
 }
 
 /**
  * @private
  */
-export const createUseFormCallbacks = <Values, ExtraContext extends Record<string, unknown>>({
+export const createUseFormCallbacks = <
+  Values,
+  ExtraContext extends Record<string, unknown>
+>({
   useCurrentContext,
 }: CreateUseFormCallbacksDependencies<Values, ExtraContext>) => {
   /**

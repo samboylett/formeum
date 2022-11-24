@@ -14,7 +14,10 @@ export interface FormHandlerStatelessProps<Values>
 /**
  * @private
  */
-export interface CreateFormHandlerStatelessDependencies<Values, ExtraContext extends Record<string, unknown>> {
+export interface CreateFormHandlerStatelessDependencies<
+  Values,
+  ExtraContext extends Record<string, unknown>
+> {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
   useFormHandlerStateless: (
     arg: UseFormHandlerStatelessArg<Values>
@@ -24,7 +27,10 @@ export interface CreateFormHandlerStatelessDependencies<Values, ExtraContext ext
 /**
  * @private
  */
-export const createFormHandlerStateless = <Values extends unknown, ExtraContext extends Record<string, unknown>>({
+export const createFormHandlerStateless = <
+  Values extends unknown,
+  ExtraContext extends Record<string, unknown>
+>({
   ContextMain,
   useFormHandlerStateless,
 }: CreateFormHandlerStatelessDependencies<Values, ExtraContext>) => {
