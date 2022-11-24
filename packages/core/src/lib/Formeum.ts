@@ -30,7 +30,10 @@ import { createUseReactInput } from "./hooks/useReactInput";
 export class Formeum<Values> {
   readonly #cache: Partial<Record<keyof Formeum<Values>, any>> = {};
 
-  #getItemFromCache<Key extends keyof Formeum<Values>, T>(name: Key, backup: () => T): T {
+  #getItemFromCache<Key extends keyof Formeum<Values>, T>(
+    name: Key,
+    backup: () => T
+  ): T {
     return (this.#cache[name] = this.#cache[name] || backup());
   }
 
