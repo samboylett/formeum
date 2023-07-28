@@ -58,7 +58,7 @@ export interface CreateUseHTMLCheckboxDependencies<Values extends BaseValues> {
 /**
  * @private
  */
-export const createUseHTMLCheckbox = <Values>({
+export const createUseHTMLCheckbox = <Values extends BaseValues>({
   useFieldValue,
   useFieldFocus,
   useFieldBlur,
