@@ -11,7 +11,10 @@ import { DeepIndex } from "../types/DeepIndex";
 import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
 import { UseFieldDisabledReturn } from "./useFieldDisabled";
 
-export interface UseHTMLCheckboxArg<Values extends Record<any, any>, Name extends ValuesFields<Values>> {
+export interface UseHTMLCheckboxArg<
+  Values extends Record<any, any>,
+  Name extends ValuesFields<Values>
+> {
   name: DeepIndex<Values, Name> extends boolean ? Name : never;
 }
 
@@ -32,7 +35,9 @@ export interface UseHTMLCheckboxReturn<
 /**
  * @private
  */
-export interface CreateUseHTMLCheckboxDependencies<Values extends Record<any, any>> {
+export interface CreateUseHTMLCheckboxDependencies<
+  Values extends Record<any, any>
+> {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
   ) => UseFieldValueReturn<Values, Name>;

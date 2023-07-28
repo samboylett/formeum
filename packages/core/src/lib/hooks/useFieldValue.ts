@@ -12,8 +12,10 @@ export interface UseFieldValueArg<Name> {
   name: Name;
 }
 
-export interface UseFieldValueReturn<Values extends Record<any, any>, Name extends ValuesFields<Values>>
-  extends UseFieldChangeValueReturn<Values, Name> {
+export interface UseFieldValueReturn<
+  Values extends Record<any, any>,
+  Name extends ValuesFields<Values>
+> extends UseFieldChangeValueReturn<Values, Name> {
   value: DeepIndex<Values, Name>;
   initialValue: DeepIndex<Values, Name>;
   hasChanged: boolean;

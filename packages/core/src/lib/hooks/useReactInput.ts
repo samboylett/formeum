@@ -12,8 +12,10 @@ export interface UseReactInputArg<Name> {
   name: Name;
 }
 
-export interface UseReactInputReturn<Values extends Record<any, any>, Name extends ValuesFields<Values>>
-  extends UseFieldBlurReturn,
+export interface UseReactInputReturn<
+  Values extends Record<any, any>,
+  Name extends ValuesFields<Values>
+> extends UseFieldBlurReturn,
     UseFieldFocusReturn,
     UseFieldRefReturn,
     UseFieldDisabledReturn {
@@ -25,7 +27,9 @@ export interface UseReactInputReturn<Values extends Record<any, any>, Name exten
 /**
  * @private
  */
-export interface CreateUseReactInputDependencies<Values extends Record<any, any>> {
+export interface CreateUseReactInputDependencies<
+  Values extends Record<any, any>
+> {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
   ) => UseFieldValueReturn<Values, Name>;

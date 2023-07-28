@@ -11,12 +11,17 @@ import { DeepIndex } from "../types/DeepIndex";
 import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
 import { UseFieldDisabledReturn } from "./useFieldDisabled";
 
-export interface UseHTMLInputArg<Values extends Record<any, any>, Name extends ValuesFields<Values>> {
+export interface UseHTMLInputArg<
+  Values extends Record<any, any>,
+  Name extends ValuesFields<Values>
+> {
   name: DeepIndex<Values, Name> extends string ? Name : never;
 }
 
-export interface UseHTMLInputReturn<Values extends Record<any, any>, Name extends ValuesFields<Values>>
-  extends UseFieldBlurReturn,
+export interface UseHTMLInputReturn<
+  Values extends Record<any, any>,
+  Name extends ValuesFields<Values>
+> extends UseFieldBlurReturn,
     UseFieldFocusReturn,
     UseFieldRefReturn,
     UseFieldDisabledReturn {
@@ -28,7 +33,9 @@ export interface UseHTMLInputReturn<Values extends Record<any, any>, Name extend
 /**
  * @private
  */
-export interface CreateUseHTMLInputDependencies<Values extends Record<any, any>> {
+export interface CreateUseHTMLInputDependencies<
+  Values extends Record<any, any>
+> {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
   ) => UseFieldValueReturn<Values, Name>;

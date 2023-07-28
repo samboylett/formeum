@@ -15,7 +15,9 @@ export interface FormHTMLCheckboxProps<
 /**
  * @private
  */
-export interface CreateFormHTMLCheckboxDependencies<Values extends Record<any, any>> {
+export interface CreateFormHTMLCheckboxDependencies<
+  Values extends Record<any, any>
+> {
   useHTMLCheckbox: <Name extends ValuesFields<Values>>(
     arg: UseHTMLCheckboxArg<Values, Name>
   ) => UseHTMLCheckboxReturn<Values, Name>;

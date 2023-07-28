@@ -6,7 +6,8 @@ import {
   UseFormHandlerReturn,
 } from "../hooks/useFormHandler";
 
-export interface FormHandlerProps<Values extends Record<any, any>> extends UseFormHandlerArg<Values> {
+export interface FormHandlerProps<Values extends Record<any, any>>
+  extends UseFormHandlerArg<Values> {
   children: ReactNode;
 }
 
