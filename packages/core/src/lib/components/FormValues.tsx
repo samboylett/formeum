@@ -4,8 +4,9 @@ import {
   UseMainContextArg,
   UseMainContextReturn,
 } from "../hooks/useMainContext";
+import { BaseValues } from "../types/BaseValues";
 
-export interface FormValuesProps<Values extends Record<any, any>> {
+export interface FormValuesProps<Values extends BaseValues> {
   children: (arg: Values) => ReactNode;
 }
 
@@ -13,7 +14,7 @@ export interface FormValuesProps<Values extends Record<any, any>> {
  * @private
  */
 export interface CreateFormValuesDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -25,7 +26,7 @@ export interface CreateFormValuesDependencies<
  * @private
  */
 export const createFormValues = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

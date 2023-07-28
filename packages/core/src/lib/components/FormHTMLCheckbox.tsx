@@ -4,9 +4,10 @@ import {
   UseHTMLCheckboxReturn,
 } from "../hooks/useHTMLCheckbox";
 import { ValuesFields } from "../types/ValuesFields";
+import { BaseValues } from "../types/BaseValues";
 
 export interface FormHTMLCheckboxProps<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   Name extends ValuesFields<Values>
 > extends UseHTMLCheckboxArg<Values, Name> {
   children: (arg: UseHTMLCheckboxReturn<Values, Name>) => ReactNode;
@@ -16,7 +17,7 @@ export interface FormHTMLCheckboxProps<
  * @private
  */
 export interface CreateFormHTMLCheckboxDependencies<
-  Values extends Record<any, any>
+  Values extends BaseValues
 > {
   useHTMLCheckbox: <Name extends ValuesFields<Values>>(
     arg: UseHTMLCheckboxArg<Values, Name>
@@ -26,7 +27,7 @@ export interface CreateFormHTMLCheckboxDependencies<
 /**
  * @private
  */
-export const createFormHTMLCheckbox = <Values extends Record<any, any>>({
+export const createFormHTMLCheckbox = <Values extends BaseValues>({
   useHTMLCheckbox,
 }: CreateFormHTMLCheckboxDependencies<Values>) => {
   /**

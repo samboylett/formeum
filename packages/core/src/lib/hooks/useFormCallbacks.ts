@@ -3,6 +3,7 @@ import { pick } from "lodash";
 import { UseCurrentContextReturn } from "./useCurrentContext";
 import { UseFormHandlerReturn } from "./useFormHandler";
 import { ContextMainInterface } from "../contexts/ContextMain";
+import { BaseValues } from "../types/BaseValues";
 
 export const FORM_CALLBACK_NAMES = [
   "submitForm",
@@ -19,7 +20,7 @@ export const FORM_CALLBACK_NAMES = [
 export type FormCallbackNames = typeof FORM_CALLBACK_NAMES[number];
 
 export type UseFormCallbacksReturn<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > = Pick<UseFormHandlerReturn<Values, ExtraContext>, FormCallbackNames>;
 
@@ -27,7 +28,7 @@ export type UseFormCallbacksReturn<
  * @private
  */
 export interface CreateUseFormCallbacksDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useCurrentContext: () => UseCurrentContextReturn<Values, ExtraContext>;
@@ -37,7 +38,7 @@ export interface CreateUseFormCallbacksDependencies<
  * @private
  */
 export const createUseFormCallbacks = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useCurrentContext,

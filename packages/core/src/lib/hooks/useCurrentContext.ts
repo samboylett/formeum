@@ -4,19 +4,20 @@ import {
   useCurrentContext as useCurrentContextBase,
 } from "react-fast-context";
 import { ContextMainInterface } from "../contexts/ContextMain";
+import { BaseValues } from "../types/BaseValues";
 
 /**
  * @private
  */
 export interface CreateUseCurrentContextDependencies<
-  Values,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
 }
 
 export type UseCurrentContextReturn<
-  Values,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > = Readonly<MutableRefObject<ContextMainInterface<Values, ExtraContext>>>;
 
@@ -24,7 +25,7 @@ export type UseCurrentContextReturn<
  * @private
  */
 export const createUseCurrentContext = <
-  Values,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   ContextMain,

@@ -23,12 +23,13 @@ import { createUseHTMLCheckbox } from "./hooks/useHTMLCheckbox";
 import { createUseHTMLInput } from "./hooks/useHTMLInput";
 import { createUseMainContext } from "./hooks/useMainContext";
 import { createUseReactInput } from "./hooks/useReactInput";
+import { BaseValues } from "./types/BaseValues";
 
 /**
  * Generate a typed formeum object context, hooks and components
  */
 export class Formeum<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown> = Record<never, never>
 > {
   readonly #cache: Partial<Record<keyof Formeum<Values>, any>> = {};

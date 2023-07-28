@@ -4,24 +4,25 @@ import {
   FastContextShouldUpdate,
 } from "react-fast-context";
 import { ContextMainInterface } from "../contexts/ContextMain";
+import { BaseValues } from "../types/BaseValues";
 
 /**
  * @private
  */
 export interface CreateUseMainContextDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
 }
 
 export type UseMainContextReturn<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > = ContextMainInterface<Values, ExtraContext>;
 
 export interface UseMainContextArg<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   shouldUpdate: FastContextShouldUpdate<
@@ -33,7 +34,7 @@ export interface UseMainContextArg<
  * @private
  */
 export const createUseMainContext = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   ContextMain,

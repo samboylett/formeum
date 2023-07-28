@@ -6,11 +6,12 @@ import { ValuesFields } from "../types/ValuesFields";
 import useEventCallback from "use-event-callback";
 import { FormTouched } from "../types/FormTouched";
 import { AlreadySubmittingError } from "../errors/AlreadySubmittingError";
+import { BaseValues } from "../types/BaseValues";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const latest = require("promise-latest");
 
-export interface UseFormHandlerStatelessArg<Values extends Record<any, any>> {
+export interface UseFormHandlerStatelessArg<Values extends BaseValues> {
   initialValues: Values;
   validate?: (
     values: Values,
@@ -37,7 +38,7 @@ export interface UseFormHandlerStatelessArg<Values extends Record<any, any>> {
 }
 
 export interface UseFormHandlerStatelessReturn<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   values: Values;
@@ -151,7 +152,7 @@ export interface CreateUseFormHandlerStatelessDependencies<
  * @private
  */
 export const createUseFormHandlerStateless = <
-  Values,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   defaultContext,

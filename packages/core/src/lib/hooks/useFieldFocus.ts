@@ -3,6 +3,7 @@ import { ValuesFields } from "../types/ValuesFields";
 import useEventCallback from "use-event-callback";
 import { UseFieldTouchedArg, UseFieldTouchedReturn } from "./useFieldTouched";
 import { UseCurrentContextReturn } from "./useCurrentContext";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseFieldFocusArg<Name> {
   name: Name;
@@ -16,7 +17,7 @@ export interface UseFieldFocusReturn {
  * @private
  */
 export interface CreateUseFieldFocusDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useFieldTouched: <Name extends ValuesFields<Values>>(
@@ -29,7 +30,7 @@ export interface CreateUseFieldFocusDependencies<
  * @private
  */
 export const createUseFieldFocus = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useFieldTouched,

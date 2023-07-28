@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { UseMainContextArg, UseMainContextReturn } from "./useMainContext";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseFieldDisabledReturn {
   disabled: boolean;
@@ -9,7 +10,7 @@ export interface UseFieldDisabledReturn {
  * @private
  */
 export interface CreateUseFieldDisabledDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -21,7 +22,7 @@ export interface CreateUseFieldDisabledDependencies<
  * @private
  */
 export const createUseFieldDisabled = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

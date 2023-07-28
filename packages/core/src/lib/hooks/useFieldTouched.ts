@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { UseMainContextArg, UseMainContextReturn } from "./useMainContext";
 import { ValuesFields } from "../types/ValuesFields";
 import useEventCallback from "use-event-callback";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseFieldTouchedArg<Name> {
   name: Name;
@@ -22,7 +23,7 @@ export interface UseFieldTouchedReturn {
  * @private
  */
 export interface CreateUseFieldTouchedDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -34,7 +35,7 @@ export interface CreateUseFieldTouchedDependencies<
  * @private
  */
 export const createUseFieldTouched = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

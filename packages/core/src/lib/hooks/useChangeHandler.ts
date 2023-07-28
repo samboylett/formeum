@@ -6,13 +6,14 @@ import {
   UseFieldChangeValueArg,
   UseFieldChangeValueReturn,
 } from "./useFieldChangeValue";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseChangeHandlerArg<Name> {
   name: Name;
 }
 
 export interface UseChangeHandlerReturn<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   Name extends ValuesFields<Values>
 > extends UseFieldChangeValueReturn<Values, Name> {
   /**
@@ -41,7 +42,7 @@ export interface UseChangeHandlerReturn<
 /**
  * @private
  */
-export interface CreateUseChangeHandlerDependencies<Values> {
+export interface CreateUseChangeHandlerDependencies<Values extends BaseValues> {
   useFieldChangeValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldChangeValueArg<Name>
   ) => UseFieldChangeValueReturn<Values, Name>;
@@ -50,7 +51,7 @@ export interface CreateUseChangeHandlerDependencies<Values> {
 /**
  * @private
  */
-export const createUseChangeHandler = <Values>({
+export const createUseChangeHandler = <Values extends BaseValues>({
   useFieldChangeValue,
 }: CreateUseChangeHandlerDependencies<Values>) => {
   /**

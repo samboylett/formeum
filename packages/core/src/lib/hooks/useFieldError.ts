@@ -3,6 +3,7 @@ import { UseMainContextArg, UseMainContextReturn } from "./useMainContext";
 import { get, isEqual } from "lodash";
 import { ValuesFields } from "../types/ValuesFields";
 import useEventCallback from "use-event-callback";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseFieldErrorArg<Name> {
   name: Name;
@@ -23,7 +24,7 @@ export interface UseFieldErrorReturn {
  * @private
  */
 export interface CreateUseFieldErrorDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -35,7 +36,7 @@ export interface CreateUseFieldErrorDependencies<
  * @private
  */
 export const createUseFieldError = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

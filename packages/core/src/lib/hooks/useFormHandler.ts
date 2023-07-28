@@ -5,8 +5,9 @@ import {
   UseFormHandlerStatelessArg,
   UseFormHandlerStatelessReturn,
 } from "./useFormHandlerStateless";
+import { BaseValues } from "../types/BaseValues";
 
-export type UseFormHandlerArg<Values> = Omit<
+export type UseFormHandlerArg<Values extends BaseValues> = Omit<
   UseFormHandlerStatelessArg<Values>,
   | "values"
   | "onValues"
@@ -19,7 +20,7 @@ export type UseFormHandlerArg<Values> = Omit<
 >;
 
 export type UseFormHandlerReturn<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > = UseFormHandlerStatelessReturn<Values, ExtraContext>;
 
@@ -27,7 +28,7 @@ export type UseFormHandlerReturn<
  * @private
  */
 export interface CreateUseFormHandlerDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useFormHandlerStateless: (
@@ -39,7 +40,7 @@ export interface CreateUseFormHandlerDependencies<
  * @private
  */
 export const createUseFormHandler = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useFormHandlerStateless,

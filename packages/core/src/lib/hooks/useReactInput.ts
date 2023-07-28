@@ -7,13 +7,14 @@ import { UseFieldValueArg, UseFieldValueReturn } from "./useFieldValue";
 import { DeepIndex } from "../types/DeepIndex";
 import { UseFieldRefArg, UseFieldRefReturn } from "./useFieldRef";
 import { UseFieldDisabledReturn } from "./useFieldDisabled";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseReactInputArg<Name> {
   name: Name;
 }
 
 export interface UseReactInputReturn<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   Name extends ValuesFields<Values>
 > extends UseFieldBlurReturn,
     UseFieldFocusReturn,
@@ -28,7 +29,7 @@ export interface UseReactInputReturn<
  * @private
  */
 export interface CreateUseReactInputDependencies<
-  Values extends Record<any, any>
+  Values extends BaseValues
 > {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
@@ -48,7 +49,7 @@ export interface CreateUseReactInputDependencies<
 /**
  * @private
  */
-export const createUseReactInput = <Values extends Record<any, any>>({
+export const createUseReactInput = <Values extends BaseValues>({
   useFieldValue,
   useFieldFocus,
   useFieldBlur,

@@ -1,9 +1,10 @@
 import { UseFormHandlerReturn } from "../hooks/useFormHandler";
 import { createFastContext } from "react-fast-context";
 import { NoContextError } from "../errors/NoContextError";
+import { BaseValues } from "../types/BaseValues";
 
 export type ContextMainInterface<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > = UseFormHandlerReturn<Values, ExtraContext>;
 
@@ -15,7 +16,7 @@ const noContextCallback = () => {
  * @private
  */
 export const createContextMain = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown> = Record<never, never>
 >(
   otherDefaults: ExtraContext

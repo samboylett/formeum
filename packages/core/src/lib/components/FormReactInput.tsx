@@ -1,9 +1,10 @@
 import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { UseReactInputArg, UseReactInputReturn } from "../hooks/useReactInput";
 import { ValuesFields } from "../types/ValuesFields";
+import { BaseValues } from "../types/BaseValues";
 
 export interface FormReactInputProps<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   Name extends ValuesFields<Values>
 > extends UseReactInputArg<Name> {
   children: (arg: UseReactInputReturn<Values, Name>) => ReactNode;
@@ -13,7 +14,7 @@ export interface FormReactInputProps<
  * @private
  */
 export interface CreateFormReactInputDependencies<
-  Values extends Record<any, any>
+  Values extends BaseValues
 > {
   useReactInput: <Name extends ValuesFields<Values>>(
     arg: UseReactInputArg<Name>
@@ -23,7 +24,7 @@ export interface CreateFormReactInputDependencies<
 /**
  * @private
  */
-export const createFormReactInput = <Values extends Record<any, any>>({
+export const createFormReactInput = <Values extends BaseValues>({
   useReactInput,
 }: CreateFormReactInputDependencies<Values>) => {
   /**

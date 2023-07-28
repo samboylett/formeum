@@ -4,13 +4,14 @@ import { ValuesFields } from "../types/ValuesFields";
 import useEventCallback from "use-event-callback";
 import { UseFieldTouchedArg, UseFieldTouchedReturn } from "./useFieldTouched";
 import { UseCurrentContextReturn } from "./useCurrentContext";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseFieldChangeValueArg<Name> {
   name: Name;
 }
 
 export interface UseFieldChangeValueReturn<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   Name extends ValuesFields<Values>
 > {
   /**
@@ -25,7 +26,7 @@ export interface UseFieldChangeValueReturn<
  * @private
  */
 export interface CreateUseFieldChangeValueDependencies<
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 > {
   useCurrentContext: () => UseCurrentContextReturn<Values, ExtraContext>;
@@ -38,7 +39,7 @@ export interface CreateUseFieldChangeValueDependencies<
  * @private
  */
 export const createUseFieldChangeValue = <
-  Values extends Record<any, any>,
+  Values extends BaseValues,
   ExtraContext extends Record<string, unknown>
 >({
   useFieldTouched,
