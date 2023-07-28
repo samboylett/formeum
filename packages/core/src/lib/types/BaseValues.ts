@@ -1,3 +1,1 @@
-import { BaseKeys } from "./BaseKeys";
-
-export type BaseValues = Record<BaseKeys, unknown>;
+export type BaseValues = Record<never, unknown>;

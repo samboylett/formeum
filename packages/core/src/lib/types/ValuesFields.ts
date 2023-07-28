@@ -1,6 +1,11 @@
-import { ArrayFields } from "./ArrayFields";
 import { BaseValues } from "./BaseValues";
 
-export type ValuesFields<Data extends BaseValues> =
-  | (string & keyof Data)
-  | ArrayFields<Data>;
+type DeepKeys<T> = T extends object
+  ? {
+      [K in keyof T]-?: K extends string | number
+        ? `${K}` | `${K}.${DeepKeys<T[K]>}`
+        : never;
+    }[keyof T]
+  : never;
+
+export type ValuesFields<Data extends BaseValues> = DeepKeys<Data>;
