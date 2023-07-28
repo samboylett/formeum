@@ -1,13 +1,13 @@
 import { Formeum } from "../lib";
 
 describe("Formeum", () => {
-  let formeum: Formeum<{}>;
+  let formeum: Formeum<Record<never, never>>;
 
   beforeEach(() => {
-    formeum = new Formeum<{}>({});
+    formeum = new Formeum<Record<never, never>>({});
   });
 
-  test.each<keyof Formeum<{}>>([
+  test.each<keyof Formeum<Record<never, never>>>([
     "ContextMain",
     "useMainContext",
     "useCurrentContext",
