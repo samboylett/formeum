@@ -2,6 +2,7 @@ import { MutableRefObject, useLayoutEffect, useMemo, useRef } from "react";
 import { ValuesFields } from "../types/ValuesFields";
 import { UseFieldErrorArg, UseFieldErrorReturn } from "./useFieldError";
 import { UseFieldTouchedArg } from "./useFieldTouched";
+import { BaseValues } from "../types/BaseValues";
 
 export interface UseFieldRefArg<Name> {
   name: Name;
@@ -14,7 +15,7 @@ export interface UseFieldRefReturn {
 /**
  * @private
  */
-export interface CreateUseFieldRefDependencies<Values> {
+export interface CreateUseFieldRefDependencies<Values extends BaseValues> {
   useFieldError: <Name extends ValuesFields<Values>>(
     arg: UseFieldErrorArg<Name>
   ) => UseFieldErrorReturn;
@@ -32,7 +33,7 @@ const hasSetCustomValidity = <T>(
 /**
  * @private
  */
-export const createUseFieldRef = <Values>({
+export const createUseFieldRef = <Values extends BaseValues>({
   useFieldError,
 }: CreateUseFieldRefDependencies<Values>) => {
   /**

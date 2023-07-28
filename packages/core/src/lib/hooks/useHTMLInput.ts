@@ -56,7 +56,7 @@ export interface CreateUseHTMLInputDependencies<Values extends BaseValues> {
 /**
  * @private
  */
-export const createUseHTMLInput = <Values>({
+export const createUseHTMLInput = <Values extends BaseValues>({
   useFieldValue,
   useFieldFocus,
   useFieldBlur,
