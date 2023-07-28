@@ -9,10 +9,15 @@ export type DeepIndexString<T, K extends BaseKeys> = T extends object
     : Idx<T, K>
   : never;
 
-export type DeepIndexArray<T, K extends Array<string>> = DeepIndexString<T, S.Join<K, ".">>;
+export type DeepIndexArray<T, K extends Array<string>> = DeepIndexString<
+  T,
+  S.Join<K, ".">
+>;
 
-export type DeepIndex<T, K extends BaseKeys | Array<BaseKeys>> =
-  K extends Array<string>
+export type DeepIndex<
+  T,
+  K extends BaseKeys | Array<BaseKeys>
+> = K extends Array<string>
   ? DeepIndexArray<T, K>
   : K extends BaseKeys
   ? DeepIndexString<T, K>

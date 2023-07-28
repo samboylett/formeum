@@ -13,9 +13,7 @@ export interface FormHTMLInputProps<
 /**
  * @private
  */
-export interface CreateFormHTMLInputDependencies<
-  Values extends BaseValues
-> {
+export interface CreateFormHTMLInputDependencies<Values extends BaseValues> {
   useHTMLInput: <Name extends ValuesFields<Values>>(
     arg: UseHTMLInputArg<Values, Name>
   ) => UseHTMLInputReturn<Values, Name>;

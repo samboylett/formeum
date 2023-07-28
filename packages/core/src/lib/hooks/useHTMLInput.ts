@@ -34,9 +34,7 @@ export interface UseHTMLInputReturn<
 /**
  * @private
  */
-export interface CreateUseHTMLInputDependencies<
-  Values extends BaseValues
-> {
+export interface CreateUseHTMLInputDependencies<Values extends BaseValues> {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
   ) => UseFieldValueReturn<Values, Name>;

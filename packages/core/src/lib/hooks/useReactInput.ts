@@ -28,9 +28,7 @@ export interface UseReactInputReturn<
 /**
  * @private
  */
-export interface CreateUseReactInputDependencies<
-  Values extends BaseValues
-> {
+export interface CreateUseReactInputDependencies<Values extends BaseValues> {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
   ) => UseFieldValueReturn<Values, Name>;

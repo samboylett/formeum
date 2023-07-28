@@ -13,9 +13,7 @@ export interface FormReactInputProps<
 /**
  * @private
  */
-export interface CreateFormReactInputDependencies<
-  Values extends BaseValues
-> {
+export interface CreateFormReactInputDependencies<Values extends BaseValues> {
   useReactInput: <Name extends ValuesFields<Values>>(
     arg: UseReactInputArg<Name>
   ) => UseReactInputReturn<Values, Name>;

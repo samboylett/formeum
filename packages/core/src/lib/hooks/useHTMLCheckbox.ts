@@ -36,9 +36,7 @@ export interface UseHTMLCheckboxReturn<
 /**
  * @private
  */
-export interface CreateUseHTMLCheckboxDependencies<
-  Values extends BaseValues
-> {
+export interface CreateUseHTMLCheckboxDependencies<Values extends BaseValues> {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
   ) => UseFieldValueReturn<Values, Name>;
