@@ -22,7 +22,7 @@ export interface UseFieldTouchedReturn {
  * @private
  */
 export interface CreateUseFieldTouchedDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -34,7 +34,7 @@ export interface CreateUseFieldTouchedDependencies<
  * @private
  */
 export const createUseFieldTouched = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

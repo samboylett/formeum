@@ -6,7 +6,7 @@ import {
   UseFormHandlerReturn,
 } from "../hooks/useFormHandler";
 
-export interface FormHandlerProps<Values> extends UseFormHandlerArg<Values> {
+export interface FormHandlerProps<Values extends Record<any, any>> extends UseFormHandlerArg<Values> {
   children: ReactNode;
 }
 
@@ -14,7 +14,7 @@ export interface FormHandlerProps<Values> extends UseFormHandlerArg<Values> {
  * @private
  */
 export interface CreateFormHandlerDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
@@ -27,7 +27,7 @@ export interface CreateFormHandlerDependencies<
  * @private
  */
 export const createFormHandler = <
-  Values extends unknown,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   ContextMain,

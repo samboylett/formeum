@@ -6,7 +6,7 @@ import {
   UseFormHandlerStatelessReturn,
 } from "../hooks/useFormHandlerStateless";
 
-export interface FormHandlerStatelessProps<Values>
+export interface FormHandlerStatelessProps<Values extends Record<any, any>>
   extends UseFormHandlerStatelessArg<Values> {
   children: ReactNode;
 }
@@ -15,7 +15,7 @@ export interface FormHandlerStatelessProps<Values>
  * @private
  */
 export interface CreateFormHandlerStatelessDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
@@ -28,7 +28,7 @@ export interface CreateFormHandlerStatelessDependencies<
  * @private
  */
 export const createFormHandlerStateless = <
-  Values extends unknown,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   ContextMain,

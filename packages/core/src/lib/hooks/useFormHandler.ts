@@ -19,7 +19,7 @@ export type UseFormHandlerArg<Values> = Omit<
 >;
 
 export type UseFormHandlerReturn<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > = UseFormHandlerStatelessReturn<Values, ExtraContext>;
 
@@ -27,7 +27,7 @@ export type UseFormHandlerReturn<
  * @private
  */
 export interface CreateUseFormHandlerDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useFormHandlerStateless: (
@@ -39,7 +39,7 @@ export interface CreateUseFormHandlerDependencies<
  * @private
  */
 export const createUseFormHandler = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useFormHandlerStateless,

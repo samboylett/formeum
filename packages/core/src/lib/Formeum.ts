@@ -28,7 +28,7 @@ import { createUseReactInput } from "./hooks/useReactInput";
  * Generate a typed formeum object context, hooks and components
  */
 export class Formeum<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown> = Record<never, never>
 > {
   readonly #cache: Partial<Record<keyof Formeum<Values>, any>> = {};

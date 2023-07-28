@@ -9,7 +9,7 @@ export interface UseFieldDisabledReturn {
  * @private
  */
 export interface CreateUseFieldDisabledDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -21,7 +21,7 @@ export interface CreateUseFieldDisabledDependencies<
  * @private
  */
 export const createUseFieldDisabled = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

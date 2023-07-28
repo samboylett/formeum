@@ -16,7 +16,7 @@ export interface UseFieldBlurReturn {
  * @private
  */
 export interface CreateUseFieldBlurDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useFieldTouched: <Name extends ValuesFields<Values>>(
@@ -29,7 +29,7 @@ export interface CreateUseFieldBlurDependencies<
  * @private
  */
 export const createUseFieldBlur = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useFieldTouched,

@@ -16,7 +16,7 @@ export interface UseFieldFocusReturn {
  * @private
  */
 export interface CreateUseFieldFocusDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useFieldTouched: <Name extends ValuesFields<Values>>(
@@ -29,7 +29,7 @@ export interface CreateUseFieldFocusDependencies<
  * @private
  */
 export const createUseFieldFocus = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useFieldTouched,

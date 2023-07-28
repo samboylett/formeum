@@ -12,7 +12,7 @@ export interface UseFieldValueArg<Name> {
   name: Name;
 }
 
-export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>>
+export interface UseFieldValueReturn<Values extends Record<any, any>, Name extends ValuesFields<Values>>
   extends UseFieldChangeValueReturn<Values, Name> {
   value: DeepIndex<Values, Name>;
   initialValue: DeepIndex<Values, Name>;
@@ -23,7 +23,7 @@ export interface UseFieldValueReturn<Values, Name extends ValuesFields<Values>>
  * @private
  */
 export interface CreateUseFieldValueDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -38,7 +38,7 @@ export interface CreateUseFieldValueDependencies<
  * @private
  */
 export const createUseFieldValue = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

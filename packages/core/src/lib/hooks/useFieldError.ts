@@ -23,7 +23,7 @@ export interface UseFieldErrorReturn {
  * @private
  */
 export interface CreateUseFieldErrorDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useMainContext: (
@@ -35,7 +35,7 @@ export interface CreateUseFieldErrorDependencies<
  * @private
  */
 export const createUseFieldError = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useMainContext,

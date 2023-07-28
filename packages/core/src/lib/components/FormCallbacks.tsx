@@ -2,7 +2,7 @@ import { memo, ReactElement, ReactNode, useMemo } from "react";
 import { UseFormCallbacksReturn } from "../hooks/useFormCallbacks";
 
 export interface FormCallbacksProps<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   children: (arg: UseFormCallbacksReturn<Values, ExtraContext>) => ReactNode;
@@ -12,7 +12,7 @@ export interface FormCallbacksProps<
  * @private
  */
 export interface CreateFormCallbacksDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   useFormCallbacks: () => UseFormCallbacksReturn<Values, ExtraContext>;
@@ -22,7 +22,7 @@ export interface CreateFormCallbacksDependencies<
  * @private
  */
 export const createFormCallbacks = <
-  Values extends unknown,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   useFormCallbacks,

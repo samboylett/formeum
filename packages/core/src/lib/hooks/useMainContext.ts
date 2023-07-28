@@ -9,19 +9,19 @@ import { ContextMainInterface } from "../contexts/ContextMain";
  * @private
  */
 export interface CreateUseMainContextDependencies<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   ContextMain: FastContext<ContextMainInterface<Values, ExtraContext>>;
 }
 
 export type UseMainContextReturn<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > = ContextMainInterface<Values, ExtraContext>;
 
 export interface UseMainContextArg<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   shouldUpdate: FastContextShouldUpdate<
@@ -33,7 +33,7 @@ export interface UseMainContextArg<
  * @private
  */
 export const createUseMainContext = <
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 >({
   ContextMain,

@@ -10,7 +10,7 @@ import { AlreadySubmittingError } from "../errors/AlreadySubmittingError";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const latest = require("promise-latest");
 
-export interface UseFormHandlerStatelessArg<Values> {
+export interface UseFormHandlerStatelessArg<Values extends Record<any, any>> {
   initialValues: Values;
   validate?: (
     values: Values,
@@ -37,7 +37,7 @@ export interface UseFormHandlerStatelessArg<Values> {
 }
 
 export interface UseFormHandlerStatelessReturn<
-  Values,
+  Values extends Record<any, any>,
   ExtraContext extends Record<string, unknown>
 > {
   values: Values;

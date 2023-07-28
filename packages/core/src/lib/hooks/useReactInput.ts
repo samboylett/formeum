@@ -12,7 +12,7 @@ export interface UseReactInputArg<Name> {
   name: Name;
 }
 
-export interface UseReactInputReturn<Values, Name extends ValuesFields<Values>>
+export interface UseReactInputReturn<Values extends Record<any, any>, Name extends ValuesFields<Values>>
   extends UseFieldBlurReturn,
     UseFieldFocusReturn,
     UseFieldRefReturn,
@@ -25,7 +25,7 @@ export interface UseReactInputReturn<Values, Name extends ValuesFields<Values>>
 /**
  * @private
  */
-export interface CreateUseReactInputDependencies<Values> {
+export interface CreateUseReactInputDependencies<Values extends Record<any, any>> {
   useFieldValue: <Name extends ValuesFields<Values>>(
     arg: UseFieldValueArg<Name>
   ) => UseFieldValueReturn<Values, Name>;
@@ -44,7 +44,7 @@ export interface CreateUseReactInputDependencies<Values> {
 /**
  * @private
  */
-export const createUseReactInput = <Values>({
+export const createUseReactInput = <Values extends Record<any, any>>({
   useFieldValue,
   useFieldFocus,
   useFieldBlur,

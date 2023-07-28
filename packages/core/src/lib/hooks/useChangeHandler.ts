@@ -12,7 +12,7 @@ export interface UseChangeHandlerArg<Name> {
 }
 
 export interface UseChangeHandlerReturn<
-  Values,
+  Values extends Record<any, any>,
   Name extends ValuesFields<Values>
 > extends UseFieldChangeValueReturn<Values, Name> {
   /**
