@@ -35,6 +35,8 @@ export interface UseFormHandlerStatelessArg<Values extends BaseValues> {
   onSubmit: (values: Values) => void;
   isSubmitting: boolean;
   onIsSubmitting: (nextIsSubmitting: boolean) => void;
+  isValidating: boolean;
+  onIsValidating: (nextIsValidating: boolean) => void;
 }
 
 export interface UseFormHandlerStatelessReturn<
@@ -56,6 +58,7 @@ export interface UseFormHandlerStatelessReturn<
   disabledWhileSubmitting: boolean;
   isSubmitting: boolean;
   extraContext: ExtraContext;
+  isValidating: boolean;
 
   /**
    * Update the form data in its entirity.
@@ -184,6 +187,8 @@ export const createUseFormHandlerStateless = <
     touchOnFocus = false,
     isSubmitting,
     onIsSubmitting,
+    isValidating,
+    onIsValidating,
   }: UseFormHandlerStatelessArg<Values>): UseFormHandlerStatelessReturn<
     Values,
     ExtraContext
@@ -206,14 +211,20 @@ export const createUseFormHandlerStateless = <
       ExtraContext
     >["runValidation"] = useEventCallback(
       async ({ newValues = values, fieldName }) => {
-        const nextErrors: FormErrors<Values> = await validate(
-          newValues,
-          fieldName
-        );
+        try {
+          onIsValidating(true);
 
-        setErrors(nextErrors);
+          const nextErrors: FormErrors<Values> = await validate(
+            newValues,
+            fieldName
+          );
 
-        return nextErrors;
+          setErrors(nextErrors);
+
+          return nextErrors;
+        } finally {
+          onIsValidating(false);
+        }
       }
     );
 
@@ -327,6 +338,7 @@ export const createUseFormHandlerStateless = <
       validateOnSubmit,
       isSubmitting,
       onSubmit,
+      isValidating,
       disabledWhileSubmitting,
       extraContext: defaultContext,
     };
